@@ -1,0 +1,16 @@
+<resources>
+
+    <style name="DarkSearchContainer" parent="TextAppearance.AppCompat">
+        <item name="android:textColorHint">@color/colorTextDark</item>
+        <item name="colorAccent">@color/colorTextDark</item>
+        <item name="colorControlNormal">@color/colorTextDark</item>
+        <item name="colorControlActivated">@color/colorTextDark</item>
+    </style>
+
+    <style name="LightSearchContainer" parent="TextAppearance.AppCompat">
+        <item name="android:textColorHint">@color/colorTextLight</item>
+        <item name="colorAccent">@color/colorTextLight</item>
+        <item name="colorControlNormal">@color/colorTextLight</item>
+        <item name="colorControlActivated">@color/colorTextLight</item>
+    </style>
+</resources>
