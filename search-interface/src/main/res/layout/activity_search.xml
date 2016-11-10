@@ -23,6 +23,7 @@
         android:orientation="vertical" />
 
     <include
+        android:id="@+id/disclaimer"
         layout="@layout/rsc_results_not_found"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

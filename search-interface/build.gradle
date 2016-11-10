@@ -100,12 +100,12 @@ dependencies {
     // THIRD PARTY
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.mikhaellopez:circularimageview:3.0.2'
-    compile 'br.com.edsilfer:list-manager:0.0.1'
     compile 'com.jakewharton:kotterknife:0.1.0-SNAPSHOT'
 
     // OWN THIRD LIBRARIES
     compile 'br.com.edsilfer:kotlin-support:1.0.2'
     compile 'br.com.instachat:emoji-library:1.0.7'
+    compile 'br.com.edsilfer:list-manager:0.0.2'
 
     // KOTLIN
     compile "com.android.support:appcompat-v7:$support_version"

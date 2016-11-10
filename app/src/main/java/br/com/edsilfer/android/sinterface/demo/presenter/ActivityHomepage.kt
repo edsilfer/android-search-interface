@@ -10,6 +10,7 @@ import br.com.edsilfer.android.search_interface.service.SearchNotificationCenter
 import br.com.edsilfer.android.sinterface.demo.infrastructure.FakeDataProvider
 import br.com.edsilfer.android.sinterface.demo.model.Chat
 import br.com.edsilfer.kotlin_support.extensions.log
+import com.google.common.base.Strings
 
 /**
  * Created by efernandes on 09/11/16.
@@ -39,23 +40,14 @@ class ActivityHomepage : AppCompatActivity(), ISubscriber {
     }
 
     private fun performSearch(query: String) {
-        val result = mutableListOf<Chat>()
-
-        for (c in FakeDataProvider.provideChats()) {
-            if (c.mHeader.toLowerCase().contains(query.toLowerCase())) {
-                result.add(c)
-            }
-        }
-
-        SearchNotificationCenter.notify(
-                Events.UPDATE_RESULTS,
-                result
-        )
-
-        /*SearchNotificationCenter.notify(
-                Events.UPDATE_RESULTS,
-                FakeDataProvider.provideChats().filter { it.mHeader.contains(query) }
-        )*/
+        if (Strings.isNullOrEmpty(query)) SearchNotificationCenter.notify(Events.UPDATE_RESULTS, mutableListOf<Chat>())
+        else SearchNotificationCenter
+                .notify(
+                        Events.UPDATE_RESULTS,
+                        FakeDataProvider
+                                .provideChats()
+                                .filter { it.mHeader.toLowerCase().contains(query.toLowerCase()) }
+                )
     }
 }
 

@@ -1,12 +1,15 @@
 package br.com.edsilfer.android.search_interface.presenter.activity
 
 import android.os.Bundle
+import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.CardView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import br.com.edsilfer.android.lmanager.model.GenericHolderFactory
 import br.com.edsilfer.android.lmanager.model.GenericViewHolder
+import br.com.edsilfer.android.lmanager.model.IListControl
 import br.com.edsilfer.android.lmanager.presenter.fragment.GenericListFragment
 import br.com.edsilfer.android.search_interface.R
 import br.com.edsilfer.android.search_interface.model.IResultRow
@@ -25,6 +28,7 @@ import java.util.*
 
 class ActivitySearch<T : IResultRow> : AppCompatActivity(), ISearchInterface<T>, ISubscriber {
 
+    private var mListFragment: IListControl<T>? = null
     private var mSearchBar: SearchBarManager? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,13 +39,13 @@ class ActivitySearch<T : IResultRow> : AppCompatActivity(), ISearchInterface<T>,
     }
 
     private fun showResults(dataSet: ArrayList<T>) {
-        val fragment = GenericListFragment<T>().getInstance(
+        mListFragment = GenericListFragment<T>().getInstance(
                 dataSet,
                 ResultItemFactory()
         )
 
         val transaction = supportFragmentManager.beginTransaction()
-        transaction.add(R.id.replaceable, fragment)
+        transaction.add(R.id.replaceable, mListFragment as Fragment)
         transaction.commit()
     }
 
@@ -51,19 +55,35 @@ class ActivitySearch<T : IResultRow> : AppCompatActivity(), ISearchInterface<T>,
         }
     }
 
-    override fun updateResults(results: MutableList<T>) {
-        if (results.size == 0) {
+    override fun updateResults(results: MutableList<T>?) {
+        if (null == results || results.size == 0) {
             replaceable.visibility = LinearLayout.GONE
-            val aux = fragmentManager.findFragmentById(R.id.replaceable)
-            if (null != aux) {
-                fragmentManager
-                        .beginTransaction()
-                        .remove(fragmentManager.findFragmentById(R.id.replaceable))
-                        .commit()
-            }
+            disclaimer.visibility = CardView.VISIBLE
+            hideFragment()
         } else {
             replaceable.visibility = LinearLayout.VISIBLE
-            showResults(results as ArrayList<T>)
+            disclaimer.visibility = CardView.GONE
+            if (null == mListFragment) showResults(results as ArrayList<T>)
+            else mListFragment!!.updateDataSet(results as ArrayList<T>)
+            showFragment()
+        }
+    }
+
+    private fun hideFragment() {
+        if (null != mListFragment) {
+            supportFragmentManager.beginTransaction()
+                    .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
+                    .hide(mListFragment as Fragment)
+                    .commit()
+        }
+    }
+
+    private fun showFragment() {
+        if (null != mListFragment) {
+            supportFragmentManager.beginTransaction()
+                    .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
+                    .show(mListFragment as Fragment)
+                    .commit()
         }
     }
 

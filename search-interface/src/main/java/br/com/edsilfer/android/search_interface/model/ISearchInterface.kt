@@ -6,6 +6,6 @@ package br.com.edsilfer.android.search_interface.model
 
 interface ISearchInterface<T> {
 
-    fun updateResults (results : MutableList<T>)
+    fun updateResults (results : MutableList<T>?)
 
 }
