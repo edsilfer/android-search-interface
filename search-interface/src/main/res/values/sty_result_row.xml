@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="result_row_header">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="result_row_subheader1">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="result_row_subheader2">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">sans-serif-thin</item>
+        <item name="android:textSize">9sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="result_row_timestamp">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">sans-serif-thin</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+</resources>

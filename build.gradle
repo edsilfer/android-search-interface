@@ -1,6 +1,6 @@
 buildscript {
     // VARIABLE CONFIGURATIONS
-    ext.kotlin_version = '1.0.4'
+    ext.kotlin_version = '1.0.5'
     ext.anko_version = '0.9'
     ext.support_version = '25.0.0'
     ext.dagger_version = '2.7'
@@ -34,6 +34,9 @@ allprojects {
 
     repositories {
         maven { url "https://jitpack.io" }
+        maven {
+            url 'https://oss.sonatype.org/content/repositories/snapshots/'
+        }
         jcenter()
     }
 }

@@ -1,5 +1,6 @@
 package br.com.edsilfer.android.sinterface.demo.model
 
+import br.com.edsilfer.android.search_interface.model.IResultRow
 import br.com.edsilfer.android.sinterface.demo.model.Message
 import br.com.edsilfer.android.sinterface.demo.model.User
 import br.com.edsilfer.android.sinterface.demo.model.enum.ChatType
@@ -12,21 +13,37 @@ import java.io.Serializable
 
 class Chat(
         var id: Double = -1.toDouble(),
-        var header: String = "empty header",
+        var mHeader: String = "empty mHeader",
         val currentUser: User,
         var participants: MutableList<User> = mutableListOf<User>(),
-        var unreadMessages: Int = 0,
-        var thumbnail: String = "",
-        var lastMessage: Message = Message()
-) : Serializable {
+        var mThumbnail: String = "",
+        var lastMessage: Message
+) : Serializable, IResultRow {
+
+    override fun getThumbnail(): String {
+        return mThumbnail
+    }
+
+    override fun getHeader(): String {
+        return mHeader
+    }
+
+    override fun getSubHeader1(): String {
+        return "${lastMessage.sender.nickname}: ${lastMessage.content}"
+    }
+
+    override fun getSubHeader2(): String {
+        return "${participants.size} participants"
+    }
+
     private val chatType: ChatType
 
     init {
         chatType = if (participants.size > 2) ChatType.GROUP else ChatType.INDIVIDUAL
         if (chatType == ChatType.INDIVIDUAL) {
             removeCurrentUser()
-            header = participants[0].name
-            thumbnail = participants[0].thumbnail
+            mHeader = participants[0].name
+            mThumbnail = participants[0].thumbnail
         }
 
     }

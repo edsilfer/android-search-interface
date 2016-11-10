@@ -1,14 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/rsc_search_bar" />
+    <ImageView
+        android:id="@+id/background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/rsc_search_bar" />
 
     <LinearLayout
         android:id="@+id/replaceable"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:layout_below="@+id/toolbar"
         android:orientation="vertical" />
-</LinearLayout>
+
+    <include
+        layout="@layout/rsc_results_not_found"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:visibility="gone"
+        android:layout_marginTop="@dimen/dim_no_results_found_message_top_margin" />
+</RelativeLayout>
