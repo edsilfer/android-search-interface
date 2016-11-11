@@ -1,14 +1,14 @@
 package br.com.edsilfer.android.search_interface.service
 
+import android.support.design.widget.TextInputLayout
 import android.support.v7.app.AppCompatActivity
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.ImageView
-import android.widget.RelativeLayout
+import android.widget.LinearLayout
 import android.widget.TextView
 import br.com.edsilfer.android.search_interface.R
 import br.com.edsilfer.android.search_interface.model.ISearchBarManager
-import br.com.edsilfer.android.search_interface.model.SearchBarPresets
 import br.com.edsilfer.android.search_interface.model.SearchPallet
 import br.com.edsilfer.android.search_interface.model.enum.Events
 import br.com.edsilfer.kotlin_support.extensions.hideIndeterminateProgressBar
@@ -19,27 +19,39 @@ import com.google.common.base.Strings
  * Created by efernandes on 09/11/16.
  */
 
-class SearchBarManager private constructor(val mActivity: AppCompatActivity, val mPreset : SearchPallet.SearchBar) : ISearchBarManager {
+class SearchBarManager private constructor(val mActivity: AppCompatActivity, val mPreset: SearchPallet.SearchBar) : ISearchBarManager {
 
-    private val mInput: TextView
+    private var mInput: TextView
+    private val mInputWrapper: TextInputLayout
     private val mBack: ImageView
     private val mClear: ImageView
 
     companion object {
-        fun getInstance(activity: AppCompatActivity, preset : SearchPallet.SearchBar): SearchBarManager {
+        fun getInstance(activity: AppCompatActivity, preset: SearchPallet.SearchBar): SearchBarManager {
             return SearchBarManager(activity, preset)
         }
 
     }
 
     init {
-        mInput = mActivity.findViewById(R.id.input) as TextView
+        mInputWrapper = mActivity.findViewById(R.id.input_wrapper) as TextInputLayout
         mBack = mActivity.findViewById(R.id.back) as ImageView
         mClear = mActivity.findViewById(R.id.clear) as ImageView
+        mInput = TextView(mActivity, null, mPreset.inputStyle)
+
+        addInput()
 
         addSearchTypedListener()
         addClearOnClickListener()
         addOnBackClickListener()
+    }
+
+    private fun addInput() {
+        val params = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+        )
+        mInputWrapper.addView(mInput, params)
     }
 
     private fun addOnBackClickListener() {

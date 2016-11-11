@@ -30,8 +30,9 @@
                 android:src="@drawable/ic_arrow_left_white_24dp" />
 
             <android.support.design.widget.TextInputLayout
+                android:id="@+id/input_wrapper"
                 android:layout_width="0dip"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="5"
                 android:theme="@style/LightSearchContainer">
 

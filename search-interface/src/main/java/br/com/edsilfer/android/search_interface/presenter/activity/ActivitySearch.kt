@@ -7,6 +7,7 @@ import android.support.v7.widget.CardView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import android.widget.TextView
 import br.com.edsilfer.android.lmanager.model.GenericHolderFactory
 import br.com.edsilfer.android.lmanager.model.GenericViewHolder
 import br.com.edsilfer.android.lmanager.model.IListControl
@@ -21,6 +22,7 @@ import br.com.edsilfer.android.search_interface.model.viewholder.ResultViewHolde
 import br.com.edsilfer.android.search_interface.service.SearchBarManager
 import br.com.edsilfer.android.search_interface.service.SearchNotificationCenter
 import kotlinx.android.synthetic.main.activity_search.*
+import kotlinx.android.synthetic.main.rsc_search_bar.*
 import org.jetbrains.anko.backgroundColor
 import org.jetbrains.anko.image
 import java.util.*
@@ -45,17 +47,13 @@ class ActivitySearch<T : IResultRow> : AppCompatActivity(), ISearchInterface<T>,
         retrievePreset()
         mSearchBar = SearchBarManager.getInstance(this, mPreset!!.searchBar)
         SearchNotificationCenter.subscribe(Events.UPDATE_RESULTS, this)
-
-
         configureUserInterface()
-
-
-
     }
 
     private fun configureUserInterface() {
-
         setBackgroundPreset()
+
+
     }
 
     private fun setBackgroundPreset() {
