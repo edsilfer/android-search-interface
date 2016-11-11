@@ -1,8 +1,6 @@
 package br.com.edsilfer.android.sinterface.demo.model
 
-import br.com.edsilfer.android.search_interface.model.`interface`.IResultRow
-import br.com.edsilfer.android.sinterface.demo.model.Message
-import br.com.edsilfer.android.sinterface.demo.model.User
+import br.com.edsilfer.android.search_interface.model.IResultRow
 import br.com.edsilfer.android.sinterface.demo.model.enum.ChatType
 import com.google.gson.Gson
 import java.io.Serializable
