@@ -1,0 +1,3 @@
+<resources>
+    <string name="str_exceptions_preset_not_found">Please provide an instance of SearchPallet in order to use ActivitySearch</string>
+</resources>

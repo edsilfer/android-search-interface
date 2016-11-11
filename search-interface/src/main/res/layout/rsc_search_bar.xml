@@ -56,5 +56,5 @@
     <br.com.edsilfer.kotlin_support.presenter.layout.LineProgressBar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:colorLine="@color/colorTextLight" />
+        app:colorLine="@color/clr_theme_light_text" />
 </android.support.design.widget.AppBarLayout>

@@ -15,11 +15,14 @@ import br.com.edsilfer.android.search_interface.R
 import br.com.edsilfer.android.search_interface.model.IResultRow
 import br.com.edsilfer.android.search_interface.model.ISearchInterface
 import br.com.edsilfer.android.search_interface.model.ISubscriber
+import br.com.edsilfer.android.search_interface.model.SearchPallet
 import br.com.edsilfer.android.search_interface.model.enum.Events
 import br.com.edsilfer.android.search_interface.model.viewholder.ResultViewHolder
 import br.com.edsilfer.android.search_interface.service.SearchBarManager
 import br.com.edsilfer.android.search_interface.service.SearchNotificationCenter
 import kotlinx.android.synthetic.main.activity_search.*
+import org.jetbrains.anko.backgroundColor
+import org.jetbrains.anko.image
 import java.util.*
 
 /**
@@ -28,14 +31,46 @@ import java.util.*
 
 class ActivitySearch<T : IResultRow> : AppCompatActivity(), ISearchInterface<T>, ISubscriber {
 
+    companion object {
+        val ARG_SEARCH_PRESET = "searchpreset"
+    }
+
     private var mListFragment: IListControl<T>? = null
     private var mSearchBar: SearchBarManager? = null
+    private var mPreset: SearchPallet? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
-        mSearchBar = SearchBarManager.getInstance(this)
+        retrievePreset()
+        mSearchBar = SearchBarManager.getInstance(this, mPreset!!.searchBar)
         SearchNotificationCenter.subscribe(Events.UPDATE_RESULTS, this)
+
+
+        configureUserInterface()
+
+
+
+    }
+
+    private fun configureUserInterface() {
+
+        setBackgroundPreset()
+    }
+
+    private fun setBackgroundPreset() {
+        if (mPreset!!.background.drawable != -1) {
+            background.image = getDrawable(mPreset!!.background.drawable)
+            background.alpha = mPreset!!.background.alpha
+        } else {
+            container.backgroundColor = mPreset!!.background.color
+            container.alpha = mPreset!!.background.alpha
+        }
+    }
+
+    private fun retrievePreset() {
+        intent.extras.getSerializable(ARG_SEARCH_PRESET) ?: throw IllegalArgumentException(getString(R.string.str_exceptions_preset_not_found))
+        mPreset = intent.extras.getSerializable(ARG_SEARCH_PRESET) as SearchPallet
     }
 
     private fun showResults(dataSet: ArrayList<T>) {

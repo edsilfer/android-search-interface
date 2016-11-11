@@ -4,8 +4,8 @@
     <color name="colorPrimaryDark">#000</color>
     <color name="colorAccent">#FAFAFA</color>
 
-    <color name="colorTextDark">#424242</color>
-    <color name="colorTextLight">#FFF</color>
-    <color name="colorTextShadowDark">#000</color>
-    <color name="colorTextShadowLight">#FFF</color>
+    <color name="clr_theme_dark_text">#424242</color>
+    <color name="clr_theme_light_text">#FFF</color>
+    <color name="clr_theme_dark_text_shadow">#000</color>
+    <color name="clr_theme_light_text_shadow">#FFF</color>
 </resources>

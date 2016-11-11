@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="dim_presets_commons_text_input_size">12sp</dimen>
+    <dimen name="dim_presets_commons_text_header_size">14sp</dimen>
+    <dimen name="dim_presets_commons_text_subheader1_size">12sp</dimen>
+    <dimen name="dim_presets_commons_text_subheader2_size">10sp</dimen>
+</resources>

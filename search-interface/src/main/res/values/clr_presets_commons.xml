@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- DARK THEME -->
+    <color name="clr_theme_dark_color_primary">#000000</color>
+    <color name="clr_theme_dark_color_primary_dark">#000000</color>
+
+    <color name="clr_theme_dark_text_input">#424242</color>
+    <color name="clr_theme_dark_text_input_hint">#424242</color>
+
+    <color name="clr_theme_dark_text_header">#424242</color>
+    <color name="clr_theme_dark_text_subheader1">#424242</color>
+    <color name="clr_theme_dark_text_subheader2">#424242</color>
+
+    <!-- LIGHT THEME -->
+    <color name="clr_theme_light_color_primary">#FFFFFF</color>
+    <color name="clr_theme_light_color_primary_dark">#FFFFFF</color>
+
+    <color name="clr_theme_light_text_input">#FFF</color>
+    <color name="clr_theme_light_text_input_hint">#FFF</color>
+
+    <color name="clr_theme_light_text_header">#FFF</color>
+    <color name="clr_theme_light_text_subheader1">#FFF</color>
+    <color name="clr_theme_light_text_subheader2">#FFF</color>
+</resources>
