@@ -3,36 +3,40 @@
     android:id="@+id/wrapper"
     android:layout_width="match_parent"
     android:layout_height="@dimen/dim_result_row_size"
-    android:background="@android:color/white"
     android:foreground="?android:attr/selectableItemBackground"
     android:orientation="vertical"
     android:padding="5dip">
 
-    <com.mikhaellopez.circularimageview.CircularImageView
-        android:id="@+id/thumbnail"
-        android:layout_width="@dimen/dim_result_row_thumbnail_size"
-        android:layout_height="@dimen/dim_result_row_thumbnail_size"
-        android:layout_centerVertical="true" />
+
+    <RelativeLayout
+        android:id="@+id/thumbnail_wrapper"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:gravity="center">
+
+        <com.mikhaellopez.circularimageview.CircularImageView
+            android:id="@+id/circle_thumbnail"
+            android:layout_width="@dimen/dim_result_row_thumbnail_size"
+            android:layout_height="@dimen/dim_result_row_thumbnail_size"
+            android:layout_centerInParent="true" />
+
+        <ImageView
+            android:id="@+id/square_thumbnail"
+            android:layout_width="@dimen/dim_result_row_thumbnail_size"
+            android:layout_height="@dimen/dim_result_row_thumbnail_size"
+            android:layout_centerInParent="true"
+            android:visibility="gone" />
+    </RelativeLayout>
+
 
     <LinearLayout
+        android:id="@+id/information_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_marginStart="8dip"
-        android:layout_toEndOf="@+id/thumbnail"
+        android:layout_toEndOf="@+id/thumbnail_wrapper"
         android:baselineAligned="false"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/header"
-            style="@style/result_row_header" />
-
-        <TextView
-            android:id="@+id/subheader1"
-            style="@style/result_row_subheader1" />
-
-        <TextView
-            android:id="@+id/subheader2"
-            style="@style/result_row_subheader2" />
-    </LinearLayout>
+        android:orientation="vertical" />
 </RelativeLayout>

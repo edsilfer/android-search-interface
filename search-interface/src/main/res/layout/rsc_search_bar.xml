@@ -10,32 +10,14 @@
         android:id="@+id/search_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="-20dip"
         android:background="@color/colorPrimary"
         android:minHeight="?attr/actionBarSize"
-        app:layout_scrollFlags="scroll|enterAlways">
+        app:layout_scrollFlags="scroll|enterAlways" />
 
-        <LinearLayout
-            android:id="@+id/toolbar_inner_container"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:padding="3dip"
-            android:weightSum="7">
-
-            <ImageView
-                android:id="@+id/back"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:src="@drawable/ic_arrow_left_white_24dp" />
-
-
-        </LinearLayout>
-    </android.support.v7.widget.Toolbar>
 
     <br.com.edsilfer.kotlin_support.presenter.layout.LineProgressBar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:colorLine="@color/clr_theme_light_text" />
+        app:colorLine="@android:color/white" />
 </android.support.design.widget.AppBarLayout>

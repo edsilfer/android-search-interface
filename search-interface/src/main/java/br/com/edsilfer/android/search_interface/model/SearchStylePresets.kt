@@ -1,6 +1,5 @@
 package br.com.edsilfer.android.search_interface.model
 
-import android.graphics.Typeface
 import br.com.edsilfer.android.search_interface.R
 import br.com.edsilfer.android.search_interface.model.enum.ThumbnailStyle
 
@@ -31,21 +30,25 @@ object SearchStylePresets {
 object SearchBarPresets {
     fun lightSearchBar(): SearchPallet.SearchBar {
         return SearchPallet.SearchBar(
-                TextPreset.darkEditText(),
+                R.style.TextInputThemeLight,
+                R.style.TextInputLayoutThemeLight,
                 R.color.clr_theme_light_color_primary,
                 R.color.clr_theme_light_color_primary_dark,
                 R.drawable.ic_arrow_left_black_24dp,
-                R.drawable.ic_close_black_24dp
+                R.drawable.ic_close_black_24dp,
+                R.string.str_search_bar_default_hint
         )
     }
 
     fun darkSearchBar(): SearchPallet.SearchBar {
         return SearchPallet.SearchBar(
-                TextPreset.lightEditText(),
+                R.style.TextInputThemeDark,
+                R.style.TextInputLayoutThemeDark,
                 R.color.clr_theme_dark_color_primary,
                 R.color.clr_theme_dark_color_primary_dark,
                 R.drawable.ic_arrow_left_white_24dp,
-                R.drawable.ic_close_white_24dp
+                R.drawable.ic_close_white_24dp,
+                R.string.str_search_bar_default_hint
         )
     }
 }
@@ -54,9 +57,9 @@ object ResultRowPreset {
     fun lightResultRow(): SearchPallet.ResultRow {
         return SearchPallet.ResultRow(
                 ThumbnailStyle.SQUARE,
-                TextPreset.darkHeader(),
-                TextPreset.darkSubHeader1(),
-                TextPreset.darkSubHeader2(),
+                R.style.TextHeaderThemeDark,
+                R.style.TextSubHeader1ThemeDark,
+                R.style.TextSubHeader2ThemeDark,
                 R.color.clr_theme_light_color_primary
         )
     }
@@ -64,9 +67,9 @@ object ResultRowPreset {
     fun darkResultRow(): SearchPallet.ResultRow {
         return SearchPallet.ResultRow(
                 ThumbnailStyle.SQUARE,
-                TextPreset.lightHeader(),
-                TextPreset.lightSubHeader1(),
-                TextPreset.lightSubHeader2(),
+                R.style.TextHeaderThemeLight,
+                R.style.TextSubHeader1ThemeLight,
+                R.style.TextSubHeader2ThemeLight,
                 R.color.clr_theme_dark_color_primary
         )
     }
@@ -75,14 +78,14 @@ object ResultRowPreset {
 object ResultDisclaimerPreset {
     fun lightResultDisclaimer(): SearchPallet.ResultDisclaimer {
         return SearchPallet.ResultDisclaimer(
-                R.style.TextSubHeader1ThemeDark,
+                R.style.TextSubHeader1ThemeLight,
                 R.color.clr_theme_light_color_primary
         )
     }
 
     fun darkResultDisclaimer(): SearchPallet.ResultDisclaimer {
         return SearchPallet.ResultDisclaimer(
-                R.style.TextSubHeader1ThemeLight,
+                R.style.TextSubHeader1ThemeDark,
                 R.color.clr_theme_dark_color_primary
         )
     }
@@ -102,92 +105,3 @@ object BackgroundPreset {
     }
 }
 
-object TextPreset {
-    fun darkEditText(): SearchPallet.TextStyle {
-        return SearchPallet.TextStyle(
-                R.color.clr_theme_dark_text_input,
-                R.color.clr_theme_dark_text_input_hint,
-                R.dimen.dim_presets_commons_text_input_size,
-                Typeface.NORMAL,
-                R.color.clr_theme_dark_text_input,
-                "sans-serif"
-        )
-    }
-
-    fun darkHeader(): SearchPallet.TextStyle {
-        return SearchPallet.TextStyle(
-                R.color.clr_theme_dark_text_input,
-                R.color.clr_theme_dark_text_input_hint,
-                R.dimen.dim_presets_commons_text_header_size,
-                Typeface.NORMAL,
-                R.color.clr_theme_dark_text_input,
-                "sans-serif"
-        )
-    }
-
-    fun darkSubHeader1(): SearchPallet.TextStyle {
-        return SearchPallet.TextStyle(
-                R.color.clr_theme_dark_text_input,
-                R.color.clr_theme_dark_text_input_hint,
-                R.dimen.dim_presets_commons_text_subheader1_size,
-                Typeface.NORMAL,
-                R.color.clr_theme_dark_text_input,
-                "sans-serif"
-        )
-    }
-
-    fun darkSubHeader2(): SearchPallet.TextStyle {
-        return SearchPallet.TextStyle(
-                R.color.clr_theme_light_text_input,
-                R.color.clr_theme_light_text_input_hint,
-                R.dimen.dim_presets_commons_text_subheader2_size,
-                Typeface.NORMAL,
-                R.color.clr_theme_light_text_input,
-                "sans-serif"
-        )
-    }
-
-    fun lightEditText(): SearchPallet.TextStyle {
-        return SearchPallet.TextStyle(
-                R.color.clr_theme_light_text_input,
-                R.color.clr_theme_light_text_input_hint,
-                R.dimen.dim_presets_commons_text_input_size,
-                Typeface.NORMAL,
-                R.color.clr_theme_light_text_input,
-                "sans-serif"
-        )
-    }
-
-    fun lightHeader(): SearchPallet.TextStyle {
-        return SearchPallet.TextStyle(
-                R.color.clr_theme_light_text_input,
-                R.color.clr_theme_light_text_input_hint,
-                R.dimen.dim_presets_commons_text_header_size,
-                Typeface.NORMAL,
-                R.color.clr_theme_light_text_input,
-                "sans-serif"
-        )
-    }
-
-    fun lightSubHeader1(): SearchPallet.TextStyle {
-        return SearchPallet.TextStyle(
-                R.color.clr_theme_light_text_input,
-                R.color.clr_theme_light_text_input_hint,
-                R.dimen.dim_presets_commons_text_subheader1_size,
-                Typeface.NORMAL,
-                R.color.clr_theme_light_text_input,
-                "sans-serif"
-        )
-    }
-
-    fun lightSubHeader2(): SearchPallet.TextStyle {
-        return SearchPallet.TextStyle(
-                R.color.clr_theme_light_text_input,
-                R.color.clr_theme_light_text_input_hint,
-                R.dimen.dim_presets_commons_text_subheader2_size,
-                Typeface.NORMAL,
-                R.color.clr_theme_light_text_input,
-                "sans-serif"
-        )
-    }
-}

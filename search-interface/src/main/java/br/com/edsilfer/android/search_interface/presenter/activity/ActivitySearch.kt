@@ -6,8 +6,9 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.CardView
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.view.WindowManager
+import android.view.WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
 import android.widget.LinearLayout
-import android.widget.TextView
 import br.com.edsilfer.android.lmanager.model.GenericHolderFactory
 import br.com.edsilfer.android.lmanager.model.GenericViewHolder
 import br.com.edsilfer.android.lmanager.model.IListControl
@@ -22,13 +23,14 @@ import br.com.edsilfer.android.search_interface.model.viewholder.ResultViewHolde
 import br.com.edsilfer.android.search_interface.service.SearchBarManager
 import br.com.edsilfer.android.search_interface.service.SearchNotificationCenter
 import kotlinx.android.synthetic.main.activity_search.*
-import kotlinx.android.synthetic.main.rsc_search_bar.*
 import org.jetbrains.anko.backgroundColor
 import org.jetbrains.anko.image
 import java.util.*
 import android.icu.lang.UCharacter.GraphemeClusterBreak.T
-import android.view.WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
-import android.view.WindowManager
+import br.com.edsilfer.kotlin_support.extensions.hideIndeterminateProgressBar
+import br.com.edsilfer.kotlin_support.extensions.showIndeterminateProgressBar
+import java.lang.reflect.AccessibleObject.setAccessible
+
 
 
 
@@ -50,11 +52,16 @@ class ActivitySearch<T : IResultRow> : AppCompatActivity(), ISearchInterface<T>,
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
         retrievePreset()
-        mSearchBar = SearchBarManager.getInstance(this, mPreset!!.searchBar)
+        mSearchBar = SearchBarManager(this, mPreset!!.searchBar)
         paintStatusBar()
         SearchNotificationCenter.subscribe(Events.UPDATE_RESULTS, this)
         configureUserInterface()
         showResults(arrayListOf<T>())
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putString("WORKAROUND_FOR_BUG_19917_KEY", "WORKAROUND_FOR_BUG_19917_VALUE")
+        super.onSaveInstanceState(outState)
     }
 
     /**
@@ -68,7 +75,7 @@ class ActivitySearch<T : IResultRow> : AppCompatActivity(), ISearchInterface<T>,
 
     private fun configureUserInterface() {
         setBackgroundPreset()
-2    }
+    }
 
     private fun setBackgroundPreset() {
         if (mPreset!!.background.drawable != -1) {
@@ -88,7 +95,7 @@ class ActivitySearch<T : IResultRow> : AppCompatActivity(), ISearchInterface<T>,
     private fun showResults(dataSet: ArrayList<T>) {
         mListFragment = GenericListFragment<T>().getInstance(
                 dataSet,
-                ResultItemFactory()
+                ResultItemFactory(mPreset!!.resultRow)
         )
 
         val transaction = supportFragmentManager.beginTransaction()
@@ -103,6 +110,7 @@ class ActivitySearch<T : IResultRow> : AppCompatActivity(), ISearchInterface<T>,
     }
 
     override fun updateResults(results: MutableList<T>?) {
+        hideIndeterminateProgressBar()
         if (null == results || results.size == 0) {
             replaceable.visibility = LinearLayout.GONE
             disclaimer.visibility = CardView.VISIBLE
@@ -120,7 +128,7 @@ class ActivitySearch<T : IResultRow> : AppCompatActivity(), ISearchInterface<T>,
             supportFragmentManager.beginTransaction()
                     .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
                     .hide(mListFragment as Fragment)
-                    .commit()
+                    .commitAllowingStateLoss()
         }
     }
 
@@ -129,13 +137,13 @@ class ActivitySearch<T : IResultRow> : AppCompatActivity(), ISearchInterface<T>,
             supportFragmentManager.beginTransaction()
                     .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
                     .show(mListFragment as Fragment)
-                    .commit()
+                    .commitAllowingStateLoss()
         }
     }
 
-    class ResultItemFactory<in T : IResultRow> : GenericHolderFactory<T>() {
+    class ResultItemFactory<in T : IResultRow>(val mPreset: SearchPallet.ResultRow) : GenericHolderFactory<T>() {
         override fun getViewHolder(view: ViewGroup): GenericViewHolder<T> {
-            return ResultViewHolder(LayoutInflater.from(view.context).inflate(R.layout.rsc_result_row, view, false))
+            return ResultViewHolder(LayoutInflater.from(view.context).inflate(R.layout.rsc_result_row, view, false), mPreset)
         }
     }
 }

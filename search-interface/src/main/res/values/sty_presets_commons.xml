@@ -1,54 +1,29 @@
 <resources>
 
-    <!-- THEME DARK -->
+    <!-- THEME DARK ============================================================================ -->
+    <!-- search bar input text layout -->
+    <style name="TextInputLayoutThemeDark" parent="TextAppearance.AppCompat">
+        <item name="android:textColorHint">@color/clr_theme_dark_text_input_hint</item>
+        <item name="colorAccent">@color/clr_theme_dark_text_input_hint</item>
+        <item name="colorControlNormal">@color/clr_theme_dark_text_input_hint</item>
+        <item name="colorControlActivated">@color/clr_theme_dark_text_input_hint</item>
+    </style>
+
     <!-- search bar input text -->
-    <style name="TextInputThemeLight">
-        <item name="colorAccent">@color/clr_theme_light_text_input_hint</item>
-        <item name="android:textColorHint">@color/clr_theme_light_text_input_hint</item>
-        <item name="android:textColor">@color/clr_theme_light_text_input</item>
-        <item name="colorControlNormal">@color/clr_theme_light_text_input</item>
-        <item name="colorControlActivated">@color/clr_theme_light_text_input</item>
-        <item name="android:textSize">@dimen/dim_presets_commons_text_input_size</item>
-    </style>
-
-    <!-- result row header -->
-    <style name="TextHeaderThemeLight" parent="@android:style/Widget.TextView">
-        <item name="android:textSize">@dimen/dim_presets_commons_text_header_size</item>
-        <item name="android:textColor">@color/clr_theme_dark_text_header</item>
-        <item name="android:fontFamily">sans-serif</item>
-        <item name="android:textStyle">bold</item>
-    </style>
-
-    <!-- result row subheader1 -->
-    <style name="TextSubHeader1ThemeLight" parent="@android:style/Widget.TextView">
-        <item name="android:textSize">@dimen/dim_presets_commons_text_subheader1_size</item>
-        <item name="android:textColor">@color/clr_theme_dark_text_subheader1</item>
-        <item name="android:fontFamily">sans-thin</item>
-    </style>
-
-    <!-- result row subheader2 -->
-    <style name="TextSubHeader2ThemeLight" parent="@android:style/Widget.TextView">
-        <item name="android:textSize">@dimen/dim_presets_commons_text_header_size</item>
-        <item name="android:textColor">@color/clr_theme_dark_text_subheader2</item>
-        <item name="android:fontFamily">sans-thin</item>
-    </style>
-
-
-    <!-- THEME LIGHT -->
-    <!-- search bar input text -->
-    <style name="TextInputThemeDark">
+    <style name="TextInputThemeDark" parent="@android:style/Widget.EditText">
         <item name="android:colorAccent">@color/clr_theme_dark_text_input_hint</item>
         <item name="android:textColorHint">@color/clr_theme_dark_text_input_hint</item>
         <item name="android:textColor">@color/clr_theme_dark_text_input</item>
         <item name="android:colorControlNormal">@color/clr_theme_dark_text_input</item>
         <item name="android:colorControlActivated">@color/clr_theme_dark_text_input</item>
         <item name="android:textSize">@dimen/dim_presets_commons_text_input_size</item>
+        <item name="android:background">@null</item>
     </style>
 
     <!-- result row header -->
     <style name="TextHeaderThemeDark" parent="@android:style/Widget.TextView">
         <item name="android:textSize">@dimen/dim_presets_commons_text_header_size</item>
-        <item name="android:textColor">@color/clr_theme_dark_text_header</item>
+        <item name="android:textColor">@color/clr_theme_light_text_header</item>
         <item name="android:fontFamily">sans-serif</item>
         <item name="android:textStyle">bold</item>
     </style>
@@ -56,20 +31,57 @@
     <!-- result row subheader1 -->
     <style name="TextSubHeader1ThemeDark" parent="@android:style/Widget.TextView">
         <item name="android:textSize">@dimen/dim_presets_commons_text_subheader1_size</item>
-        <item name="android:textColor">@color/clr_theme_dark_text_subheader1</item>
-        <item name="android:fontFamily">sans-thin</item>
+        <item name="android:textColor">@color/clr_theme_light_text_subheader1</item>
+        <item name="android:fontFamily">sans-serif</item>
     </style>
 
     <!-- result row subheader2 -->
     <style name="TextSubHeader2ThemeDark" parent="@android:style/Widget.TextView">
         <item name="android:textSize">@dimen/dim_presets_commons_text_header_size</item>
-        <item name="android:textColor">@color/clr_theme_dark_text_subheader2</item>
-        <item name="android:fontFamily">sans-thin</item>
+        <item name="android:textColor">@color/clr_theme_light_text_subheader2</item>
+        <item name="android:fontFamily">sans-serif</item>
     </style>
 
-    <style name="SearchText">
-        <item name="android:textColorHint">#000</item>
-        <item name="android:colorAccent">#000</item>
-        <item name="android:textColor">#000</item>
+
+    <!-- THEME LIGHT =========================================================================== -->
+    <!-- search bar input text layout -->
+    <style name="TextInputLayoutThemeLight" parent="TextAppearance.AppCompat">
+        <item name="android:textColorHint">@color/clr_theme_light_text_input_hint</item>
+        <item name="colorAccent">@color/clr_theme_light_text_input_hint</item>
+        <item name="colorControlNormal">@color/clr_theme_light_text_input_hint</item>
+        <item name="colorControlActivated">@color/clr_theme_light_text_input_hint</item>
+    </style>
+
+    <!-- search bar input text -->
+    <style name="TextInputThemeLight" parent="@android:style/Widget.EditText">
+        <item name="android:colorAccent">@color/clr_theme_light_text_input_hint</item>
+        <item name="android:textColorHint">@color/clr_theme_light_text_input_hint</item>
+        <item name="android:textColor">@color/clr_theme_light_text_input</item>
+        <item name="android:colorControlNormal">@color/clr_theme_light_text_input</item>
+        <item name="android:colorControlActivated">@color/clr_theme_light_text_input</item>
+        <item name="android:textSize">@dimen/dim_presets_commons_text_input_size</item>
+        <item name="android:background">@null</item>
+    </style>
+
+    <!-- result row header -->
+    <style name="TextHeaderThemeLight">
+        <item name="android:textSize">@dimen/dim_presets_commons_text_header_size</item>
+        <item name="android:textColor">@color/clr_theme_dark_text_header</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- result row subheader1 -->
+    <style name="TextSubHeader1ThemeLight">
+        <item name="android:textSize">@dimen/dim_presets_commons_text_subheader1_size</item>
+        <item name="android:textColor">@color/clr_theme_dark_text_subheader1</item>
+        <item name="android:fontFamily">sans-serif</item>
+    </style>
+
+    <!-- result row subheader2 -->
+    <style name="TextSubHeader2ThemeLight">
+        <item name="android:textSize">@dimen/dim_presets_commons_text_header_size</item>
+        <item name="android:textColor">@color/clr_theme_dark_text_subheader2</item>
+        <item name="android:fontFamily">sans-serif</item>
     </style>
 </resources>
