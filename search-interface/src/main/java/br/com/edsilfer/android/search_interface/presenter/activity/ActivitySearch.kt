@@ -26,6 +26,11 @@ import kotlinx.android.synthetic.main.rsc_search_bar.*
 import org.jetbrains.anko.backgroundColor
 import org.jetbrains.anko.image
 import java.util.*
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import android.view.WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
+import android.view.WindowManager
+
+
 
 /**
  * Created by efernandes on 09/11/16.
@@ -46,15 +51,24 @@ class ActivitySearch<T : IResultRow> : AppCompatActivity(), ISearchInterface<T>,
         setContentView(R.layout.activity_search)
         retrievePreset()
         mSearchBar = SearchBarManager.getInstance(this, mPreset!!.searchBar)
+        paintStatusBar()
         SearchNotificationCenter.subscribe(Events.UPDATE_RESULTS, this)
         configureUserInterface()
+        showResults(arrayListOf<T>())
+    }
+
+    /**
+     * TODO: transfer to kotlin support library
+     */
+    private fun paintStatusBar() {
+        window.clearFlags(FLAG_TRANSLUCENT_STATUS)
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        window.statusBarColor = resources.getColor(mPreset!!.searchBar.colorPrimaryDark)
     }
 
     private fun configureUserInterface() {
         setBackgroundPreset()
-
-
-    }
+2    }
 
     private fun setBackgroundPreset() {
         if (mPreset!!.background.drawable != -1) {
@@ -96,8 +110,7 @@ class ActivitySearch<T : IResultRow> : AppCompatActivity(), ISearchInterface<T>,
         } else {
             replaceable.visibility = LinearLayout.VISIBLE
             disclaimer.visibility = CardView.GONE
-            if (null == mListFragment) showResults(results as ArrayList<T>)
-            else mListFragment!!.updateDataSet(results as ArrayList<T>)
+            mListFragment!!.updateDataSet(results as ArrayList<T>)
             showFragment()
         }
     }

@@ -1,9 +1,12 @@
 package br.com.edsilfer.android.sinterface.demo.presenter
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import br.com.edsilfer.android.search_interface.model.ISubscriber
+import br.com.edsilfer.android.search_interface.model.SearchPallet
+import br.com.edsilfer.android.search_interface.model.SearchStylePresets
 import br.com.edsilfer.android.search_interface.model.enum.Events
 import br.com.edsilfer.android.search_interface.presenter.activity.ActivitySearch
 import br.com.edsilfer.android.search_interface.service.SearchNotificationCenter
@@ -26,7 +29,9 @@ class ActivityHomepage : AppCompatActivity(), ISubscriber {
     }
 
     private fun startSearchActivity() {
-        startActivity(Intent(this, ActivitySearch::class.java))
+        val intent = Intent(this, ActivitySearch::class.java)
+        intent.putExtra(ActivitySearch.ARG_SEARCH_PRESET, SearchStylePresets.lightSearch())
+        startActivity(intent)
     }
 
     override fun execute(event: Events, payload: Any) {
