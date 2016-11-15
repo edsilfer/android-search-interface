@@ -20,9 +20,10 @@ import br.com.edsilfer.android.search_interface.model.ISubscriber
 import br.com.edsilfer.android.search_interface.model.SearchPallet
 import br.com.edsilfer.android.search_interface.model.enum.Events
 import br.com.edsilfer.android.search_interface.model.viewholder.ResultViewHolder
-import br.com.edsilfer.android.search_interface.service.SearchBarManager
-import br.com.edsilfer.android.search_interface.service.SearchNotificationCenter
+import br.com.edsilfer.android.search_interface.service.SearchBar
+import br.com.edsilfer.android.search_interface.service.NotificationCenter
 import br.com.edsilfer.kotlin_support.extensions.hideIndeterminateProgressBar
+import br.com.edsilfer.kotlin_support.extensions.showIndeterminateProgressBar
 import kotlinx.android.synthetic.main.activity_search.*
 import org.jetbrains.anko.backgroundColor
 import org.jetbrains.anko.image
@@ -40,23 +41,18 @@ class ActivitySearch<T : IResultRow> : AppCompatActivity(), ISearchInterface<T>,
     }
 
     private var mListFragment: IListControl<T>? = null
-    private var mSearchBar: SearchBarManager? = null
+    private var mSearchBar: SearchBar? = null
     private var mPreset: SearchPallet? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
         retrievePreset()
-        mSearchBar = SearchBarManager(this, mPreset!!.searchBar)
+        mSearchBar = SearchBar(this, mPreset!!.searchBar)
         paintStatusBar()
-        SearchNotificationCenter.subscribe(Events.UPDATE_RESULTS, this)
+        NotificationCenter.subscribe(Events.UPDATE_RESULTS, this)
         configureUserInterface()
         loadFragment(arrayListOf<T>())
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        outState.putString("WORKAROUND_FOR_BUG_19917_KEY", "WORKAROUND_FOR_BUG_19917_VALUE")
-        super.onSaveInstanceState(outState)
     }
 
     /**
@@ -101,6 +97,9 @@ class ActivitySearch<T : IResultRow> : AppCompatActivity(), ISearchInterface<T>,
         }
     }
 
+    /**
+     * NOTIFICATION CENTER EVENT HANDLER
+     */
     override fun execute(event: Events, payload: Any) {
         when (event) {
             Events.UPDATE_RESULTS -> updateResults(payload as MutableList<T>)
