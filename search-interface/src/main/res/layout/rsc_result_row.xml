@@ -12,8 +12,7 @@
         android:id="@+id/thumbnail_wrapper"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:gravity="center">
+        android:layout_centerVertical="true">
 
         <com.mikhaellopez.circularimageview.CircularImageView
             android:id="@+id/circle_thumbnail"
@@ -35,8 +34,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_marginStart="8dip"
+        android:layout_marginStart="10dip"
         android:layout_toEndOf="@+id/thumbnail_wrapper"
-        android:baselineAligned="false"
         android:orientation="vertical" />
 </RelativeLayout>
