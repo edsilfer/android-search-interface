@@ -33,7 +33,7 @@ class SearchBarManager(val mActivity: AppCompatActivity, val mPreset: SearchPall
 
     init {
         mBack = ImageButton(mActivity)
-        mInput = EditText(ContextThemeWrapper(mActivity, mPreset.inputStyle))
+        mInput = EditText(ContextThemeWrapper(mActivity, mPreset.inputStyle), null, 0)
         mClear = ImageButton(mActivity)
         assembleLayout()
         addSearchTypedListener()

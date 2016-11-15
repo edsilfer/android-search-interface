@@ -22,16 +22,11 @@ import br.com.edsilfer.android.search_interface.model.enum.Events
 import br.com.edsilfer.android.search_interface.model.viewholder.ResultViewHolder
 import br.com.edsilfer.android.search_interface.service.SearchBarManager
 import br.com.edsilfer.android.search_interface.service.SearchNotificationCenter
+import br.com.edsilfer.kotlin_support.extensions.hideIndeterminateProgressBar
 import kotlinx.android.synthetic.main.activity_search.*
 import org.jetbrains.anko.backgroundColor
 import org.jetbrains.anko.image
 import java.util.*
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
-import br.com.edsilfer.kotlin_support.extensions.hideIndeterminateProgressBar
-import br.com.edsilfer.kotlin_support.extensions.showIndeterminateProgressBar
-import java.lang.reflect.AccessibleObject.setAccessible
-
-
 
 
 /**
@@ -56,7 +51,7 @@ class ActivitySearch<T : IResultRow> : AppCompatActivity(), ISearchInterface<T>,
         paintStatusBar()
         SearchNotificationCenter.subscribe(Events.UPDATE_RESULTS, this)
         configureUserInterface()
-        showResults(arrayListOf<T>())
+        loadFragment(arrayListOf<T>())
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -92,20 +87,26 @@ class ActivitySearch<T : IResultRow> : AppCompatActivity(), ISearchInterface<T>,
         mPreset = intent.extras.getSerializable(ARG_SEARCH_PRESET) as SearchPallet
     }
 
-    private fun showResults(dataSet: ArrayList<T>) {
-        mListFragment = GenericListFragment<T>().getInstance(
-                dataSet,
-                ResultItemFactory(mPreset!!.resultRow)
-        )
+    private fun loadFragment(dataSet: ArrayList<T>) {
+        if (!isFinishing) {
+            mListFragment = GenericListFragment<T>().getInstance(
+                    dataSet,
+                    ResultItemFactory(mPreset!!.resultRow)
+            )
 
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.add(R.id.replaceable, mListFragment as Fragment)
-        transaction.commit()
+            supportFragmentManager
+                    .beginTransaction()
+                    .add(R.id.replaceable, mListFragment as Fragment)
+                    .commit()
+        }
     }
 
     override fun execute(event: Events, payload: Any) {
         when (event) {
             Events.UPDATE_RESULTS -> updateResults(payload as MutableList<T>)
+            else -> {
+                // DO NOTHING
+            }
         }
     }
 

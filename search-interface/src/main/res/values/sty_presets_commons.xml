@@ -75,13 +75,13 @@
     <style name="TextSubHeader1ThemeLight">
         <item name="android:textSize">@dimen/dim_presets_commons_text_subheader1_size</item>
         <item name="android:textColor">@color/clr_theme_dark_text_subheader1</item>
-        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:fontFamily">sans-serif-thin</item>
     </style>
 
     <!-- result row subheader2 -->
     <style name="TextSubHeader2ThemeLight">
-        <item name="android:textSize">@dimen/dim_presets_commons_text_header_size</item>
+        <item name="android:textSize">@dimen/dim_presets_commons_text_subheader2_size</item>
         <item name="android:textColor">@color/clr_theme_dark_text_subheader2</item>
-        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:fontFamily">sans-serif-thin</item>
     </style>
 </resources>
