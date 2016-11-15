@@ -1,11 +1,9 @@
 package br.com.edsilfer.android.sinterface.demo.presenter
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import br.com.edsilfer.android.search_interface.model.ISubscriber
-import br.com.edsilfer.android.search_interface.model.SearchPallet
 import br.com.edsilfer.android.search_interface.model.SearchStylePresets
 import br.com.edsilfer.android.search_interface.model.enum.Events
 import br.com.edsilfer.android.search_interface.presenter.activity.ActivitySearch
