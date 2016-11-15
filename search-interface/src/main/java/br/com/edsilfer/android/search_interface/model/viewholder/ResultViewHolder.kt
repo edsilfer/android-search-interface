@@ -18,7 +18,6 @@ import com.google.common.base.Strings
 import com.mikhaellopez.circularimageview.CircularImageView
 import com.squareup.picasso.Picasso
 import org.jetbrains.anko.backgroundColor
-import org.jetbrains.anko.textColor
 
 /**
  * Created by User on 09/11/2016.
@@ -33,28 +32,47 @@ class ResultViewHolder<in T : IResultRow>(rootView: View, val mPreset: SearchPal
     val mCircularThumbnail: CircularImageView by bindView(R.id.circle_thumbnail)
     val mWrapper: RelativeLayout by bindView(R.id.wrapper)
     val mInfoContainer: LinearLayout by bindView(R.id.information_container)
+    var mHeader: TextView? = null
+    var mSubHeader1: TextView? = null
+    var mSubHeader2: TextView? = null
+
 
     override fun onBindViewHolder(item: T) {
-        val header = TextView(ContextThemeWrapper(rootView.context, mPreset.headerStyle))
-        header.layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+        mInfoContainer.removeAllViews();
 
-        val subHeader1 = TextView(ContextThemeWrapper(rootView.context, mPreset.subHeader1Style))
-        subHeader1.layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+        if (null != rootView.findViewById(R.id.header)) {
+            mHeader = rootView.findViewById(R.id.header) as TextView
+            mSubHeader1 = rootView.findViewById(R.id.subheader1) as TextView
+            mSubHeader2 = rootView.findViewById(R.id.subheader2) as TextView
+        } else {
+            createInformation()
+        }
 
-        val subHeader2 = TextView(ContextThemeWrapper(rootView.context, mPreset.subHeader2Style))
-        subHeader2.layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+        mHeader!!.text = item.getHeader()
+        mSubHeader1!!.text = item.getSubHeader1()
+        mSubHeader2!!.text = item.getSubHeader2()
 
-        header.text = item.getHeader()
-        subHeader1.text = item.getSubHeader1()
-        subHeader2.text = item.getSubHeader2()
-
-        mInfoContainer.addView(header)
-        mInfoContainer.addView(subHeader1)
-        mInfoContainer.addView(subHeader2)
+        mInfoContainer.addView(mHeader)
+        mInfoContainer.addView(mSubHeader1)
+        mInfoContainer.addView(mSubHeader2)
 
         mWrapper.backgroundColor = rootView.resources.getColor(mPreset.color)
 
         loadThumbnail(item.getThumbnail())
+    }
+
+    private fun createInformation() {
+        mHeader = TextView(ContextThemeWrapper(rootView.context, mPreset.headerStyle))
+        mHeader!!.layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+        mHeader!!.id = R.id.header
+
+        mSubHeader1 = TextView(ContextThemeWrapper(rootView.context, mPreset.subHeader1Style))
+        mSubHeader1!!.layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+        mSubHeader1!!.id = R.id.subheader1
+
+        mSubHeader2 = TextView(ContextThemeWrapper(rootView.context, mPreset.subHeader2Style))
+        mSubHeader2!!.layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+        mSubHeader2!!.id = R.id.subheader2
     }
 
     override fun getClickableItem(): View {
