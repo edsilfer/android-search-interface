@@ -12,7 +12,7 @@ import br.com.edsilfer.android.search_interface.model.IResultRow
 import br.com.edsilfer.android.search_interface.model.SearchPallet
 import br.com.edsilfer.android.search_interface.model.enum.Events
 import br.com.edsilfer.android.search_interface.model.enum.ThumbnailStyle
-import br.com.edsilfer.android.search_interface.service.SearchNotificationCenter
+import br.com.edsilfer.android.search_interface.service.NotificationCenter
 import butterknife.bindView
 import com.google.common.base.Strings
 import com.mikhaellopez.circularimageview.CircularImageView
@@ -80,7 +80,7 @@ class ResultViewHolder<in T : IResultRow>(rootView: View, val mPreset: SearchPal
     }
 
     override fun onItemClicked(item: T, index: Int) {
-        SearchNotificationCenter.notify(Events.ITEM_CHOSEN, item)
+        NotificationCenter.notify(Events.ITEM_CHOSEN, item)
     }
 
     private fun loadThumbnail(url: String) {

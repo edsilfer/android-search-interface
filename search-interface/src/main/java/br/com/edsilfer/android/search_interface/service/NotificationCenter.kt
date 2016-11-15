@@ -7,7 +7,7 @@ import br.com.edsilfer.android.search_interface.model.enum.Events
  * Created by User on 09/11/2016.
  */
 
-object SearchNotificationCenter {
+object NotificationCenter {
     private val mSubscribers = mutableMapOf<Events, MutableList<ISubscriber>>()
 
     fun notify(event: Events, payload: Any) {

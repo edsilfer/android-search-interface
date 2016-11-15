@@ -10,6 +10,4 @@ interface ISearchBarManager {
 
     fun setSearch(query: String)
 
-    fun updateUI (isSearching : Boolean)
-
 }
