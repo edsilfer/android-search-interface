@@ -6,8 +6,6 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.CardView
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.view.WindowManager
-import android.view.WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
 import android.widget.LinearLayout
 import br.com.edsilfer.android.lmanager.model.GenericHolderFactory
 import br.com.edsilfer.android.lmanager.model.GenericViewHolder
@@ -20,10 +18,10 @@ import br.com.edsilfer.android.search_interface.model.ISubscriber
 import br.com.edsilfer.android.search_interface.model.SearchPallet
 import br.com.edsilfer.android.search_interface.model.enum.Events
 import br.com.edsilfer.android.search_interface.model.viewholder.ResultViewHolder
-import br.com.edsilfer.android.search_interface.service.SearchBar
 import br.com.edsilfer.android.search_interface.service.NotificationCenter
+import br.com.edsilfer.android.search_interface.service.SearchBar
 import br.com.edsilfer.kotlin_support.extensions.hideIndeterminateProgressBar
-import br.com.edsilfer.kotlin_support.extensions.showIndeterminateProgressBar
+import br.com.edsilfer.kotlin_support.extensions.paintStatusBar
 import kotlinx.android.synthetic.main.activity_search.*
 import org.jetbrains.anko.backgroundColor
 import org.jetbrains.anko.image
@@ -49,19 +47,10 @@ class ActivitySearch<T : IResultRow> : AppCompatActivity(), ISearchInterface<T>,
         setContentView(R.layout.activity_search)
         retrievePreset()
         mSearchBar = SearchBar(this, mPreset!!.searchBar)
-        paintStatusBar()
+        paintStatusBar(mPreset!!.searchBar.colorPrimaryDark)
         NotificationCenter.subscribe(Events.UPDATE_RESULTS, this)
         configureUserInterface()
         loadFragment(arrayListOf<T>())
-    }
-
-    /**
-     * TODO: transfer to kotlin support library
-     */
-    private fun paintStatusBar() {
-        window.clearFlags(FLAG_TRANSLUCENT_STATUS)
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-        window.statusBarColor = resources.getColor(mPreset!!.searchBar.colorPrimaryDark)
     }
 
     private fun configureUserInterface() {

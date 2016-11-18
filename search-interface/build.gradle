@@ -103,7 +103,7 @@ dependencies {
     compile 'com.jakewharton:kotterknife:0.1.0-SNAPSHOT'
 
     // OWN THIRD LIBRARIES
-    compile 'br.com.edsilfer:kotlin-support:1.0.2'
+    compile 'br.com.edsilfer:kotlin-support:1.0.6'
     compile 'br.com.instachat:emoji-library:1.0.7'
     compile 'br.com.edsilfer:list-manager:0.0.2'
 

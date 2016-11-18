@@ -123,7 +123,7 @@ class SearchBar(
             }
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                mActivity.showIndeterminateProgressBar()
+                mActivity.showIndeterminateProgressBar(mPreset.colorPrimaryDark)
                 if (!Strings.isNullOrEmpty(getSearch())) mClear.visibility = ImageView.VISIBLE
                 else mClear.visibility = ImageView.INVISIBLE
                 NotificationCenter.notify(Events.ON_SEARCH_TYPED, getSearch())
