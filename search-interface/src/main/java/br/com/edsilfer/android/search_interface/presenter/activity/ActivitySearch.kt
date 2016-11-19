@@ -3,10 +3,12 @@ package br.com.edsilfer.android.search_interface.presenter.activity
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.view.ContextThemeWrapper
 import android.support.v7.widget.CardView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import android.widget.TextView
 import br.com.edsilfer.android.lmanager.model.GenericHolderFactory
 import br.com.edsilfer.android.lmanager.model.GenericViewHolder
 import br.com.edsilfer.android.lmanager.model.IListControl
@@ -22,6 +24,7 @@ import br.com.edsilfer.android.search_interface.service.NotificationCenter
 import br.com.edsilfer.android.search_interface.service.SearchBar
 import br.com.edsilfer.kotlin_support.extensions.hideIndeterminateProgressBar
 import br.com.edsilfer.kotlin_support.extensions.paintStatusBar
+import br.com.edsilfer.kotlin_support.extensions.showIndeterminateProgressBar
 import kotlinx.android.synthetic.main.activity_search.*
 import org.jetbrains.anko.backgroundColor
 import org.jetbrains.anko.image
@@ -55,6 +58,16 @@ class ActivitySearch<T : IResultRow> : AppCompatActivity(), ISearchInterface<T>,
 
     private fun configureUserInterface() {
         setBackgroundPreset()
+        setNoResultsDisclaimer()
+    }
+
+    private fun setNoResultsDisclaimer() {
+        message_wrapper.setCardBackgroundColor(resources.getColor(mPreset!!.resultDisclaimer.backgroundColor))
+        val disclaimer = TextView(ContextThemeWrapper(this, mPreset!!.resultDisclaimer.style), null, 0)
+        disclaimer.layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+        disclaimer.textAlignment = TextView.TEXT_ALIGNMENT_CENTER
+        disclaimer.text = getString(mPreset!!.resultDisclaimer.message)
+        message_wrapper.addView(disclaimer)
     }
 
     private fun setBackgroundPreset() {
@@ -102,31 +115,35 @@ class ActivitySearch<T : IResultRow> : AppCompatActivity(), ISearchInterface<T>,
         hideIndeterminateProgressBar()
         if (null == results || results.size == 0) {
             replaceable.visibility = LinearLayout.GONE
-            disclaimer.visibility = CardView.VISIBLE
+            message_wrapper.visibility = CardView.VISIBLE
             hideFragment()
         } else {
             replaceable.visibility = LinearLayout.VISIBLE
-            disclaimer.visibility = CardView.GONE
+            message_wrapper.visibility = CardView.GONE
             mListFragment!!.updateDataSet(results as ArrayList<T>)
             showFragment()
         }
     }
 
     private fun hideFragment() {
-        if (null != mListFragment) {
-            supportFragmentManager.beginTransaction()
-                    .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
-                    .hide(mListFragment as Fragment)
-                    .commitAllowingStateLoss()
+        runOnUiThread {
+            if (null != mListFragment) {
+                supportFragmentManager.beginTransaction()
+                        .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
+                        .hide(mListFragment as Fragment)
+                        .commitAllowingStateLoss()
+            }
         }
     }
 
     private fun showFragment() {
-        if (null != mListFragment) {
-            supportFragmentManager.beginTransaction()
-                    .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
-                    .show(mListFragment as Fragment)
-                    .commitAllowingStateLoss()
+        runOnUiThread {
+            if (null != mListFragment) {
+                supportFragmentManager.beginTransaction()
+                        .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
+                        .show(mListFragment as Fragment)
+                        .commitAllowingStateLoss()
+            }
         }
     }
 

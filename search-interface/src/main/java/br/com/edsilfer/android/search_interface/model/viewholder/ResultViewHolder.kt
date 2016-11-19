@@ -62,15 +62,15 @@ class ResultViewHolder<in T : IResultRow>(rootView: View, val mPreset: SearchPal
     }
 
     private fun createInformation() {
-        mHeader = TextView(ContextThemeWrapper(rootView.context, mPreset.headerStyle))
+        mHeader = TextView(ContextThemeWrapper(rootView.context, mPreset.headerStyle), null, 0)
         mHeader!!.layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
         mHeader!!.id = R.id.header
 
-        mSubHeader1 = TextView(ContextThemeWrapper(rootView.context, mPreset.subHeader1Style))
+        mSubHeader1 = TextView(ContextThemeWrapper(rootView.context, mPreset.subHeader1Style), null, 0)
         mSubHeader1!!.layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
         mSubHeader1!!.id = R.id.subheader1
 
-        mSubHeader2 = TextView(ContextThemeWrapper(rootView.context, mPreset.subHeader2Style))
+        mSubHeader2 = TextView(ContextThemeWrapper(rootView.context, mPreset.subHeader2Style), null, 0)
         mSubHeader2!!.layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
         mSubHeader2!!.id = R.id.subheader2
     }

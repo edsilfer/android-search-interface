@@ -5,5 +5,5 @@
     <dimen name="dim_no_results_found_message_vertical_margin">8dip</dimen>
     <dimen name="dim_no_results_found_message_horizontal_margin">15dip</dimen>
     <dimen name="dim_no_results_found_message_text_size">12sp</dimen>
-    <dimen name="dim_no_results_found_message_top_margin">150dip</dimen>
+    <dimen name="dim_no_results_found_message_top_margin">100dip</dimen>
 </resources>

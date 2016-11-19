@@ -8,7 +8,11 @@ import br.com.edsilfer.android.search_interface.model.enum.ThumbnailStyle
  */
 
 object SearchStylePresets {
-    fun lightSearch(): SearchPallet {
+
+    /**
+     * Light search with light results row
+     */
+    fun template01(): SearchPallet {
         return SearchPallet(
                 SearchBarPresets.lightSearchBar(),
                 ResultRowPreset.lightResultRow(),
@@ -17,10 +21,37 @@ object SearchStylePresets {
         )
     }
 
-    fun darkSearch(): SearchPallet {
+    /**
+     * Light search with dark results row
+     */
+    fun template02(): SearchPallet {
+        return SearchPallet(
+                SearchBarPresets.lightSearchBar(),
+                ResultRowPreset.darkResultRow(),
+                ResultDisclaimerPreset.lightResultDisclaimer(),
+                BackgroundPreset.lightBackground()
+        )
+    }
+
+    /**
+     * Dark search with dark results row
+     */
+    fun template03(): SearchPallet {
         return SearchPallet(
                 SearchBarPresets.darkSearchBar(),
                 ResultRowPreset.darkResultRow(),
+                ResultDisclaimerPreset.darkResultDisclaimer(),
+                BackgroundPreset.darkBackground()
+        )
+    }
+
+    /**
+     * Dark search with light results row
+     */
+    fun template04(): SearchPallet {
+        return SearchPallet(
+                SearchBarPresets.darkSearchBar(),
+                ResultRowPreset.lightResultRow(),
                 ResultDisclaimerPreset.darkResultDisclaimer(),
                 BackgroundPreset.darkBackground()
         )
@@ -34,6 +65,7 @@ object SearchBarPresets {
                 R.style.TextInputLayoutThemeLight,
                 R.color.clr_theme_light_color_primary,
                 R.color.clr_theme_light_color_primary_dark,
+                android.R.color.black,
                 R.drawable.ic_arrow_left_black_24dp,
                 R.drawable.ic_close_black_24dp,
                 R.string.str_search_bar_default_hint
@@ -46,6 +78,7 @@ object SearchBarPresets {
                 R.style.TextInputLayoutThemeDark,
                 R.color.clr_theme_dark_color_primary,
                 R.color.clr_theme_dark_color_primary_dark,
+                android.R.color.white,
                 R.drawable.ic_arrow_left_white_24dp,
                 R.drawable.ic_close_white_24dp,
                 R.string.str_search_bar_default_hint
@@ -56,7 +89,7 @@ object SearchBarPresets {
 object ResultRowPreset {
     fun lightResultRow(): SearchPallet.ResultRow {
         return SearchPallet.ResultRow(
-                ThumbnailStyle.SQUARE,
+                ThumbnailStyle.CIRCLE,
                 R.style.TextHeaderThemeDark,
                 R.style.TextSubHeader1ThemeDark,
                 R.style.TextSubHeader2ThemeDark,
@@ -66,7 +99,7 @@ object ResultRowPreset {
 
     fun darkResultRow(): SearchPallet.ResultRow {
         return SearchPallet.ResultRow(
-                ThumbnailStyle.SQUARE,
+                ThumbnailStyle.CIRCLE,
                 R.style.TextHeaderThemeLight,
                 R.style.TextSubHeader1ThemeLight,
                 R.style.TextSubHeader2ThemeLight,
@@ -78,6 +111,7 @@ object ResultRowPreset {
 object ResultDisclaimerPreset {
     fun lightResultDisclaimer(): SearchPallet.ResultDisclaimer {
         return SearchPallet.ResultDisclaimer(
+                R.string.str_results_not_found,
                 R.style.TextSubHeader1ThemeLight,
                 R.color.clr_theme_light_color_primary
         )
@@ -85,7 +119,8 @@ object ResultDisclaimerPreset {
 
     fun darkResultDisclaimer(): SearchPallet.ResultDisclaimer {
         return SearchPallet.ResultDisclaimer(
-                R.style.TextSubHeader1ThemeDark,
+                R.string.str_results_not_found,
+                R.style.TextHeaderThemeLight,
                 R.color.clr_theme_dark_color_primary
         )
     }

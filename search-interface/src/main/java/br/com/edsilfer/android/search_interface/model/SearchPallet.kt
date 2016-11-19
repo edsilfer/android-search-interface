@@ -19,6 +19,7 @@ data class SearchPallet(
             val textInputLayoutStyle: Int,
             val colorPrimary: Int,
             val colorPrimaryDark: Int,
+            val colorLoading: Int,
             val iconBack: Int,
             val iconClear: Int,
             val hintText: Int
@@ -33,8 +34,9 @@ data class SearchPallet(
     ) : Serializable
 
     data class ResultDisclaimer(
-            val messageStyle: Int,
-            val color: Int
+            val message: Int,
+            val style: Int,
+            val backgroundColor: Int
     ) : Serializable
 
     data class Background(
