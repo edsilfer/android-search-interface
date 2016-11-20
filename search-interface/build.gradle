@@ -5,7 +5,7 @@ apply plugin: 'kotlin-android-extensions'
 Properties properties = new Properties()
 properties.load(project.rootProject.file('local.properties').newDataInputStream())
 
-group = 'br.com.edsilfer'
+group = 'br.com.edsilfer.android'
 version = '0.0.1'
 // *************************************************************************************************
 android {
