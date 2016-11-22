@@ -1,4 +1,4 @@
-package br.com.edsilfer.android.search_interface.model
+package br.com.edsilfer.android.search_interface.model.intf
 
 import br.com.edsilfer.android.search_interface.model.enum.Events
 import java.io.Serializable

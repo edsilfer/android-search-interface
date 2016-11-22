@@ -8,10 +8,10 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import br.com.edsilfer.android.lmanager.model.GenericViewHolder
 import br.com.edsilfer.android.search_interface.R
-import br.com.edsilfer.android.search_interface.model.IResultRow
 import br.com.edsilfer.android.search_interface.model.SearchPallet
 import br.com.edsilfer.android.search_interface.model.enum.Events
 import br.com.edsilfer.android.search_interface.model.enum.ThumbnailStyle
+import br.com.edsilfer.android.search_interface.model.intf.IResultRow
 import br.com.edsilfer.android.search_interface.service.NotificationCenter
 import butterknife.bindView
 import com.google.common.base.Strings
@@ -31,6 +31,7 @@ class ResultViewHolder<in T : IResultRow>(rootView: View, val mPreset: SearchPal
     val mSquareThumbnail: ImageView by bindView(R.id.square_thumbnail)
     val mCircularThumbnail: CircularImageView by bindView(R.id.circle_thumbnail)
     val mWrapper: RelativeLayout by bindView(R.id.wrapper)
+    //val mBackground: View by bindView(R.id.background)
     val mInfoContainer: LinearLayout by bindView(R.id.information_container)
     var mHeader: TextView? = null
     var mSubHeader1: TextView? = null
@@ -38,7 +39,7 @@ class ResultViewHolder<in T : IResultRow>(rootView: View, val mPreset: SearchPal
 
 
     override fun onBindViewHolder(item: T) {
-        mInfoContainer.removeAllViews();
+        mInfoContainer.removeAllViews()
 
         if (null != rootView.findViewById(R.id.header)) {
             mHeader = rootView.findViewById(R.id.header) as TextView
@@ -56,7 +57,8 @@ class ResultViewHolder<in T : IResultRow>(rootView: View, val mPreset: SearchPal
         mInfoContainer.addView(mSubHeader1)
         mInfoContainer.addView(mSubHeader2)
 
-        mWrapper.backgroundColor = rootView.resources.getColor(mPreset.color)
+        //mBackground.alpha = mPreset.alpha
+        //mBackground.backgroundColor = rootView.resources.getColor(mPreset.color)
 
         loadThumbnail(item.getThumbnail())
     }

@@ -1,4 +1,4 @@
-package br.com.edsilfer.android.search_interface.model
+package br.com.edsilfer.android.search_interface.model.intf
 
 import java.io.Serializable
 

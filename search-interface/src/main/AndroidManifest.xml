@@ -9,6 +9,7 @@
         android:supportsRtl="true">
         <activity
             android:name=".presenter.activity.ActivitySearch"
-            android:theme="@style/NoActionBar"/>
+            android:theme="@style/NoActionBar"
+            android:windowSoftInputMode="adjustNothing"/>
     </application>
 </manifest>

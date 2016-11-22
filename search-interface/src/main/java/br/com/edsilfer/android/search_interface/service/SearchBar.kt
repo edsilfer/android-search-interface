@@ -12,7 +12,7 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
 import br.com.edsilfer.android.search_interface.R
-import br.com.edsilfer.android.search_interface.model.ISearchBarManager
+import br.com.edsilfer.android.search_interface.model.intf.ISearchBarManager
 import br.com.edsilfer.android.search_interface.model.SearchPallet
 import br.com.edsilfer.android.search_interface.model.enum.Events
 import br.com.edsilfer.android.search_interface.presenter.activity.ActivitySearch
