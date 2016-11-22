@@ -7,6 +7,7 @@ import android.support.v7.view.ContextThemeWrapper
 import android.support.v7.widget.CardView
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import br.com.edsilfer.android.lmanager.model.GenericHolderFactory
@@ -14,16 +15,17 @@ import br.com.edsilfer.android.lmanager.model.GenericViewHolder
 import br.com.edsilfer.android.lmanager.model.IListControl
 import br.com.edsilfer.android.lmanager.presenter.fragment.GenericListFragment
 import br.com.edsilfer.android.search_interface.R
-import br.com.edsilfer.android.search_interface.model.IResultRow
-import br.com.edsilfer.android.search_interface.model.ISearchInterface
-import br.com.edsilfer.android.search_interface.model.ISubscriber
 import br.com.edsilfer.android.search_interface.model.SearchPallet
 import br.com.edsilfer.android.search_interface.model.enum.Events
+import br.com.edsilfer.android.search_interface.model.intf.IResultRow
+import br.com.edsilfer.android.search_interface.model.intf.ISearchInterface
+import br.com.edsilfer.android.search_interface.model.intf.ISubscriber
 import br.com.edsilfer.android.search_interface.model.viewholder.ResultViewHolder
 import br.com.edsilfer.android.search_interface.service.NotificationCenter
 import br.com.edsilfer.android.search_interface.service.SearchBar
 import br.com.edsilfer.kotlin_support.extensions.hideIndeterminateProgressBar
 import br.com.edsilfer.kotlin_support.extensions.paintStatusBar
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_search.*
 import org.jetbrains.anko.backgroundColor
 import org.jetbrains.anko.image
@@ -37,6 +39,7 @@ import java.util.*
 class ActivitySearch<T : IResultRow> : AppCompatActivity(), ISearchInterface<T>, ISubscriber {
 
     companion object {
+        val TAG_LIST_ITEMS = "listitems"
         val ARG_SEARCH_PRESET = "searchpreset"
     }
 
@@ -71,11 +74,12 @@ class ActivitySearch<T : IResultRow> : AppCompatActivity(), ISearchInterface<T>,
 
     private fun setBackgroundPreset() {
         if (mPreset!!.background.drawable != -1) {
-            background.image = getDrawable(mPreset!!.background.drawable)
+            background.visibility = ImageView.VISIBLE
+            Picasso.with(this).load(mPreset!!.background.drawable).fit().centerCrop().into(background)
             background.alpha = mPreset!!.background.alpha
         } else {
+            background.visibility = ImageView.GONE
             container.backgroundColor = mPreset!!.background.color
-            container.alpha = mPreset!!.background.alpha
         }
     }
 
@@ -93,7 +97,7 @@ class ActivitySearch<T : IResultRow> : AppCompatActivity(), ISearchInterface<T>,
 
             supportFragmentManager
                     .beginTransaction()
-                    .add(R.id.replaceable, mListFragment as Fragment)
+                    .add(R.id.replaceable, mListFragment as Fragment, TAG_LIST_ITEMS)
                     .commit()
         }
     }
@@ -123,13 +127,7 @@ class ActivitySearch<T : IResultRow> : AppCompatActivity(), ISearchInterface<T>,
         runOnUiThread {
             replaceable.visibility = LinearLayout.GONE
             message_wrapper.visibility = CardView.VISIBLE
-
-            if (null != mListFragment) {
-                supportFragmentManager.beginTransaction()
-                        .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
-                        .hide(mListFragment as Fragment)
-                        .commitAllowingStateLoss()
-            }
+            supportFragmentManager.findFragmentByTag(TAG_LIST_ITEMS)?.view?.alpha = 0f
         }
     }
 
@@ -139,11 +137,7 @@ class ActivitySearch<T : IResultRow> : AppCompatActivity(), ISearchInterface<T>,
                 replaceable.visibility = LinearLayout.VISIBLE
                 message_wrapper.visibility = CardView.GONE
                 mListFragment!!.updateDataSet(results as ArrayList<T>)
-
-                supportFragmentManager.beginTransaction()
-                        .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
-                        .show(mListFragment as Fragment)
-                        .commitAllowingStateLoss()
+                supportFragmentManager.findFragmentByTag(TAG_LIST_ITEMS)?.view?.alpha = 1f
             }
         }
     }

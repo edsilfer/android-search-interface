@@ -3,13 +3,13 @@ package br.com.edsilfer.android.sinterface.demo.presenter
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import br.com.edsilfer.android.search_interface.model.ISubscriber
-import br.com.edsilfer.android.search_interface.model.SearchStylePresets
 import br.com.edsilfer.android.search_interface.model.enum.Events
+import br.com.edsilfer.android.search_interface.model.intf.ISubscriber
 import br.com.edsilfer.android.search_interface.presenter.activity.ActivitySearch
 import br.com.edsilfer.android.search_interface.service.NotificationCenter
 import br.com.edsilfer.android.sinterface.demo.infrastructure.FakeDataProvider
 import br.com.edsilfer.android.sinterface.demo.model.Chat
+import br.com.edsilfer.android.sinterface.demo.services.Samples
 import br.com.edsilfer.kotlin_support.extensions.log
 import com.google.common.base.Strings
 import org.jetbrains.anko.doAsync
@@ -29,7 +29,7 @@ class ActivityHomepage : AppCompatActivity(), ISubscriber {
 
     private fun startSearchActivity() {
         val intent = Intent(this, ActivitySearch::class.java)
-        intent.putExtra(ActivitySearch.ARG_SEARCH_PRESET, SearchStylePresets.template01())
+        intent.putExtra(ActivitySearch.ARG_SEARCH_PRESET, Samples().sample01())
         startActivity(intent)
     }
 

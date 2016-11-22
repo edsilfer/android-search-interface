@@ -12,10 +12,10 @@ object SearchStylePresets {
     /**
      * Light search with light results row
      */
-    fun template01(): SearchPallet {
+    fun template01WithCircleResultRow(): SearchPallet {
         return SearchPallet(
                 SearchBarPresets.lightSearchBar(),
-                ResultRowPreset.lightResultRow(),
+                ResultRowPreset.lightResultRow(ThumbnailStyle.CIRCLE),
                 ResultDisclaimerPreset.lightResultDisclaimer(),
                 BackgroundPreset.lightBackground()
         )
@@ -24,10 +24,10 @@ object SearchStylePresets {
     /**
      * Light search with dark results row
      */
-    fun template02(): SearchPallet {
+    fun template02WithCircleResultRow(): SearchPallet {
         return SearchPallet(
                 SearchBarPresets.lightSearchBar(),
-                ResultRowPreset.darkResultRow(),
+                ResultRowPreset.darkResultRow(ThumbnailStyle.CIRCLE),
                 ResultDisclaimerPreset.lightResultDisclaimer(),
                 BackgroundPreset.lightBackground()
         )
@@ -36,10 +36,10 @@ object SearchStylePresets {
     /**
      * Dark search with dark results row
      */
-    fun template03(): SearchPallet {
+    fun template03WithCircleResultRow(): SearchPallet {
         return SearchPallet(
                 SearchBarPresets.darkSearchBar(),
-                ResultRowPreset.darkResultRow(),
+                ResultRowPreset.darkResultRow(ThumbnailStyle.CIRCLE),
                 ResultDisclaimerPreset.darkResultDisclaimer(),
                 BackgroundPreset.darkBackground()
         )
@@ -48,10 +48,58 @@ object SearchStylePresets {
     /**
      * Dark search with light results row
      */
-    fun template04(): SearchPallet {
+    fun template04WithCircleResultRow(): SearchPallet {
         return SearchPallet(
                 SearchBarPresets.darkSearchBar(),
-                ResultRowPreset.lightResultRow(),
+                ResultRowPreset.lightResultRow(ThumbnailStyle.CIRCLE),
+                ResultDisclaimerPreset.darkResultDisclaimer(),
+                BackgroundPreset.darkBackground()
+        )
+    }
+
+    /**
+     * Light search with light results row
+     */
+    fun template01WithSquareResultRow(): SearchPallet {
+        return SearchPallet(
+                SearchBarPresets.lightSearchBar(),
+                ResultRowPreset.lightResultRow(ThumbnailStyle.SQUARE),
+                ResultDisclaimerPreset.lightResultDisclaimer(),
+                BackgroundPreset.lightBackground()
+        )
+    }
+
+    /**
+     * Light search with dark results row
+     */
+    fun template02WithSquareResultRow(): SearchPallet {
+        return SearchPallet(
+                SearchBarPresets.lightSearchBar(),
+                ResultRowPreset.darkResultRow(ThumbnailStyle.SQUARE),
+                ResultDisclaimerPreset.lightResultDisclaimer(),
+                BackgroundPreset.lightBackground()
+        )
+    }
+
+    /**
+     * Dark search with dark results row
+     */
+    fun template03WithSquareResultRow(): SearchPallet {
+        return SearchPallet(
+                SearchBarPresets.darkSearchBar(),
+                ResultRowPreset.darkResultRow(ThumbnailStyle.SQUARE),
+                ResultDisclaimerPreset.darkResultDisclaimer(),
+                BackgroundPreset.darkBackground()
+        )
+    }
+
+    /**
+     * Dark search with light results row
+     */
+    fun template04WithSquareResultRow(): SearchPallet {
+        return SearchPallet(
+                SearchBarPresets.darkSearchBar(),
+                ResultRowPreset.lightResultRow(ThumbnailStyle.SQUARE),
                 ResultDisclaimerPreset.darkResultDisclaimer(),
                 BackgroundPreset.darkBackground()
         )
@@ -87,9 +135,9 @@ object SearchBarPresets {
 }
 
 object ResultRowPreset {
-    fun lightResultRow(): SearchPallet.ResultRow {
+    fun lightResultRow(tStyle: ThumbnailStyle): SearchPallet.ResultRow {
         return SearchPallet.ResultRow(
-                ThumbnailStyle.CIRCLE,
+                tStyle,
                 R.style.TextHeaderThemeDark,
                 R.style.TextSubHeader1ThemeDark,
                 R.style.TextSubHeader2ThemeDark,
@@ -97,9 +145,9 @@ object ResultRowPreset {
         )
     }
 
-    fun darkResultRow(): SearchPallet.ResultRow {
+    fun darkResultRow(tStyle: ThumbnailStyle): SearchPallet.ResultRow {
         return SearchPallet.ResultRow(
-                ThumbnailStyle.CIRCLE,
+                tStyle,
                 R.style.TextHeaderThemeLight,
                 R.style.TextSubHeader1ThemeLight,
                 R.style.TextSubHeader2ThemeLight,

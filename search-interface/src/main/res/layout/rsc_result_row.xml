@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/wrapper"
     android:layout_width="match_parent"
     android:layout_height="@dimen/dim_result_row_size"
     android:foreground="?android:attr/selectableItemBackground"
     android:orientation="vertical"
     android:padding="5dip">
-
 
     <RelativeLayout
         android:id="@+id/thumbnail_wrapper"
@@ -18,7 +18,8 @@
             android:id="@+id/circle_thumbnail"
             android:layout_width="@dimen/dim_result_row_thumbnail_size"
             android:layout_height="@dimen/dim_result_row_thumbnail_size"
-            android:layout_centerInParent="true" />
+            android:layout_centerInParent="true"
+            app:civ_border_width="0dp" />
 
         <ImageView
             android:id="@+id/square_thumbnail"

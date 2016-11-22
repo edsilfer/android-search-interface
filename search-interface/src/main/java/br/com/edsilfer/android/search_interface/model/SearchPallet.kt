@@ -30,7 +30,8 @@ data class SearchPallet(
             val headerStyle: Int,
             val subHeader1Style: Int,
             val subHeader2Style: Int,
-            val color: Int
+            val color: Int,
+            val alpha: Float = 1.toFloat()
     ) : Serializable
 
     data class ResultDisclaimer(
@@ -43,15 +44,6 @@ data class SearchPallet(
             val color: Int,
             val drawable: Int = -1,
             val alpha: Float = 1.toFloat()
-    ) : Serializable
-
-    data class TextStyle(
-            val textColor: Int,
-            val textHintColor: Int,
-            val textSize: Int,
-            val textStyle: Int,
-            val hangerColor: Int,
-            val fontFamily: String
     ) : Serializable
 }
 
