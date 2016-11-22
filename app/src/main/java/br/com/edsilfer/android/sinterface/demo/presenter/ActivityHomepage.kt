@@ -29,7 +29,7 @@ class ActivityHomepage : AppCompatActivity(), ISubscriber {
 
     private fun startSearchActivity() {
         val intent = Intent(this, ActivitySearch::class.java)
-        intent.putExtra(ActivitySearch.ARG_SEARCH_PRESET, SearchStylePresets.template04())
+        intent.putExtra(ActivitySearch.ARG_SEARCH_PRESET, SearchStylePresets.template01())
         startActivity(intent)
     }
 

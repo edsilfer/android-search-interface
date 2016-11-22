@@ -112,7 +112,7 @@ object ResultDisclaimerPreset {
     fun lightResultDisclaimer(): SearchPallet.ResultDisclaimer {
         return SearchPallet.ResultDisclaimer(
                 R.string.str_results_not_found,
-                R.style.TextSubHeader1ThemeLight,
+                R.style.TextHeaderThemeDark,
                 R.color.clr_theme_light_color_primary
         )
     }

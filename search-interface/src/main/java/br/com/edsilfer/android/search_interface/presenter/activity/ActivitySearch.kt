@@ -24,7 +24,6 @@ import br.com.edsilfer.android.search_interface.service.NotificationCenter
 import br.com.edsilfer.android.search_interface.service.SearchBar
 import br.com.edsilfer.kotlin_support.extensions.hideIndeterminateProgressBar
 import br.com.edsilfer.kotlin_support.extensions.paintStatusBar
-import br.com.edsilfer.kotlin_support.extensions.showIndeterminateProgressBar
 import kotlinx.android.synthetic.main.activity_search.*
 import org.jetbrains.anko.backgroundColor
 import org.jetbrains.anko.image
@@ -113,20 +112,18 @@ class ActivitySearch<T : IResultRow> : AppCompatActivity(), ISearchInterface<T>,
 
     override fun updateResults(results: MutableList<T>?) {
         hideIndeterminateProgressBar()
-        if (null == results || results.size == 0) {
-            replaceable.visibility = LinearLayout.GONE
-            message_wrapper.visibility = CardView.VISIBLE
+        if (null == results || results.size == 0)
             hideFragment()
-        } else {
-            replaceable.visibility = LinearLayout.VISIBLE
-            message_wrapper.visibility = CardView.GONE
-            mListFragment!!.updateDataSet(results as ArrayList<T>)
-            showFragment()
-        }
+        else
+            showFragment(results)
+
     }
 
     private fun hideFragment() {
         runOnUiThread {
+            replaceable.visibility = LinearLayout.GONE
+            message_wrapper.visibility = CardView.VISIBLE
+
             if (null != mListFragment) {
                 supportFragmentManager.beginTransaction()
                         .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
@@ -136,9 +133,13 @@ class ActivitySearch<T : IResultRow> : AppCompatActivity(), ISearchInterface<T>,
         }
     }
 
-    private fun showFragment() {
+    private fun showFragment(results: MutableList<T>?) {
         runOnUiThread {
             if (null != mListFragment) {
+                replaceable.visibility = LinearLayout.VISIBLE
+                message_wrapper.visibility = CardView.GONE
+                mListFragment!!.updateDataSet(results as ArrayList<T>)
+
                 supportFragmentManager.beginTransaction()
                         .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
                         .show(mListFragment as Fragment)
