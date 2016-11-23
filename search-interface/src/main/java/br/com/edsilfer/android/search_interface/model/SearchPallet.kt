@@ -42,8 +42,7 @@ data class SearchPallet(
 
     data class Background(
             val color: Int,
-            val drawable: Int = -1,
-            val alpha: Float = 1.toFloat()
+            val drawable: Int = -1
     ) : Serializable
 }
 

@@ -4,15 +4,23 @@
     android:id="@+id/wrapper"
     android:layout_width="match_parent"
     android:layout_height="@dimen/dim_result_row_size"
-    android:foreground="?android:attr/selectableItemBackground"
-    android:orientation="vertical"
-    android:padding="5dip">
+    android:orientation="vertical">
+
+    <View
+        android:id="@+id/background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:elevation="0dip"
+        android:foreground="?android:attr/selectableItemBackground" />
 
     <RelativeLayout
         android:id="@+id/thumbnail_wrapper"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true">
+        android:layout_centerVertical="true"
+        android:layout_marginStart="5dip"
+        android:layout_marginTop="5dip"
+        android:elevation="2dip">
 
         <com.mikhaellopez.circularimageview.CircularImageView
             android:id="@+id/circle_thumbnail"
@@ -29,13 +37,14 @@
             android:visibility="gone" />
     </RelativeLayout>
 
-
     <LinearLayout
         android:id="@+id/information_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_marginStart="10dip"
+        android:layout_marginTop="5dip"
         android:layout_toEndOf="@+id/thumbnail_wrapper"
+        android:elevation="1dip"
         android:orientation="vertical" />
 </RelativeLayout>

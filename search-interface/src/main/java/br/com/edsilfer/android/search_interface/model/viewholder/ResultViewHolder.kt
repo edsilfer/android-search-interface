@@ -31,7 +31,7 @@ class ResultViewHolder<in T : IResultRow>(rootView: View, val mPreset: SearchPal
     val mSquareThumbnail: ImageView by bindView(R.id.square_thumbnail)
     val mCircularThumbnail: CircularImageView by bindView(R.id.circle_thumbnail)
     val mWrapper: RelativeLayout by bindView(R.id.wrapper)
-    //val mBackground: View by bindView(R.id.background)
+    val mBackground: View by bindView(R.id.background)
     val mInfoContainer: LinearLayout by bindView(R.id.information_container)
     var mHeader: TextView? = null
     var mSubHeader1: TextView? = null
@@ -57,8 +57,8 @@ class ResultViewHolder<in T : IResultRow>(rootView: View, val mPreset: SearchPal
         mInfoContainer.addView(mSubHeader1)
         mInfoContainer.addView(mSubHeader2)
 
-        //mBackground.alpha = mPreset.alpha
-        //mBackground.backgroundColor = rootView.resources.getColor(mPreset.color)
+        mBackground.alpha = mPreset.alpha
+        mBackground.backgroundColor = rootView.resources.getColor(mPreset.color)
 
         loadThumbnail(item.getThumbnail())
     }

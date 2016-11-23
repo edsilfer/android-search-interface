@@ -76,7 +76,7 @@ class ActivitySearch<T : IResultRow> : AppCompatActivity(), ISearchInterface<T>,
         if (mPreset!!.background.drawable != -1) {
             background.visibility = ImageView.VISIBLE
             Picasso.with(this).load(mPreset!!.background.drawable).fit().centerCrop().into(background)
-            background.alpha = mPreset!!.background.alpha
+            //background.alpha = mPreset!!.background.alpha
         } else {
             background.visibility = ImageView.GONE
             container.backgroundColor = mPreset!!.background.color

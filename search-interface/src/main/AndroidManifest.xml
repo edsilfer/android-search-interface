@@ -10,6 +10,7 @@
         <activity
             android:name=".presenter.activity.ActivitySearch"
             android:theme="@style/NoActionBar"
-            android:windowSoftInputMode="adjustNothing"/>
+            android:windowSoftInputMode="adjustNothing"
+            android:screenOrientation="portrait"/>
     </application>
 </manifest>

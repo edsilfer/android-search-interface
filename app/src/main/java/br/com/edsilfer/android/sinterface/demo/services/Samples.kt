@@ -28,13 +28,12 @@ class Samples {
                         R.style.TextSubHeader1ThemeLight,
                         R.style.TextSubHeader2ThemeLight,
                         R.color.clr_theme_dark_color_primary,
-                        alpha = 0.3f
+                        alpha = 0.4f
                 ),
                 ResultDisclaimerPreset.darkResultDisclaimer(),
                 SearchPallet.Background(
                         color = R.color.clr_theme_dark_color_primary,
-                        drawable = br.com.edsilfer.android.sinterface.demo.R.drawable.sample_background_01,
-                        alpha = 0.5f
+                        drawable = br.com.edsilfer.android.sinterface.demo.R.drawable.sample_background_01
                 )
         )
     }
