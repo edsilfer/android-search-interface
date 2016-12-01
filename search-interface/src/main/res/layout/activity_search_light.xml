@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:elevation="0dip"
+        android:visibility="gone" />
+
+    <include
+        android:id="@+id/toolbar"
+        android:elevation="1dip"
+        layout="@layout/rsc_search_bar_text_dark" />
+
+    <LinearLayout
+        android:id="@+id/replaceable"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar"
+        android:layout_centerInParent="true"
+        android:orientation="vertical" />
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/message_wrapper"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginEnd="15dip"
+        android:layout_marginStart="15dip"
+        android:layout_marginTop="@dimen/dim_no_results_found_message_top_margin"
+        android:visibility="gone"
+        card_view:cardBackgroundColor="@android:color/white"
+        card_view:cardCornerRadius="@dimen/dim_no_results_found_wrapper_corner_radius"
+        card_view:cardUseCompatPadding="true"
+        card_view:contentPaddingBottom="5dp"
+        card_view:contentPaddingLeft="15dp"
+        card_view:contentPaddingRight="15dp"
+        card_view:contentPaddingTop="5dp" />
+
+</RelativeLayout>

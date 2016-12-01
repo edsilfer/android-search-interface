@@ -3,4 +3,5 @@
     <dimen name="dim_search_bar_">40dip</dimen>
     <dimen name="dim_search_bar_search_text_size">12sp</dimen>
     <dimen name="dim_search_bar_input_margin_start">15dip</dimen>
+    <dimen name="dim_search_bar_done_width">60dip</dimen>
 </resources>

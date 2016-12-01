@@ -5,6 +5,6 @@ package br.com.edsilfer.android.search_interface.model.enum
  */
 
 enum class Events {
-    UPDATE_RESULTS, ON_SEARCH_TYPED, ITEM_CHOSEN
+    UPDATE_RESULTS, ON_SEARCH_TYPED, ITEM_CHOSEN, MULTI_SELECT_FINISHED
 }
 

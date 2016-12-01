@@ -25,6 +25,7 @@ class ActivityHomepage : AppCompatActivity(), ISubscriber {
         startSearchActivity()
         NotificationCenter.subscribe(Events.ON_SEARCH_TYPED, this)
         NotificationCenter.subscribe(Events.ITEM_CHOSEN, this)
+        NotificationCenter.subscribe(Events.MULTI_SELECT_FINISHED, this)
     }
 
     private fun startSearchActivity() {
@@ -37,6 +38,11 @@ class ActivityHomepage : AppCompatActivity(), ISubscriber {
         when (event) {
             Events.ON_SEARCH_TYPED -> performSearch(payload as String)
             Events.ITEM_CHOSEN -> log("Item: $payload has been chosen")
+            Events.MULTI_SELECT_FINISHED -> {
+                for (c in (payload as MutableList<Chat>)) {
+                    log("Chosen items are: ${c.mHeader}")
+                }
+            }
             else -> {
                 /*DO NOTHING*/
             }

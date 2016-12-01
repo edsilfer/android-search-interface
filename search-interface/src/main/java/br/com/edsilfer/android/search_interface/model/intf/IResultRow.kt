@@ -23,7 +23,6 @@ abstract class IResultRow : Serializable {
         }
     }
 
-    var isSelected = false
 
     abstract fun getThumbnail(): String
 
@@ -32,6 +31,8 @@ abstract class IResultRow : Serializable {
     abstract fun getSubHeader1(): String
 
     abstract fun getSubHeader2(): String
+
+    abstract fun getUniqueIdentifier(): String
 
     fun getChip(): Chip {
         return mChip

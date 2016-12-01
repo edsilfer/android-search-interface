@@ -60,4 +60,8 @@ class Chat(
     override fun toString(): String {
         return Gson().toJson(this)
     }
+
+    override fun getUniqueIdentifier(): String {
+        return mHeader
+    }
 }

@@ -25,11 +25,11 @@ import java.io.Serializable
 /**
  * Created by efernandes on 09/11/16.
  */
-class SearchBar(
+class SearchBar<T>(
         val mActivity: AppCompatActivity,
         val mPreset: SearchPallet.SearchBar,
         val searchType: SearchType
-) : ISearchBarManager, Serializable {
+) : ISearchBarManager<T>, Serializable {
 
     private val mInputWrapper: TextInputLayout
     private val mInput: ChipEditText
@@ -37,29 +37,44 @@ class SearchBar(
     private val mClear: ImageView
     private val mToolbar: Toolbar
 
+    var mSelectedItems = mutableListOf<T>()
+        private set
+
     init {
         mInputWrapper = mActivity.findViewById(R.id.input_wrapper) as TextInputLayout
         mToolbar = mActivity.findViewById(R.id.search_toolbar) as Toolbar
-        mActivity.setSupportActionBar(mToolbar)
-        mToolbar.setBackgroundColor(mActivity.resources.getColor(mPreset.colorPrimary))
-        mToolbar.setNavigationIcon(mPreset.iconBack)
-        mToolbar.setNavigationOnClickListener {
-            mActivity.finish()
-        }
-
         mInput = mActivity.findViewById(R.id.input) as ChipEditText
+        mDone = mActivity.findViewById(R.id.done) as Button
+        mClear = mActivity.findViewById(R.id.clear) as ImageView
+
+        setToolbarUI()
+        setInputUI()
+
+        addSearchTypedListener()
+        addClearOnClickListener()
+        addDoneOnClickListener()
+
+        mActivity.showSoftKeyboard()
+    }
+
+    private fun setInputUI() {
         mInput.requestFocus()
         mInput.setChipStyle(Presets.preset02())
         mInputWrapper.hint = mActivity.getString(mPreset.hintText)
+    }
 
-        mClear = mActivity.findViewById(R.id.clear) as ImageView
+    private fun setToolbarUI() {
+        mToolbar.setBackgroundColor(mActivity.resources.getColor(mPreset.colorPrimary))
+        mToolbar.setNavigationIcon(mPreset.iconBack)
+        mToolbar.contentInsetStartWithNavigation = 0
         mClear.setBackgroundResource(mPreset.iconClear)
-        mDone = mActivity.findViewById(R.id.done) as Button
-
         toggleClearButtonVisibility()
-        addSearchTypedListener()
-        addClearOnClickListener()
-        mActivity.showSoftKeyboard()
+        mToolbar.setNavigationOnClickListener {
+            mActivity.finish()
+        }
+        mActivity.setSupportActionBar(mToolbar)
+        mActivity.supportActionBar!!.setDisplayShowTitleEnabled(false)
+        //mActivity.supportActionBar!!.setDisplayHomeAsUpEnabled(true)
     }
 
     private fun toggleClearButtonVisibility() {
@@ -78,6 +93,12 @@ class SearchBar(
         }
     }
 
+    private fun addDoneOnClickListener() {
+        mDone.setOnClickListener {
+            NotificationCenter.notify(Events.MULTI_SELECT_FINISHED, mSelectedItems)
+        }
+    }
+
     private fun addSearchTypedListener() {
         mInput.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {
@@ -90,18 +111,27 @@ class SearchBar(
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 mActivity.showIndeterminateProgressBar(mPreset.colorLoading)
+
                 if (searchType == SearchType.SINGLE_SELECT) {
-                    if (!Strings.isNullOrEmpty(getSearch())) mClear.visibility = ImageView.VISIBLE
+                    if (!Strings.isNullOrEmpty(getSearchWithNoSpans())) mClear.visibility = ImageView.VISIBLE
                     else mClear.visibility = ImageView.INVISIBLE
+                } else {
+                    if (!Strings.isNullOrEmpty(getSearchWithSpans())) mDone.visibility = ImageView.VISIBLE
+                    else mDone.visibility = Button.INVISIBLE
                 }
+
                 NotificationCenter.notify(Events.ON_SEARCH_TYPED, mInput.getTextWithNoSpans())
             }
         })
     }
 
     // PUBLIC INTERFACE ============================================================================
-    override fun getSearch(): String {
+    override fun getSearchWithNoSpans(): String {
         return mInput.getTextWithNoSpans()
+    }
+
+    override fun getSearchWithSpans(): String {
+        return mInput.text.toString()
     }
 
     override fun setSearch(query: String) {
@@ -114,5 +144,13 @@ class SearchBar(
 
     override fun removeChip(chip: Chip) {
         mInput.removeChip(chip)
+    }
+
+    override fun addSelectedItem(item: T) {
+        mSelectedItems.add(item)
+    }
+
+    override fun removeSelectedItem(item: T) {
+        mSelectedItems.remove(item)
     }
 }

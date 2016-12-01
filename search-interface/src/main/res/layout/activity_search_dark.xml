@@ -16,7 +16,7 @@
     <include
         android:id="@+id/toolbar"
         android:elevation="1dip"
-        layout="@layout/rsc_search_bar" />
+        layout="@layout/rsc_search_bar_text_light" />
 
     <LinearLayout
         android:id="@+id/replaceable"
