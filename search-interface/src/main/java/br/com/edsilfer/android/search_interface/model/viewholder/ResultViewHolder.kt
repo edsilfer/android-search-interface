@@ -1,6 +1,7 @@
 package br.com.edsilfer.android.search_interface.model.viewholder
 
 import android.support.v7.view.ContextThemeWrapper
+import android.support.v7.widget.AppCompatCheckBox
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -13,6 +14,7 @@ import br.com.edsilfer.android.search_interface.model.enum.Events
 import br.com.edsilfer.android.search_interface.model.enum.ThumbnailStyle
 import br.com.edsilfer.android.search_interface.model.intf.IResultRow
 import br.com.edsilfer.android.search_interface.service.NotificationCenter
+import br.com.edsilfer.android.search_interface.service.SearchBar
 import butterknife.bindView
 import com.google.common.base.Strings
 import com.mikhaellopez.circularimageview.CircularImageView
@@ -23,7 +25,11 @@ import org.jetbrains.anko.backgroundColor
  * Created by User on 09/11/2016.
  */
 
-class ResultViewHolder<in T : IResultRow>(rootView: View, val mPreset: SearchPallet.ResultRow) : GenericViewHolder<T>(rootView) {
+class ResultViewHolder<in T : IResultRow>(
+        rootView: View,
+        val mPreset: SearchPallet.ResultRow,
+        val mSearchBar: SearchBar
+) : GenericViewHolder<T>(rootView) {
     companion object {
         val THUMBNAIL_RESIZE_SIZE = 100
     }
@@ -33,10 +39,10 @@ class ResultViewHolder<in T : IResultRow>(rootView: View, val mPreset: SearchPal
     val mWrapper: RelativeLayout by bindView(R.id.wrapper)
     val mBackground: View by bindView(R.id.background)
     val mInfoContainer: LinearLayout by bindView(R.id.information_container)
+    val mSelected: AppCompatCheckBox by bindView(R.id.selected)
     var mHeader: TextView? = null
     var mSubHeader1: TextView? = null
     var mSubHeader2: TextView? = null
-
 
     override fun onBindViewHolder(item: T) {
         mInfoContainer.removeAllViews()
@@ -60,6 +66,8 @@ class ResultViewHolder<in T : IResultRow>(rootView: View, val mPreset: SearchPal
         mBackground.alpha = mPreset.alpha
         mBackground.backgroundColor = rootView.resources.getColor(mPreset.color)
 
+        mSelected.isChecked = item.isSelected
+
         loadThumbnail(item.getThumbnail())
     }
 
@@ -82,6 +90,13 @@ class ResultViewHolder<in T : IResultRow>(rootView: View, val mPreset: SearchPal
     }
 
     override fun onItemClicked(item: T, index: Int) {
+        item.isSelected = !item.isSelected
+        mSelected.isChecked = item.isSelected
+        if (item.isSelected) {
+            mSearchBar.addChip(item.getChip(), mSearchBar.getSearch())
+        } else {
+            mSearchBar.removeChip(item.getChip())
+        }
         NotificationCenter.notify(Events.ITEM_CHOSEN, item)
     }
 
@@ -112,3 +127,4 @@ class ResultViewHolder<in T : IResultRow>(rootView: View, val mPreset: SearchPal
         }
     }
 }
+

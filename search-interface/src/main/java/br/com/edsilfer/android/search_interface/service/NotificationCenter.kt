@@ -1,7 +1,7 @@
 package br.com.edsilfer.android.search_interface.service
 
-import br.com.edsilfer.android.search_interface.model.intf.ISubscriber
 import br.com.edsilfer.android.search_interface.model.enum.Events
+import br.com.edsilfer.android.search_interface.model.intf.ISubscriber
 
 /**
  * Created by User on 09/11/2016.

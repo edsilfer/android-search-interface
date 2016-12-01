@@ -44,6 +44,7 @@ class ActivityHomepage : AppCompatActivity(), ISubscriber {
     }
 
     private fun performSearch(query: String) {
+        log("received query: $query")
         doAsync {
             if (Strings.isNullOrEmpty(query)) NotificationCenter.notify(Events.UPDATE_RESULTS, mutableListOf<Chat>())
             else NotificationCenter

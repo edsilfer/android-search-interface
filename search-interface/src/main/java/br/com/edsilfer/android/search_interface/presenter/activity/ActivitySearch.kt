@@ -28,7 +28,7 @@ import br.com.edsilfer.kotlin_support.extensions.paintStatusBar
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_search.*
 import org.jetbrains.anko.backgroundColor
-import org.jetbrains.anko.image
+import java.io.Serializable
 import java.util.*
 
 
@@ -51,7 +51,7 @@ class ActivitySearch<T : IResultRow> : AppCompatActivity(), ISearchInterface<T>,
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
         retrievePreset()
-        mSearchBar = SearchBar(this, mPreset!!.searchBar)
+        mSearchBar = SearchBar(this, mPreset!!.searchBar, mPreset!!.searchType)
         paintStatusBar(mPreset!!.searchBar.colorPrimaryDark)
         NotificationCenter.subscribe(Events.UPDATE_RESULTS, this)
         configureUserInterface()
@@ -76,7 +76,6 @@ class ActivitySearch<T : IResultRow> : AppCompatActivity(), ISearchInterface<T>,
         if (mPreset!!.background.drawable != -1) {
             background.visibility = ImageView.VISIBLE
             Picasso.with(this).load(mPreset!!.background.drawable).fit().centerCrop().into(background)
-            //background.alpha = mPreset!!.background.alpha
         } else {
             background.visibility = ImageView.GONE
             container.backgroundColor = mPreset!!.background.color
@@ -92,7 +91,7 @@ class ActivitySearch<T : IResultRow> : AppCompatActivity(), ISearchInterface<T>,
         if (!isFinishing) {
             mListFragment = GenericListFragment<T>().getInstance(
                     dataSet,
-                    ResultItemFactory(mPreset!!.resultRow)
+                    ResultItemFactory(mPreset!!.resultRow, mSearchBar!!)
             )
 
             supportFragmentManager
@@ -116,11 +115,13 @@ class ActivitySearch<T : IResultRow> : AppCompatActivity(), ISearchInterface<T>,
 
     override fun updateResults(results: MutableList<T>?) {
         hideIndeterminateProgressBar()
-        if (null == results || results.size == 0)
-            hideFragment()
-        else
-            showFragment(results)
-
+        if (mSearchBar!!.getSearch().isEmpty() && results == null || results!!.isEmpty()) {
+        } else {
+            if (results.size == 0)
+                hideFragment()
+            else
+                showFragment(results)
+        }
     }
 
     private fun hideFragment() {
@@ -142,9 +143,9 @@ class ActivitySearch<T : IResultRow> : AppCompatActivity(), ISearchInterface<T>,
         }
     }
 
-    class ResultItemFactory<in T : IResultRow>(val mPreset: SearchPallet.ResultRow) : GenericHolderFactory<T>() {
+    class ResultItemFactory<in T : IResultRow>(val mPreset: SearchPallet.ResultRow, val mSearchBar: SearchBar) : GenericHolderFactory<T>(), Serializable {
         override fun getViewHolder(view: ViewGroup): GenericViewHolder<T> {
-            return ResultViewHolder(LayoutInflater.from(view.context).inflate(R.layout.rsc_result_row, view, false), mPreset)
+            return ResultViewHolder(LayoutInflater.from(view.context).inflate(R.layout.rsc_result_row, view, false), mPreset, mSearchBar)
         }
     }
 }

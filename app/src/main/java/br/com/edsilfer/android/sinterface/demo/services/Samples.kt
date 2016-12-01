@@ -3,6 +3,8 @@ package br.com.edsilfer.android.sinterface.demo.services
 import br.com.edsilfer.android.search_interface.R
 import br.com.edsilfer.android.search_interface.model.ResultDisclaimerPreset
 import br.com.edsilfer.android.search_interface.model.SearchPallet
+import br.com.edsilfer.android.search_interface.model.enum.InputStyle
+import br.com.edsilfer.android.search_interface.model.enum.SearchType
 import br.com.edsilfer.android.search_interface.model.enum.ThumbnailStyle
 
 /**
@@ -13,8 +15,7 @@ class Samples {
     fun sample01(): SearchPallet {
         return SearchPallet(
                 SearchPallet.SearchBar(
-                        R.style.TextInputThemeDark,
-                        R.style.TextInputLayoutThemeDark,
+                        InputStyle.LIGHT,
                         R.color.clr_theme_dark_color_primary,
                         R.color.clr_theme_dark_color_primary_dark,
                         android.R.color.holo_red_dark,
@@ -34,7 +35,8 @@ class Samples {
                 SearchPallet.Background(
                         color = R.color.clr_theme_dark_color_primary,
                         drawable = br.com.edsilfer.android.sinterface.demo.R.drawable.sample_background_01
-                )
+                ),
+                SearchType.MULTI_SELECT
         )
     }
 }
