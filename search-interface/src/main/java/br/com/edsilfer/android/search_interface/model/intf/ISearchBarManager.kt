@@ -18,8 +18,5 @@ interface ISearchBarManager<T> {
 
     fun removeChip(chip : Chip)
 
-    fun addSelectedItem (item : T)
-
-    fun removeSelectedItem (item : T)
-
+    fun getChips() : Set<Chip>
 }

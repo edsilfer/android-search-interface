@@ -45,9 +45,10 @@ class ResultViewHolder<T : IResultRow>(
     private fun setCheckbox(item: T) {
         val checkBox = rootView.findViewById(R.id.checkbox) as AppCompatCheckBox
         if (mSearchType == SearchType.MULTI_SELECT) {
-            for (si in mSearchBar.mSelectedItems) {
-                if (si.getUniqueIdentifier() == item.getUniqueIdentifier()) {
+            for (si in mSearchBar.getChips()) {
+                if (si == item.getChip()) {
                     checkBox.isChecked = true
+                    break
                 } else {
                     checkBox.isChecked = false
                 }
@@ -105,10 +106,8 @@ class ResultViewHolder<T : IResultRow>(
         if (mSearchType == SearchType.MULTI_SELECT) {
             checkbox.isChecked = !checkbox.isChecked
             if (checkbox.isChecked) {
-                mSearchBar.addSelectedItem(item)
                 mSearchBar.addChip(item.getChip(), mSearchBar.getSearchWithNoSpans())
             } else {
-                mSearchBar.removeSelectedItem(item)
                 mSearchBar.removeChip(item.getChip())
             }
         } else {

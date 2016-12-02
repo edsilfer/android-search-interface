@@ -3,6 +3,7 @@ package br.com.edsilfer.android.sinterface.demo.presenter
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import br.com.edsilfer.android.chipinterface.model.Chip
 import br.com.edsilfer.android.search_interface.model.enum.Events
 import br.com.edsilfer.android.search_interface.model.intf.ISubscriber
 import br.com.edsilfer.android.search_interface.presenter.activity.ActivitySearch
@@ -39,8 +40,8 @@ class ActivityHomepage : AppCompatActivity(), ISubscriber {
             Events.ON_SEARCH_TYPED -> performSearch(payload as String)
             Events.ITEM_CHOSEN -> log("Item: $payload has been chosen")
             Events.MULTI_SELECT_FINISHED -> {
-                for (c in (payload as MutableList<Chat>)) {
-                    log("Chosen items are: ${c.mHeader}")
+                for (c in (payload as Set<Chip>)) {
+                    log("Chosen items are: ${c.getHeader()}")
                 }
             }
             else -> {

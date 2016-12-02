@@ -106,7 +106,7 @@ dependencies {
     compile 'br.com.edsilfer:kotlin-support:1.0.10'
     compile 'br.com.instachat:emoji-library:1.0.7'
     compile 'br.com.edsilfer:list-manager:1.0.1'
-    compile 'br.com.edsilfer.android:chip-interface:1.0.3'
+    compile 'br.com.edsilfer.android:chip-interface:1.0.4'
 
     // KOTLIN
     compile "com.android.support:appcompat-v7:$support_version"

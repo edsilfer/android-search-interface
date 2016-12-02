@@ -32,8 +32,6 @@ abstract class IResultRow : Serializable {
 
     abstract fun getSubHeader2(): String
 
-    abstract fun getUniqueIdentifier(): String
-
     fun getChip(): Chip {
         return mChip
     }

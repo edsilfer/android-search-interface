@@ -37,9 +37,6 @@ class SearchBar<T>(
     private val mClear: ImageView
     private val mToolbar: Toolbar
 
-    var mSelectedItems = mutableListOf<T>()
-        private set
-
     init {
         mInputWrapper = mActivity.findViewById(R.id.input_wrapper) as TextInputLayout
         mToolbar = mActivity.findViewById(R.id.search_toolbar) as Toolbar
@@ -95,7 +92,7 @@ class SearchBar<T>(
 
     private fun addDoneOnClickListener() {
         mDone.setOnClickListener {
-            NotificationCenter.notify(Events.MULTI_SELECT_FINISHED, mSelectedItems)
+            NotificationCenter.notify(Events.MULTI_SELECT_FINISHED, ChipEditText.mChips)
         }
     }
 
@@ -126,6 +123,10 @@ class SearchBar<T>(
     }
 
     // PUBLIC INTERFACE ============================================================================
+    override fun getChips(): Set<Chip> {
+        return ChipEditText.mChips
+    }
+
     override fun getSearchWithNoSpans(): String {
         return mInput.getTextWithNoSpans()
     }
@@ -144,13 +145,5 @@ class SearchBar<T>(
 
     override fun removeChip(chip: Chip) {
         mInput.removeChip(chip)
-    }
-
-    override fun addSelectedItem(item: T) {
-        mSelectedItems.add(item)
-    }
-
-    override fun removeSelectedItem(item: T) {
-        mSelectedItems.remove(item)
     }
 }
