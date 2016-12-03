@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import br.com.edsilfer.android.chipinterface.model.ChipEvents
 import br.com.edsilfer.android.lmanager.model.GenericHolderFactory
 import br.com.edsilfer.android.lmanager.model.GenericViewHolder
 import br.com.edsilfer.android.lmanager.model.IListControl
@@ -25,6 +26,7 @@ import br.com.edsilfer.android.search_interface.model.intf.ISubscriber
 import br.com.edsilfer.android.search_interface.model.viewholder.ResultViewHolder
 import br.com.edsilfer.android.search_interface.service.NotificationCenter
 import br.com.edsilfer.android.search_interface.service.SearchBar
+import br.com.edsilfer.kotlin_support.extensions.addEventSubscriber
 import br.com.edsilfer.kotlin_support.extensions.hideIndeterminateProgressBar
 import br.com.edsilfer.kotlin_support.extensions.paintStatusBar
 import com.squareup.picasso.Picasso
@@ -48,12 +50,19 @@ class ActivitySearch<T : IResultRow> : AppCompatActivity(), ISearchInterface<T>,
     private var mListFragment: IListControl<T>? = null
     private var mSearchBar: SearchBar<T>? = null
     private var mPreset: SearchPallet? = null
+    private var mLastUpdatedItems = mutableListOf<T>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         retrievePreset()
         configureUserInterface()
         NotificationCenter.subscribe(Events.UPDATE_RESULTS, this)
+
+        addEventSubscriber(ChipEvents.CHIP_REMOVED, object : br.com.edsilfer.kotlin_support.model.ISubscriber {
+            override fun onEventTriggered(event: br.com.edsilfer.kotlin_support.model.Events, payload: Any?) {
+                updateResults(mLastUpdatedItems)
+            }
+        })
     }
 
     private fun loadContent() {
@@ -124,7 +133,8 @@ class ActivitySearch<T : IResultRow> : AppCompatActivity(), ISearchInterface<T>,
 
     override fun updateResults(results: MutableList<T>?) {
         hideIndeterminateProgressBar()
-        if (mSearchBar!!.getSearchWithNoSpans().isEmpty() && results == null || results!!.isEmpty()) {
+        mLastUpdatedItems = results!!
+        if (mSearchBar!!.getSearchWithNoSpans().isEmpty() && results == null || results.isEmpty()) {
         } else {
             if (results.size == 0)
                 hideFragment()
