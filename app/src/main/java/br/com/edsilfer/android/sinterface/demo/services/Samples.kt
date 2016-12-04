@@ -24,7 +24,7 @@ class Samples {
                         R.string.str_search_bar_default_hint
                 ),
                 SearchPallet.ResultRow(
-                        ThumbnailStyle.CIRCLE,
+                        ThumbnailStyle.SQUARE,
                         R.style.TextHeaderThemeLight,
                         R.style.TextSubHeader1ThemeLight,
                         R.style.TextSubHeader2ThemeLight,
@@ -36,7 +36,7 @@ class Samples {
                         color = R.color.clr_theme_dark_color_primary,
                         drawable = br.com.edsilfer.android.sinterface.demo.R.drawable.sample_background_01
                 ),
-                SearchType.MULTI_SELECT
+                SearchType.SINGLE_SELECT
         )
     }
 }

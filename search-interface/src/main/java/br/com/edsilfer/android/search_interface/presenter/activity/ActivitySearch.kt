@@ -17,18 +17,18 @@ import br.com.edsilfer.android.lmanager.model.IListControl
 import br.com.edsilfer.android.lmanager.presenter.fragment.GenericListFragment
 import br.com.edsilfer.android.search_interface.R
 import br.com.edsilfer.android.search_interface.model.SearchPallet
-import br.com.edsilfer.android.search_interface.model.enum.Events
 import br.com.edsilfer.android.search_interface.model.enum.InputStyle
+import br.com.edsilfer.android.search_interface.model.enum.SearchEvents
 import br.com.edsilfer.android.search_interface.model.enum.SearchType
 import br.com.edsilfer.android.search_interface.model.intf.IResultRow
 import br.com.edsilfer.android.search_interface.model.intf.ISearchInterface
-import br.com.edsilfer.android.search_interface.model.intf.ISubscriber
 import br.com.edsilfer.android.search_interface.model.viewholder.ResultViewHolder
-import br.com.edsilfer.android.search_interface.service.NotificationCenter
 import br.com.edsilfer.android.search_interface.service.SearchBar
 import br.com.edsilfer.kotlin_support.extensions.addEventSubscriber
 import br.com.edsilfer.kotlin_support.extensions.hideIndeterminateProgressBar
 import br.com.edsilfer.kotlin_support.extensions.paintStatusBar
+import br.com.edsilfer.kotlin_support.model.Events
+import br.com.edsilfer.kotlin_support.model.ISubscriber
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_search_dark.*
 import org.jetbrains.anko.backgroundColor
@@ -56,10 +56,12 @@ class ActivitySearch<T : IResultRow> : AppCompatActivity(), ISearchInterface<T>,
         super.onCreate(savedInstanceState)
         retrievePreset()
         configureUserInterface()
-        NotificationCenter.subscribe(Events.UPDATE_RESULTS, this)
+
+        addEventSubscriber(SearchEvents.UPDATE_RESULTS, this)
 
         addEventSubscriber(ChipEvents.CHIP_REMOVED, object : br.com.edsilfer.kotlin_support.model.ISubscriber {
             override fun onEventTriggered(event: br.com.edsilfer.kotlin_support.model.Events, payload: Any?) {
+                println("chip removed event called")
                 updateResults(mLastUpdatedItems)
             }
         })
@@ -122,9 +124,9 @@ class ActivitySearch<T : IResultRow> : AppCompatActivity(), ISearchInterface<T>,
     /**
      * NOTIFICATION CENTER EVENT HANDLER
      */
-    override fun execute(event: Events, payload: Any) {
+    override fun onEventTriggered(event: Events, payload: Any?) {
         when (event) {
-            Events.UPDATE_RESULTS -> updateResults(payload as MutableList<T>)
+            SearchEvents.UPDATE_RESULTS -> updateResults(payload as MutableList<T>)
             else -> {
                 // DO NOTHING
             }
@@ -134,13 +136,10 @@ class ActivitySearch<T : IResultRow> : AppCompatActivity(), ISearchInterface<T>,
     override fun updateResults(results: MutableList<T>?) {
         hideIndeterminateProgressBar()
         mLastUpdatedItems = results!!
-        if (mSearchBar!!.getSearchWithNoSpans().isEmpty() && results == null || results.isEmpty()) {
-        } else {
-            if (results.size == 0)
-                hideFragment()
-            else
-                showFragment(results)
-        }
+        if (results.size == 0 && !mSearchBar!!.getSearchWithNoSpans().isEmpty())
+            hideFragment()
+        else
+            showFragment(results)
     }
 
     private fun hideFragment() {

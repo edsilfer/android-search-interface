@@ -13,11 +13,13 @@ import br.com.edsilfer.android.chipinterface.model.Presets
 import br.com.edsilfer.android.chipinterface.presenter.ChipEditText
 import br.com.edsilfer.android.search_interface.R
 import br.com.edsilfer.android.search_interface.model.SearchPallet
-import br.com.edsilfer.android.search_interface.model.enum.Events
+import br.com.edsilfer.android.search_interface.model.enum.SearchEvents
 import br.com.edsilfer.android.search_interface.model.enum.SearchType
 import br.com.edsilfer.android.search_interface.model.intf.ISearchBarManager
+import br.com.edsilfer.kotlin_support.extensions.notifySubscribers
 import br.com.edsilfer.kotlin_support.extensions.showIndeterminateProgressBar
 import br.com.edsilfer.kotlin_support.extensions.showSoftKeyboard
+import br.com.edsilfer.kotlin_support.service.keyboard.EnhancedTextWatcher
 import com.google.common.base.Strings
 import java.io.Serializable
 
@@ -92,32 +94,24 @@ class SearchBar<T>(
 
     private fun addDoneOnClickListener() {
         mDone.setOnClickListener {
-            NotificationCenter.notify(Events.MULTI_SELECT_FINISHED, ChipEditText.mChips)
+            notifySubscribers(SearchEvents.MULTI_SELECT_FINISHED, ChipEditText.mChips)
         }
     }
 
     private fun addSearchTypedListener() {
-        mInput.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(p0: Editable?) {
-                // DO NOTHING
-            }
-
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                // DO NOTHING
-            }
-
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+        mInput.addTextChangedListener(object : EnhancedTextWatcher(mInput) {
+            override fun onTextChanged(cursor: Int, isBackspace: Boolean, deletedChar: Char) {
                 mActivity.showIndeterminateProgressBar(mPreset.colorLoading)
 
                 if (searchType == SearchType.SINGLE_SELECT) {
-                    if (!Strings.isNullOrEmpty(getSearchWithNoSpans())) mClear.visibility = ImageView.VISIBLE
+                    if (!Strings.isNullOrEmpty(getSearchWithSpans())) mClear.visibility = ImageView.VISIBLE
                     else mClear.visibility = ImageView.INVISIBLE
                 } else {
                     if (!Strings.isNullOrEmpty(getSearchWithSpans())) mDone.visibility = ImageView.VISIBLE
                     else mDone.visibility = Button.INVISIBLE
                 }
 
-                NotificationCenter.notify(Events.ON_SEARCH_TYPED, mInput.getTextWithNoSpans())
+                notifySubscribers(SearchEvents.ON_SEARCH_TYPED, this@SearchBar.mInput.getTextWithNoSpans())
             }
         })
     }

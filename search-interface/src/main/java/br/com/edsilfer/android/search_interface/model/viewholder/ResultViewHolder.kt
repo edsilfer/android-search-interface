@@ -9,12 +9,12 @@ import android.widget.TextView
 import br.com.edsilfer.android.lmanager.model.GenericViewHolder
 import br.com.edsilfer.android.search_interface.R
 import br.com.edsilfer.android.search_interface.model.SearchPallet
-import br.com.edsilfer.android.search_interface.model.enum.Events
+import br.com.edsilfer.android.search_interface.model.enum.SearchEvents
 import br.com.edsilfer.android.search_interface.model.enum.SearchType
 import br.com.edsilfer.android.search_interface.model.enum.ThumbnailStyle
 import br.com.edsilfer.android.search_interface.model.intf.IResultRow
-import br.com.edsilfer.android.search_interface.service.NotificationCenter
 import br.com.edsilfer.android.search_interface.service.SearchBar
+import br.com.edsilfer.kotlin_support.extensions.notifySubscribers
 import com.google.common.base.Strings
 import com.mikhaellopez.circularimageview.CircularImageView
 import com.squareup.picasso.Picasso
@@ -111,7 +111,7 @@ class ResultViewHolder<T : IResultRow>(
                 mSearchBar.removeChip(item.getChip())
             }
         } else {
-            NotificationCenter.notify(Events.ITEM_CHOSEN, item)
+            notifySubscribers(SearchEvents.ITEM_CHOSEN, item)
         }
     }
 
