@@ -1,5 +1,6 @@
 package br.com.edsilfer.android.sinterface.demo.model
 
+import br.com.edsilfer.android.chipinterface.model.Chip
 import br.com.edsilfer.android.search_interface.model.intf.IResultRow
 import br.com.edsilfer.android.sinterface.demo.model.enum.ChatType
 import com.google.gson.Gson
@@ -16,7 +17,7 @@ class Chat(
         var participants: MutableList<User> = mutableListOf<User>(),
         var mThumbnail: String = "",
         var lastMessage: Message
-) : Serializable, IResultRow {
+) : Serializable, IResultRow() {
 
     override fun getThumbnail(): String {
         return mThumbnail

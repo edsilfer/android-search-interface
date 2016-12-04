@@ -11,7 +11,7 @@ import java.util.*
 object FakeDataProvider {
 
     fun provideChats(): ArrayList<Chat> {
-        return arrayListOf(provideChat01(), provideChat02(), provideChat03(), provideChat04(), provideChat05(), provideChat06())
+        return arrayListOf(provideChat01(), provideChat02(), provideChat03(), provideChat04(), provideChat06())
     }
 
     fun provideChat01(): Chat {
@@ -59,18 +59,6 @@ object FakeDataProvider {
                 currentUser = provideJoker(),
                 lastMessage = msg,
                 participants = mutableListOf(provideHarleyQuinn(), provideJoker())
-        )
-    }
-
-    fun provideChat05(): Chat {
-        val msg = Message()
-        msg.sender = provideFlash()
-        msg.content = "How you doing?"
-
-        return Chat(
-                currentUser = provideFlash(),
-                lastMessage = msg,
-                participants = mutableListOf(provideHarleyQuinn(), provideFlash())
         )
     }
 

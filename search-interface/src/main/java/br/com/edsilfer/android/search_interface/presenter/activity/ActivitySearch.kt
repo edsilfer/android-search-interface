@@ -10,25 +10,29 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import br.com.edsilfer.android.chipinterface.model.ChipEvents
 import br.com.edsilfer.android.lmanager.model.GenericHolderFactory
 import br.com.edsilfer.android.lmanager.model.GenericViewHolder
 import br.com.edsilfer.android.lmanager.model.IListControl
 import br.com.edsilfer.android.lmanager.presenter.fragment.GenericListFragment
 import br.com.edsilfer.android.search_interface.R
 import br.com.edsilfer.android.search_interface.model.SearchPallet
-import br.com.edsilfer.android.search_interface.model.enum.Events
+import br.com.edsilfer.android.search_interface.model.enum.InputStyle
+import br.com.edsilfer.android.search_interface.model.enum.SearchEvents
+import br.com.edsilfer.android.search_interface.model.enum.SearchType
 import br.com.edsilfer.android.search_interface.model.intf.IResultRow
 import br.com.edsilfer.android.search_interface.model.intf.ISearchInterface
-import br.com.edsilfer.android.search_interface.model.intf.ISubscriber
 import br.com.edsilfer.android.search_interface.model.viewholder.ResultViewHolder
-import br.com.edsilfer.android.search_interface.service.NotificationCenter
 import br.com.edsilfer.android.search_interface.service.SearchBar
+import br.com.edsilfer.kotlin_support.extensions.addEventSubscriber
 import br.com.edsilfer.kotlin_support.extensions.hideIndeterminateProgressBar
 import br.com.edsilfer.kotlin_support.extensions.paintStatusBar
+import br.com.edsilfer.kotlin_support.model.Events
+import br.com.edsilfer.kotlin_support.model.ISubscriber
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.activity_search.*
+import kotlinx.android.synthetic.main.activity_search_dark.*
 import org.jetbrains.anko.backgroundColor
-import org.jetbrains.anko.image
+import java.io.Serializable
 import java.util.*
 
 
@@ -44,30 +48,46 @@ class ActivitySearch<T : IResultRow> : AppCompatActivity(), ISearchInterface<T>,
     }
 
     private var mListFragment: IListControl<T>? = null
-    private var mSearchBar: SearchBar? = null
+    private var mSearchBar: SearchBar<T>? = null
     private var mPreset: SearchPallet? = null
+    private var mLastUpdatedItems = mutableListOf<T>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_search)
         retrievePreset()
-        mSearchBar = SearchBar(this, mPreset!!.searchBar)
-        paintStatusBar(mPreset!!.searchBar.colorPrimaryDark)
-        NotificationCenter.subscribe(Events.UPDATE_RESULTS, this)
         configureUserInterface()
-        loadFragment(arrayListOf<T>())
+
+        addEventSubscriber(SearchEvents.UPDATE_RESULTS, this)
+
+        addEventSubscriber(ChipEvents.CHIP_REMOVED, object : br.com.edsilfer.kotlin_support.model.ISubscriber {
+            override fun onEventTriggered(event: br.com.edsilfer.kotlin_support.model.Events, payload: Any?) {
+                println("chip removed event called")
+                updateResults(mLastUpdatedItems)
+            }
+        })
+    }
+
+    private fun loadContent() {
+        if (mPreset!!.searchBar.inputStyle == InputStyle.DARK)
+            setContentView(R.layout.activity_search_dark)
+        else
+            setContentView(R.layout.activity_search_light)
     }
 
     private fun configureUserInterface() {
+        loadContent()
+        paintStatusBar(mPreset!!.searchBar.colorPrimaryDark)
+        mSearchBar = SearchBar(this, mPreset!!.searchBar, mPreset!!.searchType)
         setBackgroundPreset()
         setNoResultsDisclaimer()
+        loadFragment(arrayListOf<T>())
     }
 
     private fun setNoResultsDisclaimer() {
         message_wrapper.setCardBackgroundColor(resources.getColor(mPreset!!.resultDisclaimer.backgroundColor))
         val disclaimer = TextView(ContextThemeWrapper(this, mPreset!!.resultDisclaimer.style), null, 0)
         disclaimer.layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
-        disclaimer.textAlignment = TextView.TEXT_ALIGNMENT_CENTER
+        //disclaimer.textAlignment = TextView.TEXT_ALIGNMENT_CENTER
         disclaimer.text = getString(mPreset!!.resultDisclaimer.message)
         message_wrapper.addView(disclaimer)
     }
@@ -76,7 +96,6 @@ class ActivitySearch<T : IResultRow> : AppCompatActivity(), ISearchInterface<T>,
         if (mPreset!!.background.drawable != -1) {
             background.visibility = ImageView.VISIBLE
             Picasso.with(this).load(mPreset!!.background.drawable).fit().centerCrop().into(background)
-            //background.alpha = mPreset!!.background.alpha
         } else {
             background.visibility = ImageView.GONE
             container.backgroundColor = mPreset!!.background.color
@@ -92,7 +111,7 @@ class ActivitySearch<T : IResultRow> : AppCompatActivity(), ISearchInterface<T>,
         if (!isFinishing) {
             mListFragment = GenericListFragment<T>().getInstance(
                     dataSet,
-                    ResultItemFactory(mPreset!!.resultRow)
+                    ResultItemFactory(mPreset!!.resultRow, mPreset!!.searchType, mSearchBar!!)
             )
 
             supportFragmentManager
@@ -105,9 +124,9 @@ class ActivitySearch<T : IResultRow> : AppCompatActivity(), ISearchInterface<T>,
     /**
      * NOTIFICATION CENTER EVENT HANDLER
      */
-    override fun execute(event: Events, payload: Any) {
+    override fun onEventTriggered(event: Events, payload: Any?) {
         when (event) {
-            Events.UPDATE_RESULTS -> updateResults(payload as MutableList<T>)
+            SearchEvents.UPDATE_RESULTS -> updateResults(payload as MutableList<T>)
             else -> {
                 // DO NOTHING
             }
@@ -116,11 +135,11 @@ class ActivitySearch<T : IResultRow> : AppCompatActivity(), ISearchInterface<T>,
 
     override fun updateResults(results: MutableList<T>?) {
         hideIndeterminateProgressBar()
-        if (null == results || results.size == 0)
+        mLastUpdatedItems = results!!
+        if (results.size == 0 && !mSearchBar!!.getSearchWithNoSpans().isEmpty())
             hideFragment()
         else
             showFragment(results)
-
     }
 
     private fun hideFragment() {
@@ -142,9 +161,14 @@ class ActivitySearch<T : IResultRow> : AppCompatActivity(), ISearchInterface<T>,
         }
     }
 
-    class ResultItemFactory<in T : IResultRow>(val mPreset: SearchPallet.ResultRow) : GenericHolderFactory<T>() {
+    class ResultItemFactory<T : IResultRow>(
+            val mPreset: SearchPallet.ResultRow,
+            val mSearchType: SearchType,
+            val mSearchBar: SearchBar<T>
+    ) : GenericHolderFactory<T>(), Serializable {
+
         override fun getViewHolder(view: ViewGroup): GenericViewHolder<T> {
-            return ResultViewHolder(LayoutInflater.from(view.context).inflate(R.layout.rsc_result_row, view, false), mPreset)
+            return ResultViewHolder(LayoutInflater.from(view.context).inflate(R.layout.rsc_result_row, view, false), mPreset, mSearchBar, mSearchType)
         }
     }
 }

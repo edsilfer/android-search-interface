@@ -1,13 +1,13 @@
 <resources>
 
-    <style name="DarkSearchContainer" parent="TextAppearance.AppCompat">
+    <style name="DarkSearchContainer">
         <item name="android:textColorHint">@color/clr_theme_dark_text</item>
         <item name="colorAccent">@color/clr_theme_dark_text</item>
         <item name="colorControlNormal">@color/clr_theme_dark_text</item>
         <item name="colorControlActivated">@color/clr_theme_dark_text</item>
     </style>
 
-    <style name="LightSearchContainer" parent="TextAppearance.AppCompat">
+    <style name="LightSearchContainer">
         <item name="android:textColorHint">@color/clr_theme_light_text</item>
         <item name="colorAccent">@color/clr_theme_light_text</item>
         <item name="colorControlNormal">@color/clr_theme_light_text</item>

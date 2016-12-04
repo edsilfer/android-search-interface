@@ -1,5 +1,7 @@
 package br.com.edsilfer.android.search_interface.model
 
+import br.com.edsilfer.android.search_interface.model.enum.InputStyle
+import br.com.edsilfer.android.search_interface.model.enum.SearchType
 import br.com.edsilfer.android.search_interface.model.enum.ThumbnailStyle
 import java.io.Serializable
 
@@ -11,14 +13,14 @@ data class SearchPallet(
         val searchBar: SearchBar,
         val resultRow: ResultRow,
         val resultDisclaimer: ResultDisclaimer,
-        val background: Background
+        val background: Background,
+        val searchType : SearchType
 ) : Serializable {
 
     data class SearchBar(
-            val inputStyle: Int,
-            val textInputLayoutStyle: Int,
-            val colorPrimary: Int,
-            val colorPrimaryDark: Int,
+            val inputStyle: InputStyle,
+            val colorPrimary : Int,
+            val colorPrimaryDark : Int,
             val colorLoading: Int,
             val iconBack: Int,
             val iconClear: Int,
