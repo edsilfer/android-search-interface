@@ -109,9 +109,9 @@ class ActivitySearch<T : IResultRow> : AppCompatActivity(), ISearchInterface<T>,
 
     private fun loadFragment(dataSet: ArrayList<T>) {
         if (!isFinishing) {
-            mListFragment = GenericListFragment<T>().getInstance(
-                    dataSet,
-                    ResultItemFactory(mPreset!!.resultRow, mPreset!!.searchType, mSearchBar!!)
+            mListFragment = GenericListFragment<T>(
+                    ResultItemFactory(mPreset!!.resultRow, mPreset!!.searchType, mSearchBar!!),
+                    dataSet
             )
 
             supportFragmentManager

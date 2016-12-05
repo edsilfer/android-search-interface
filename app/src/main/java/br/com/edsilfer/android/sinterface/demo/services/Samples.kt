@@ -36,7 +36,7 @@ class Samples {
                         color = R.color.clr_theme_dark_color_primary,
                         drawable = br.com.edsilfer.android.sinterface.demo.R.drawable.sample_background_01
                 ),
-                SearchType.SINGLE_SELECT
+                SearchType.MULTI_SELECT
         )
     }
 }
