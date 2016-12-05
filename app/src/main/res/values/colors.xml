@@ -3,4 +3,7 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#ffcc0000</color>
+
+    <!-- SAMPLE COLORS -->
+    <color name="clr_sample01_result_row_checkbox">#f8cd30</color>
 </resources>

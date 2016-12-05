@@ -33,7 +33,8 @@ data class SearchPallet(
             val subHeader1Style: Int,
             val subHeader2Style: Int,
             val color: Int,
-            val alpha: Float = 1.toFloat()
+            val alpha: Float = 1.toFloat(),
+            val checkboxColor : Int
     ) : Serializable
 
     data class ResultDisclaimer(

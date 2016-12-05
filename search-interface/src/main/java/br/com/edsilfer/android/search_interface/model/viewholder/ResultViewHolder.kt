@@ -1,5 +1,6 @@
 package br.com.edsilfer.android.search_interface.model.viewholder
 
+import android.content.res.ColorStateList
 import android.support.v7.view.ContextThemeWrapper
 import android.support.v7.widget.AppCompatCheckBox
 import android.view.View
@@ -19,6 +20,7 @@ import com.google.common.base.Strings
 import com.mikhaellopez.circularimageview.CircularImageView
 import com.squareup.picasso.Picasso
 import org.jetbrains.anko.backgroundColor
+
 
 /**
  * Created by User on 09/11/2016.
@@ -44,6 +46,15 @@ class ResultViewHolder<T : IResultRow>(
 
     private fun setCheckbox(item: T) {
         val checkBox = rootView.findViewById(R.id.checkbox) as AppCompatCheckBox
+        //checkBox.highlightColor = rootView.context.resources.getColor(mPreset.checkboxColor)
+
+        val colorStateList = ColorStateList(
+                arrayOf(intArrayOf(-android.R.attr.state_enabled), intArrayOf(android.R.attr.state_enabled)),
+                intArrayOf(rootView.context.resources.getColor(mPreset.checkboxColor), rootView.context.resources.getColor(mPreset.checkboxColor))
+        )
+
+        checkBox.supportButtonTintList = colorStateList
+
         if (mSearchType == SearchType.MULTI_SELECT) {
             for (si in mSearchBar.getChips()) {
                 if (si == item.getChip()) {

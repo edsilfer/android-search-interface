@@ -149,7 +149,8 @@ object ResultRowPreset {
                 R.style.TextHeaderThemeDark,
                 R.style.TextSubHeader1ThemeDark,
                 R.style.TextSubHeader2ThemeDark,
-                R.color.clr_theme_light_color_primary
+                R.color.clr_theme_light_color_primary,
+                checkboxColor = R.color.clr_theme_dark_color_primary_dark
         )
     }
 
@@ -159,7 +160,8 @@ object ResultRowPreset {
                 R.style.TextHeaderThemeLight,
                 R.style.TextSubHeader1ThemeLight,
                 R.style.TextSubHeader2ThemeLight,
-                R.color.clr_theme_dark_color_primary
+                R.color.clr_theme_dark_color_primary,
+                checkboxColor = R.color.clr_theme_light_color_primary_dark
         )
     }
 }

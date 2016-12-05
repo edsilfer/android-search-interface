@@ -29,7 +29,8 @@ class Samples {
                         R.style.TextSubHeader1ThemeLight,
                         R.style.TextSubHeader2ThemeLight,
                         R.color.clr_theme_dark_color_primary,
-                        alpha = 0.4f
+                        alpha = 0.4f,
+                        checkboxColor = br.com.edsilfer.android.sinterface.demo.R.color.clr_sample01_result_row_checkbox
                 ),
                 ResultDisclaimerPreset.darkResultDisclaimer(),
                 SearchPallet.Background(
