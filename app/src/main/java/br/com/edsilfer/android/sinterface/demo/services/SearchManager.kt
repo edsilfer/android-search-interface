@@ -30,7 +30,7 @@ class SearchManager : ISubscriber {
             SearchEvents.ON_SEARCH_TYPED -> performSearch(payload as String)
             SearchEvents.ITEM_CHOSEN -> log("Item: $payload has been chosen")
             SearchEvents.MULTI_SELECT_FINISHED -> {
-                for (c in (payload as Set<Chip>)) {
+                for (c in (payload as Set<Chat>)) {
                     log("Chosen items are: ${c.getHeader()}")
                 }
             }
