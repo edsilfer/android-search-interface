@@ -1,6 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="br.com.edsilfer.android.sinterface.demo">
 
+    <!-- For espresso testing purposes, this is removed in live builds, but not in dev builds -->
+    <uses-permission android:name="android.permission.SET_ANIMATION_SCALE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
