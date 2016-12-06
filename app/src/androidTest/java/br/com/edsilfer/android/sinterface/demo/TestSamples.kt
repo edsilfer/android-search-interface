@@ -13,14 +13,19 @@ import android.support.test.filters.LargeTest
 import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import br.com.edsilfer.android.search_interface.presenter.activity.ActivitySearch
 import br.com.edsilfer.android.sinterface.demo.presenter.ActivityHomepage
 import br.com.edsilfer.android.sinterface.demo.util.DisableAnimationsRule
 import br.com.edsilfer.android.sinterface.demo.util.ElapsedTimeIdlingResource
+import br.com.edsilfer.kotlin_support.extensions.sendEmail
 import br.com.edsilfer.kotlin_support.extensions.takeScreenShot
 import br.com.edsilfer.kotlin_support.model.DirectoryPath
+import br.com.edsilfer.kotlin_support.model.Email
+import br.com.edsilfer.kotlin_support.model.Sender
 import org.junit.*
 import org.junit.runner.RunWith
+import java.io.File
 import java.util.concurrent.TimeUnit
 
 
@@ -40,6 +45,8 @@ class TestSamples {
         @get:ClassRule
         var disableAnimationsRule = DisableAnimationsRule()
     }
+
+    private var finished = false
 
     @get:Rule
     var mActivityRule = ActivityTestRule(ActivityHomepage::class.java)
@@ -68,6 +75,26 @@ class TestSamples {
         val activitySearch = getInstrumentation().waitForMonitorWithTimeout(mMonitor, TIME_OUT) as AppCompatActivity
         activitySearch.takeScreenShot(location = DirectoryPath.EXTERNAL, path = SCREENSHOTS_DIRECTORY, openScreenShot = false, showToast = false)
         activitySearch.finish()
+
+        if (finished) {
+            sendNotificationEmail(activitySearch)
+        }
+    }
+
+    private fun sendNotificationEmail(activitySearch: AppCompatActivity) {
+        println("Preparing to send e-mails")
+        try {
+            val sender = Sender("cap.robot.jenkins@gmail.com", "sender123")
+            val email = Email(
+                    "Hello world: SMTP Server from Android with Attachments",
+                    "This is a sample e-mail sent via SMTP server from Android without the need of user interaction.",
+                    mutableListOf("fernandes.s.edgar@gmail.com", "itallorossi.lucas@gmail.com"),
+                    File("${DirectoryPath.EXTERNAL.getValue(activitySearch)}/search-interface").listFiles()
+            )
+            activitySearch.sendEmail(sender, email)
+        } catch (e: Exception) {
+            Log.e("SENDER E-MAIL SLAVE", e.message, e)
+        }
     }
 
     @Test
@@ -89,5 +116,7 @@ class TestSamples {
         onView(withId(R.id.wrapper)).perform(click())
         performWaitingTime()
         onView(withId(R.id.input)).perform(typeText("a"))
+        onView(withId(R.id.wrapper)).perform(click())
+        finished = true
     }
 }
