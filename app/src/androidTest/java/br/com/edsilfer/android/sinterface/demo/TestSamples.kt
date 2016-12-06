@@ -34,8 +34,8 @@ class TestSamples {
 
     companion object {
         private val SCREENSHOTS_DIRECTORY = "search-interface"
-        private val TIME_OUT = 5000L
-        private val WAITING_TIME = 1500L
+        private val TIME_OUT = 3000L
+        private val WAITING_TIME = 1000L
 
         @get:ClassRule
         var disableAnimationsRule = DisableAnimationsRule()
@@ -67,6 +67,7 @@ class TestSamples {
         performWaitingTime()
         val activitySearch = getInstrumentation().waitForMonitorWithTimeout(mMonitor, TIME_OUT) as AppCompatActivity
         activitySearch.takeScreenShot(location = DirectoryPath.EXTERNAL, path = SCREENSHOTS_DIRECTORY, openScreenShot = false, showToast = false)
+        activitySearch.finish()
     }
 
     @Test
@@ -87,11 +88,6 @@ class TestSamples {
         onView(withId(R.id.input)).perform(typeText("Diana"))
         onView(withId(R.id.wrapper)).perform(click())
         performWaitingTime()
-        onView(withId(R.id.input)).perform(typeText("Bruce"))
-        onView(withId(R.id.wrapper)).perform(click())
-        performWaitingTime()
-        onView(withId(R.id.input)).perform(click())
-        onView(withId(R.id.input)).perform(typeText("abcd"))
-        performWaitingTime()
+        onView(withId(R.id.input)).perform(typeText("a"))
     }
 }
