@@ -14,9 +14,9 @@ interface ISearchBarManager<T> {
 
     fun setSearch(query: String)
 
-    fun addChip(chip : Chip, replaceable : String)
+    fun addChip(item : IResultRow, replaceable : String)
 
-    fun removeChip(chip : Chip)
+    fun removeChip(item : IResultRow)
 
     fun getChips() : Set<Chip>
 }

@@ -1,3 +1,9 @@
 <resources>
-    <string name="app_name">android-search-interface</string>
+    <string name="app_name">Search Interface</string>
+
+    <!-- SAMPLES -->
+    <string name="str_btn_sample_01">SAMPLE 01</string>
+    <string name="str_btn_sample_02">SAMPLE 02</string>
+    <string name="str_btn_sample_03">SAMPLE 03</string>
+    <string name="str_btn_sample_04">SAMPLE 04</string>
 </resources>

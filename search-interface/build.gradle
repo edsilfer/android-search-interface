@@ -103,8 +103,8 @@ dependencies {
     compile 'com.jakewharton:kotterknife:0.1.0-SNAPSHOT'
 
     // OWN THIRD LIBRARIES
-    compile 'br.com.edsilfer:kotlin-support:1.0.14'
-    compile 'br.com.edsilfer:list-manager:1.0.2'
+    compile 'br.com.edsilfer:kotlin-support:1.0.15'
+    compile 'br.com.edsilfer:list-manager:1.0.3'
     compile 'br.com.edsilfer.android:chip-interface:1.0.7'
 
     // KOTLIN

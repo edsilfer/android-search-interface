@@ -23,7 +23,6 @@ abstract class IResultRow : Serializable {
         }
     }
 
-
     abstract fun getThumbnail(): String
 
     abstract fun getHeader(): String

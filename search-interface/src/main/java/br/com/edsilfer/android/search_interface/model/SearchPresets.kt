@@ -9,7 +9,7 @@ import br.com.edsilfer.android.search_interface.model.enum.ThumbnailStyle
  * Created by efernandes on 11/11/16.
  */
 
-object SearchStylePresets {
+object SearchPresets {
 
     /**
      * Light search with light results row

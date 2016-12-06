@@ -3,22 +3,25 @@ package br.com.edsilfer.android.search_interface.service
 import android.support.design.widget.TextInputLayout
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
-import android.text.Editable
-import android.text.TextWatcher
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
 import br.com.edsilfer.android.chipinterface.model.Chip
+import br.com.edsilfer.android.chipinterface.model.ChipEvents
 import br.com.edsilfer.android.chipinterface.model.Presets
 import br.com.edsilfer.android.chipinterface.presenter.ChipEditText
 import br.com.edsilfer.android.search_interface.R
 import br.com.edsilfer.android.search_interface.model.SearchPallet
 import br.com.edsilfer.android.search_interface.model.enum.SearchEvents
 import br.com.edsilfer.android.search_interface.model.enum.SearchType
+import br.com.edsilfer.android.search_interface.model.intf.IResultRow
 import br.com.edsilfer.android.search_interface.model.intf.ISearchBarManager
+import br.com.edsilfer.kotlin_support.extensions.log
 import br.com.edsilfer.kotlin_support.extensions.notifySubscribers
 import br.com.edsilfer.kotlin_support.extensions.showIndeterminateProgressBar
 import br.com.edsilfer.kotlin_support.extensions.showSoftKeyboard
+import br.com.edsilfer.kotlin_support.model.Events
+import br.com.edsilfer.kotlin_support.model.ISubscriber
 import br.com.edsilfer.kotlin_support.service.keyboard.EnhancedTextWatcher
 import com.google.common.base.Strings
 import java.io.Serializable
@@ -27,17 +30,18 @@ import java.io.Serializable
 /**
  * Created by efernandes on 09/11/16.
  */
-class SearchBar<T>(
+class SearchBarManager<T>(
         val mActivity: AppCompatActivity,
         val mPreset: SearchPallet.SearchBar,
         val searchType: SearchType
-) : ISearchBarManager<T>, Serializable {
+) : ISearchBarManager<T>, ISubscriber, Serializable {
 
     private val mInputWrapper: TextInputLayout
     private val mInput: ChipEditText
     private val mDone: Button
     private val mClear: ImageView
     private val mToolbar: Toolbar
+    private var mSelectedItems = mutableListOf<IResultRow>()
 
     init {
         mInputWrapper = mActivity.findViewById(R.id.input_wrapper) as TextInputLayout
@@ -69,11 +73,12 @@ class SearchBar<T>(
         mClear.setBackgroundResource(mPreset.iconClear)
         toggleClearButtonVisibility()
         mToolbar.setNavigationOnClickListener {
+            log("entrei no navigation click listener")
             mActivity.finish()
         }
         mActivity.setSupportActionBar(mToolbar)
         mActivity.supportActionBar!!.setDisplayShowTitleEnabled(false)
-        //mActivity.supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        mActivity.supportActionBar!!.setDisplayHomeAsUpEnabled(true)
     }
 
     private fun toggleClearButtonVisibility() {
@@ -94,7 +99,7 @@ class SearchBar<T>(
 
     private fun addDoneOnClickListener() {
         mDone.setOnClickListener {
-            notifySubscribers(SearchEvents.MULTI_SELECT_FINISHED, ChipEditText.mChips)
+            notifySubscribers(SearchEvents.MULTI_SELECT_FINISHED, mSelectedItems)
         }
     }
 
@@ -111,12 +116,34 @@ class SearchBar<T>(
                     else mDone.visibility = Button.INVISIBLE
                 }
 
-                notifySubscribers(SearchEvents.ON_SEARCH_TYPED, this@SearchBar.mInput.getTextWithNoSpans())
+                notifySubscribers(SearchEvents.ON_SEARCH_TYPED, this@SearchBarManager.mInput.getTextWithNoSpans())
             }
         })
     }
 
     // PUBLIC INTERFACE ============================================================================
+    override fun onEventTriggered(event: Events, payload: Any?) {
+        when (event) {
+            ChipEvents.CHIP_ADDED -> {
+                val item = getItem(payload as Chip)
+                if (item != null) mSelectedItems.add(item)
+            }
+
+            ChipEvents.CHIP_REMOVED -> {
+                val item = getItem(payload as Chip)
+                if (item != null) mSelectedItems.remove(item)
+            }
+
+            else -> {
+                // DO NOTHING
+            }
+        }
+    }
+
+    private fun getItem(chip: Chip): IResultRow? {
+        return mSelectedItems.firstOrNull { it.getChip() == chip }
+    }
+
     override fun getChips(): Set<Chip> {
         return ChipEditText.mChips
     }
@@ -133,11 +160,13 @@ class SearchBar<T>(
         mInput.setText(query)
     }
 
-    override fun addChip(chip: Chip, replaceable: String) {
-        mInput.addChip(chip, replaceable)
+    override fun addChip(item: IResultRow, replaceable: String) {
+        mInput.addChip(item.getChip(), replaceable)
+        mSelectedItems.add(item)
     }
 
-    override fun removeChip(chip: Chip) {
-        mInput.removeChip(chip)
+    override fun removeChip(item: IResultRow) {
+        mInput.removeChip(item.getChip())
+        mSelectedItems.remove(item)
     }
 }

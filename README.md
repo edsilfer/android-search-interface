@@ -88,7 +88,7 @@ Where `SEARCH_ACTIVITY_PALLET` is descendent of `SearchPallet`, which has all cu
 
 - <a name="step6">**Step 06: customize your activity**
 
-_Tutorial comming soon, meanwhile refer to the [sample app](https://github.com/edsilfer/android-search-interface/blob/master/app/src/main/java/br/com/edsilfer/android/sinterface/demo/presenter/ActivityHomepage.kt) for further details on how to customize the search activity_
+_Tutorial comming soon, meanwhile refer to the [sample app](https://github.com/edsilfer/android-search-interface/blob/master/app/src/main/java/br/com/edsilfer/android/sinterface/demo/presenter/Sample01.kt) for further details on how to customize the search activity_
 
 _**PS.: All code supplied is written in Kotlin and can be used together with Java.**_
 

@@ -4,6 +4,7 @@ import android.content.res.ColorStateList
 import android.support.v7.view.ContextThemeWrapper
 import android.support.v7.widget.AppCompatCheckBox
 import android.view.View
+import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -14,8 +15,9 @@ import br.com.edsilfer.android.search_interface.model.enum.SearchEvents
 import br.com.edsilfer.android.search_interface.model.enum.SearchType
 import br.com.edsilfer.android.search_interface.model.enum.ThumbnailStyle
 import br.com.edsilfer.android.search_interface.model.intf.IResultRow
-import br.com.edsilfer.android.search_interface.service.SearchBar
+import br.com.edsilfer.android.search_interface.service.SearchBarManager
 import br.com.edsilfer.kotlin_support.extensions.notifySubscribers
+import br.com.edsilfer.kotlin_support.extensions.setColor
 import com.google.common.base.Strings
 import com.mikhaellopez.circularimageview.CircularImageView
 import com.squareup.picasso.Picasso
@@ -29,7 +31,7 @@ import org.jetbrains.anko.backgroundColor
 class ResultViewHolder<T : IResultRow>(
         rootView: View,
         val mPreset: SearchPallet.ResultRow,
-        val mSearchBar: SearchBar<T>,
+        val mSearchBar: SearchBarManager<T>,
         val mSearchType: SearchType
 ) : GenericViewHolder<T>(rootView) {
 
@@ -46,16 +48,8 @@ class ResultViewHolder<T : IResultRow>(
 
     private fun setCheckbox(item: T) {
         val checkBox = rootView.findViewById(R.id.checkbox) as AppCompatCheckBox
-        //checkBox.highlightColor = rootView.context.resources.getColor(mPreset.checkboxColor)
-
-        val colorStateList = ColorStateList(
-                arrayOf(intArrayOf(-android.R.attr.state_enabled), intArrayOf(android.R.attr.state_enabled)),
-                intArrayOf(rootView.context.resources.getColor(mPreset.checkboxColor), rootView.context.resources.getColor(mPreset.checkboxColor))
-        )
-
-        checkBox.supportButtonTintList = colorStateList
-
         if (mSearchType == SearchType.MULTI_SELECT) {
+            checkBox.setColor(mPreset.checkboxColor)
             for (si in mSearchBar.getChips()) {
                 if (si == item.getChip()) {
                     checkBox.isChecked = true
@@ -64,6 +58,8 @@ class ResultViewHolder<T : IResultRow>(
                     checkBox.isChecked = false
                 }
             }
+        } else {
+            checkBox.visibility = CheckBox.GONE
         }
     }
 
@@ -117,9 +113,9 @@ class ResultViewHolder<T : IResultRow>(
         if (mSearchType == SearchType.MULTI_SELECT) {
             checkbox.isChecked = !checkbox.isChecked
             if (checkbox.isChecked) {
-                mSearchBar.addChip(item.getChip(), mSearchBar.getSearchWithNoSpans())
+                mSearchBar.addChip(item, mSearchBar.getSearchWithNoSpans())
             } else {
-                mSearchBar.removeChip(item.getChip())
+                mSearchBar.removeChip(item)
             }
         } else {
             notifySubscribers(SearchEvents.ITEM_CHOSEN, item)

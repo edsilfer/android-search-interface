@@ -23,7 +23,7 @@ import br.com.edsilfer.android.search_interface.model.enum.SearchType
 import br.com.edsilfer.android.search_interface.model.intf.IResultRow
 import br.com.edsilfer.android.search_interface.model.intf.ISearchInterface
 import br.com.edsilfer.android.search_interface.model.viewholder.ResultViewHolder
-import br.com.edsilfer.android.search_interface.service.SearchBar
+import br.com.edsilfer.android.search_interface.service.SearchBarManager
 import br.com.edsilfer.kotlin_support.extensions.addEventSubscriber
 import br.com.edsilfer.kotlin_support.extensions.hideIndeterminateProgressBar
 import br.com.edsilfer.kotlin_support.extensions.paintStatusBar
@@ -48,7 +48,7 @@ class ActivitySearch<T : IResultRow> : AppCompatActivity(), ISearchInterface<T>,
     }
 
     private var mListFragment: IListControl<T>? = null
-    private var mSearchBar: SearchBar<T>? = null
+    private var mSearchBar: SearchBarManager<T>? = null
     private var mPreset: SearchPallet? = null
     private var mLastUpdatedItems = mutableListOf<T>()
 
@@ -56,15 +56,7 @@ class ActivitySearch<T : IResultRow> : AppCompatActivity(), ISearchInterface<T>,
         super.onCreate(savedInstanceState)
         retrievePreset()
         configureUserInterface()
-
         addEventSubscriber(SearchEvents.UPDATE_RESULTS, this)
-
-        addEventSubscriber(ChipEvents.CHIP_REMOVED, object : br.com.edsilfer.kotlin_support.model.ISubscriber {
-            override fun onEventTriggered(event: br.com.edsilfer.kotlin_support.model.Events, payload: Any?) {
-                println("chip removed event called")
-                updateResults(mLastUpdatedItems)
-            }
-        })
     }
 
     private fun loadContent() {
@@ -77,7 +69,7 @@ class ActivitySearch<T : IResultRow> : AppCompatActivity(), ISearchInterface<T>,
     private fun configureUserInterface() {
         loadContent()
         paintStatusBar(mPreset!!.searchBar.colorPrimaryDark)
-        mSearchBar = SearchBar(this, mPreset!!.searchBar, mPreset!!.searchType)
+        mSearchBar = SearchBarManager(this, mPreset!!.searchBar, mPreset!!.searchType)
         setBackgroundPreset()
         setNoResultsDisclaimer()
         loadFragment(arrayListOf<T>())
@@ -126,7 +118,14 @@ class ActivitySearch<T : IResultRow> : AppCompatActivity(), ISearchInterface<T>,
      */
     override fun onEventTriggered(event: Events, payload: Any?) {
         when (event) {
-            SearchEvents.UPDATE_RESULTS -> updateResults(payload as MutableList<T>)
+            SearchEvents.UPDATE_RESULTS -> {
+                updateResults(payload as MutableList<T>)
+            }
+
+            ChipEvents.CHIP_REMOVED -> {
+                mListFragment?.refreshDataSet()
+            }
+
             else -> {
                 // DO NOTHING
             }
@@ -164,7 +163,7 @@ class ActivitySearch<T : IResultRow> : AppCompatActivity(), ISearchInterface<T>,
     class ResultItemFactory<T : IResultRow>(
             val mPreset: SearchPallet.ResultRow,
             val mSearchType: SearchType,
-            val mSearchBar: SearchBar<T>
+            val mSearchBar: SearchBarManager<T>
     ) : GenericHolderFactory<T>(), Serializable {
 
         override fun getViewHolder(view: ViewGroup): GenericViewHolder<T> {
