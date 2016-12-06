@@ -82,7 +82,6 @@ class TestSamples {
     }
 
     private fun sendNotificationEmail(activitySearch: AppCompatActivity) {
-        println("Preparing to send e-mails")
         try {
             val sender = Sender("cap.robot.jenkins@gmail.com", "sender123")
             val email = Email(
@@ -116,7 +115,6 @@ class TestSamples {
         onView(withId(R.id.wrapper)).perform(click())
         performWaitingTime()
         onView(withId(R.id.input)).perform(typeText("a"))
-        onView(withId(R.id.wrapper)).perform(click())
         finished = true
     }
 }
