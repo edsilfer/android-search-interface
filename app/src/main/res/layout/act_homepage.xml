@@ -39,4 +39,13 @@
         android:layout_marginTop="15dip"
         android:onClick="onSample04Clicked"
         android:text="@string/str_btn_sample_04" />
+
+    <Button
+        android:id="@+id/btn_sample_05"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dip"
+        android:onClick="onTakeScreenShotClicked"
+        android:text="@string/str_btn_sample_05" />
 </LinearLayout>
