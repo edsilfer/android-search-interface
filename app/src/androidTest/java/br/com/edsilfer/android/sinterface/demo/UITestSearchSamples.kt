@@ -42,7 +42,7 @@ class UITestSearchSamples {
 
     companion object {
         private val SCREENSHOTS_DIRECTORY = "search-interface"
-        private val NUMBER_OF_BACKS = 2
+        private val NUMBER_OF_BACKS = 3
         private val WAITING_TIME = 1500L
     }
 

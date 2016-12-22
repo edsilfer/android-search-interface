@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+
+<chip id="default-theme">
+    <state type="collapsed">
+        <text type="label">
+            <font>sans-serif</font>
+            <size>12</size>
+            <style>normal</style>
+            <color>#000000</color>
+        </text>
+        <background type="collapsed">#ffffff</background>
+    </state>
+
+    <state type="expanded">
+        <text
+            id="header"
+            type="label">
+            <font>sans-serif</font>
+            <size>14</size>
+            <style>normal</style>
+            <color>#ffffff</color>
+        </text>
+
+        <text
+            id="subheader"
+            type="label">
+            <font>sans-serif</font>
+            <size>12</size>
+            <style>normal</style>
+            <color>#ffffff</color>
+        </text>
+
+        <background type="top">#f8cd30</background>
+        <background type="bottom">#f9d759</background>
+    </state>
+</chip>

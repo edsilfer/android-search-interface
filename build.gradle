@@ -1,8 +1,8 @@
 buildscript {
     // VARIABLE CONFIGURATIONS
-    ext.kotlin_version = '1.0.5-2'
+    ext.kotlin_version = '1.0.5-3'
     ext.anko_version = '0.9'
-    ext.support_version = '25.0.1'
+    ext.support_version = '25.1.0'
     ext.dagger_version = '2.7'
 
     // REPOSITORIES DEFINITIONS

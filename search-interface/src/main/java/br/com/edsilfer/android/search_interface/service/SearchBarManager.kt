@@ -8,7 +8,6 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import br.com.edsilfer.android.chipinterface.model.Chip
 import br.com.edsilfer.android.chipinterface.model.ChipEvents
-import br.com.edsilfer.android.chipinterface.model.Presets
 import br.com.edsilfer.android.chipinterface.presenter.ChipEditText
 import br.com.edsilfer.android.search_interface.R
 import br.com.edsilfer.android.search_interface.model.SearchPallet
@@ -62,7 +61,6 @@ class SearchBarManager<T>(
 
     private fun setInputUI() {
         mInput.requestFocus()
-        mInput.setChipStyle(Presets.preset02())
         mInputWrapper.hint = mActivity.getString(mPreset.hintText)
     }
 

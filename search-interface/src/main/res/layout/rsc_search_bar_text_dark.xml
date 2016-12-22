@@ -41,7 +41,8 @@
                         android:paddingBottom="3dip"
                         android:paddingTop="2dip"
                         android:textColor="@android:color/white"
-                        android:textSize="12sp" />
+                        android:textSize="12sp"
+                        app:template="@raw/template_android_chip" />
                 </android.support.design.widget.TextInputLayout>
 
                 <RelativeLayout

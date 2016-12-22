@@ -89,7 +89,6 @@ dependencies {
     })
     compile "com.android.support:appcompat-v7:$support_version"
     testCompile 'junit:junit:4.12'
-    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2'
 
     // GOOGLE SUPPORT LIBRARIES DEPENDENCIES
     compile "com.android.support:appcompat-v7:$support_version"
@@ -105,9 +104,9 @@ dependencies {
     compile 'commons-io:commons-io:2.5'
 
     // OWN THIRD LIBRARIES
-    compile 'br.com.edsilfer:kotlin-support:1.0.18'
+    compile 'br.com.edsilfer:kotlin-support:1.0.21'
     compile 'br.com.edsilfer:list-manager:1.0.3'
-    compile 'br.com.edsilfer.android:chip-interface:1.0.8'
+    compile 'br.com.edsilfer.android:chip-interface:1.0.11'
 
     // KOTLIN
     compile "com.android.support:appcompat-v7:$support_version"

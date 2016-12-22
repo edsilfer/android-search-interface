@@ -45,12 +45,28 @@ tasks.whenTaskAdded { task ->
 dependencies {
     // TEST DEPENDENCIES
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2') {
         exclude group: 'com.android.support', module: 'support-annotations'
-    })
+        exclude module: 'testing-support-lib'
+        exclude module: 'support-v4'
+        exclude module: 'support-v7'
+        exclude module: 'support-annotations'
+        exclude group: 'javax.inject'
+        exclude group: 'com.android.support', module: 'design'
+    }
+    androidTestCompile ('com.android.support.test.espresso:espresso-contrib:2.2.2') {
+        exclude module: 'support-annotations'
+        exclude module: 'support-v4'
+        exclude module: 'support-v13'
+        exclude module: 'recyclerview-v7'
+        exclude module: 'appcompat-v7'
+        exclude group: 'com.android.support', module: 'design'
+    }
+
+
+    //testCompile 'junit:junit:4.12'
+
     compile "com.android.support:appcompat-v7:$support_version"
-    testCompile 'junit:junit:4.12'
-    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
     // KOTLIN DEPENDENCIES
     compile "com.android.support:appcompat-v7:$support_version"
