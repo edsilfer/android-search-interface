@@ -30,7 +30,7 @@
             <color>#ffffff</color>
         </text>
 
-        <background type="top">#f8cd30</background>
-        <background type="bottom">#f9d759</background>
+        <background type="top">#c6a426</background>
+        <background type="bottom">#dfb82b</background>
     </state>
 </chip>

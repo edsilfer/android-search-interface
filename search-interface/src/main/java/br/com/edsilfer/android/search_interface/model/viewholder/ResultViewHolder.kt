@@ -1,7 +1,6 @@
 package br.com.edsilfer.android.search_interface.model.viewholder
 
-import android.content.res.ColorStateList
-import android.support.v7.view.ContextThemeWrapper
+import android.graphics.Color
 import android.support.v7.widget.AppCompatCheckBox
 import android.view.View
 import android.widget.CheckBox
@@ -10,14 +9,15 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import br.com.edsilfer.android.lmanager.model.GenericViewHolder
 import br.com.edsilfer.android.search_interface.R
-import br.com.edsilfer.android.search_interface.model.SearchPallet
 import br.com.edsilfer.android.search_interface.model.enum.SearchEvents
 import br.com.edsilfer.android.search_interface.model.enum.SearchType
 import br.com.edsilfer.android.search_interface.model.enum.ThumbnailStyle
 import br.com.edsilfer.android.search_interface.model.intf.IResultRow
+import br.com.edsilfer.android.search_interface.model.xml.Component
 import br.com.edsilfer.android.search_interface.service.SearchBarManager
 import br.com.edsilfer.kotlin_support.extensions.notifySubscribers
 import br.com.edsilfer.kotlin_support.extensions.setColor
+import br.com.edsilfer.kotlin_support.extensions.setStyle
 import com.google.common.base.Strings
 import com.mikhaellopez.circularimageview.CircularImageView
 import com.squareup.picasso.Picasso
@@ -30,9 +30,10 @@ import org.jetbrains.anko.backgroundColor
 
 class ResultViewHolder<T : IResultRow>(
         rootView: View,
-        val mPreset: SearchPallet.ResultRow,
+        val mTemplate: Component,
         val mSearchBar: SearchBarManager<T>,
-        val mSearchType: SearchType
+        val mSearchType: SearchType,
+        val mThumbnailStyle: ThumbnailStyle
 ) : GenericViewHolder<T>(rootView) {
 
     companion object {
@@ -49,7 +50,7 @@ class ResultViewHolder<T : IResultRow>(
     private fun setCheckbox(item: T) {
         val checkBox = rootView.findViewById(R.id.checkbox) as AppCompatCheckBox
         if (mSearchType == SearchType.MULTI_SELECT) {
-            checkBox.setColor(mPreset.checkboxColor)
+            checkBox.setColor(Color.parseColor(mTemplate.getColorByID("checkbox").value), false)
             for (si in mSearchBar.getChips()) {
                 if (si == item.getChip()) {
                     checkBox.isChecked = true
@@ -65,9 +66,9 @@ class ResultViewHolder<T : IResultRow>(
 
     private fun setInformation(item: T) {
         val infoContainer = rootView.findViewById(R.id.information_container) as LinearLayout
-        var header: TextView? = null
-        var subheader1: TextView? = null
-        var subheader2: TextView? = null
+        val header: TextView?
+        val subheader1: TextView?
+        val subheader2: TextView?
 
         infoContainer.removeAllViews()
 
@@ -76,17 +77,20 @@ class ResultViewHolder<T : IResultRow>(
             subheader1 = rootView.findViewById(R.id.subheader1) as TextView
             subheader2 = rootView.findViewById(R.id.subheader2) as TextView
         } else {
-            header = TextView(ContextThemeWrapper(rootView.context, mPreset.headerStyle), null, 0)
+            header = TextView(rootView.context)
             header.layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
             header.id = R.id.header
+            header.setStyle(mTemplate.getTextByID("header"))
 
-            subheader1 = TextView(ContextThemeWrapper(rootView.context, mPreset.subHeader1Style), null, 0)
+            subheader1 = TextView(rootView.context)
             subheader1.layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
             subheader1.id = R.id.subheader1
+            subheader1.setStyle(mTemplate.getTextByID("subheader1"))
 
-            subheader2 = TextView(ContextThemeWrapper(rootView.context, mPreset.subHeader2Style), null, 0)
+            subheader2 = TextView(rootView.context)
             subheader2.layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
             subheader2.id = R.id.subheader2
+            subheader2.setStyle(mTemplate.getTextByID("subheader2"))
         }
 
         header.text = item.getHeader()
@@ -100,8 +104,8 @@ class ResultViewHolder<T : IResultRow>(
 
     private fun setBackgroundColor() {
         val background = rootView.findViewById(R.id.background)
-        background.alpha = mPreset.alpha
-        background.backgroundColor = rootView.resources.getColor(mPreset.color)
+        background.alpha = mTemplate.getColorByID("background").alpha
+        background.backgroundColor = Color.parseColor(mTemplate.getColorByID("background").value)
     }
 
     override fun getClickableItem(): View {
@@ -126,7 +130,7 @@ class ResultViewHolder<T : IResultRow>(
         val cThumbnail = rootView.findViewById(R.id.circle_thumbnail) as CircularImageView
         val sThumbnail = rootView.findViewById(R.id.square_thumbnail) as ImageView
 
-        when (mPreset.thumbnailStyle) {
+        when (mThumbnailStyle) {
             ThumbnailStyle.SQUARE -> {
                 cThumbnail.visibility = CircularImageView.GONE
                 sThumbnail.visibility = ImageView.VISIBLE

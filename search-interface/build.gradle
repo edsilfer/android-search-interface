@@ -104,7 +104,7 @@ dependencies {
     compile 'commons-io:commons-io:2.5'
 
     // OWN THIRD LIBRARIES
-    compile 'br.com.edsilfer:kotlin-support:1.0.21'
+    compile 'br.com.edsilfer:kotlin-support:1.0.24'
     compile 'br.com.edsilfer:list-manager:1.0.3'
     compile 'br.com.edsilfer.android:chip-interface:1.0.11'
 

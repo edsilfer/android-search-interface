@@ -19,4 +19,6 @@ interface ISearchBarManager<T> {
     fun removeChip(item : IResultRow)
 
     fun getChips() : Set<Chip>
+
+    fun closerSoftKeyboard()
 }

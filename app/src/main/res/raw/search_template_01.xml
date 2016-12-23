@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+
+<search-interface name="template-01" type="single-select" bkg="#fafafa">
+    <component type="search-bar" theme="light">
+        <texts>
+            <text id="search-input" type="input">
+                <font>sans-serif</font>
+                <size>13</size>
+                <style>normal</style>
+                <color>#FFFFFF</color>
+            </text>
+        </texts>
+
+        <colors>
+            <color id="status-bar">#303F9F</color>
+            <color id="background">#3F51B5</color>
+            <color id="loading">#303F9F</color>
+        </colors>
+
+        <disclaimer>Type something</disclaimer>
+    </component>
+
+    <component type="result-row" display="circular">
+        <texts>
+            <text id="header" type="label">
+                <font>sans-serif-thin</font>
+                <size>14</size>
+                <style>bold</style>
+                <color>#000000</color>
+            </text>
+
+            <text id="subheader1" type="label">
+                <font>sans-serif-thin</font>
+                <size>12</size>
+                <style>normal</style>
+                <color>#000000</color>
+            </text>
+
+            <text id="subheader2" type="label">
+                <font>sans-serif-thin</font>
+                <size>12</size>
+                <style>normal</style>
+                <color>#000000</color>
+            </text>
+        </texts>
+
+        <colors>
+            <color id="background" alpha="1">#ffffff</color>
+            <color id="checkbox">#000000</color>
+        </colors>
+    </component>
+
+    <component type="disclaimer">
+        <texts>
+            <text id="disclaimer" type="label">
+                <font>sans-serif-thin</font>
+                <size>14</size>
+                <style>normal</style>
+                <color>#000000</color>
+            </text>
+        </texts>
+
+        <colors>
+            <color id="background">#FFFFFF</color>
+        </colors>
+
+        <disclaimer>No results have been found...</disclaimer>
+    </component>
+</search-interface>

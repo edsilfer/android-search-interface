@@ -81,7 +81,7 @@ _Where `RESULT_LIST` is any POJO that implements the interface `IResultRow`_
 
 ```kotlin
 val intent = Intent(this, ActivitySearch::class.java)
-intent.putExtra(ActivitySearch.ARG_SEARCH_PRESET, SEARCH_ACTIVITY_PALLET)
+intent.putExtra(ActivitySearch.ARG_SEARCH_TEMPLATE, SEARCH_ACTIVITY_PALLET)
 startActivity(intent)
 ```
 Where `SEARCH_ACTIVITY_PALLET` is descendent of `SearchPallet`, which has all customizable attributes (see [step 6](#step6))
