@@ -10,11 +10,11 @@ While developing an application, a very common functionality is to perform searc
 <a name="showcase"></a>**SHOWCASE**
 
 <p align="center">
+  <img src="art/showcase.gif" align="center" width=150>
   <img src="art/ss_sample_01.png" align="center" width=150>
   <img src="art/ss_template_01_circle_result_row.png" align="center" width=150>
   <img src="art/ss_template_02_circle_result_row.png" align="center" width=150>
   <img src="art/ss_template_03_circle_result_row.png" align="center" width=150>
-  <img src="art/ss_template_04_circle_result_row.png" align="center" width=150>
   <br /><br />
   <i><b>Figure 01:</b> sample searches provided through presets or custom styles</i>
 </p>
