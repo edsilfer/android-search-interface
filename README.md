@@ -18,7 +18,6 @@ While developing an application, a very common functionality is to perform searc
 </p>
 
 ## How does it work?
--
 Android List Manager was developed using [Kotlin language](https://kotlinlang.org/). Kotlin is free to use and owned by [Jet Brains](https://www.jetbrains.com/). It adds a lot of cool features, boosting your productiveness while keeping everythying **100% compatible with Java.** 
 
 _For details about technical implementation of this library please refer to the source code._
@@ -33,7 +32,8 @@ compile 'br.com.edsilfer.android:search-interface:1.0.1'
 
 _Please refer to the [badge](#version) of the page to get the latest version of this library._
 
-- <a name="step2">**Step 02: make your POJO class extends `IResultRow`**
+<a name="step2">
+#### Step 02: make your POJO class extends `IResultRow`
 
 The model class whose items you intend to display as search result must implement the interface below:
 
@@ -97,13 +97,11 @@ _**PS.: All code supplied is written in Kotlin and can be used together with Jav
 
 <a name="next-steps">
 ## Next Steps
-~~- Add support for multiple item select;~
 - Add support for recent search suggestions;
 - Add support for custom suggestions;
 
 <a name="license">
 ## License
--
 Copyright 2016 Edgar da Silva Fernandes
 
 Licensed under the Apache License, Version 2.0 (the "License");
