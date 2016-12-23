@@ -7,10 +7,8 @@ import android.os.Environment
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
-import br.com.edsilfer.android.search_interface.model.SearchPresets
 import br.com.edsilfer.android.search_interface.presenter.activity.ActivitySearch
 import br.com.edsilfer.android.sinterface.demo.R
-import br.com.edsilfer.android.sinterface.demo.services.Samples
 import br.com.edsilfer.android.sinterface.demo.services.SearchManager
 import br.com.edsilfer.kotlin_support.extensions.requestPermission
 import br.com.edsilfer.kotlin_support.extensions.sendEmail
@@ -43,25 +41,19 @@ class ActivityHomepage : AppCompatActivity() {
 
     fun onSample01Clicked(view: View) {
         val intent = Intent(this, ActivitySearch::class.java)
-        intent.putExtra(ActivitySearch.ARG_SEARCH_PRESET, SearchPresets.template01WithCircleResultRow())
+        intent.putExtra(ActivitySearch.ARG_SEARCH_TEMPLATE, "search_template_01")
         startActivity(intent)
     }
 
     fun onSample02Clicked(view: View) {
         val intent = Intent(this, ActivitySearch::class.java)
-        intent.putExtra(ActivitySearch.ARG_SEARCH_PRESET, SearchPresets.template03WithSquareResultRow())
+        intent.putExtra(ActivitySearch.ARG_SEARCH_TEMPLATE, "search_template_02")
         startActivity(intent)
     }
 
     fun onSample03Clicked(view: View) {
         val intent = Intent(this, ActivitySearch::class.java)
-        intent.putExtra(ActivitySearch.ARG_SEARCH_PRESET, Samples().sample01())
-        startActivity(intent)
-    }
-
-    fun onSample04Clicked(view: View) {
-        val intent = Intent(this, ActivitySearch::class.java)
-        intent.putExtra(ActivitySearch.ARG_SEARCH_PRESET, Samples().sample01())
+        intent.putExtra(ActivitySearch.ARG_SEARCH_TEMPLATE, "search_template_03")
         startActivity(intent)
     }
 

@@ -1,5 +1,6 @@
 package br.com.edsilfer.android.search_interface.service
 
+import android.graphics.Color
 import android.support.design.widget.TextInputLayout
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
@@ -10,15 +11,12 @@ import br.com.edsilfer.android.chipinterface.model.Chip
 import br.com.edsilfer.android.chipinterface.model.ChipEvents
 import br.com.edsilfer.android.chipinterface.presenter.ChipEditText
 import br.com.edsilfer.android.search_interface.R
-import br.com.edsilfer.android.search_interface.model.SearchPallet
 import br.com.edsilfer.android.search_interface.model.enum.SearchEvents
 import br.com.edsilfer.android.search_interface.model.enum.SearchType
 import br.com.edsilfer.android.search_interface.model.intf.IResultRow
 import br.com.edsilfer.android.search_interface.model.intf.ISearchBarManager
-import br.com.edsilfer.kotlin_support.extensions.log
-import br.com.edsilfer.kotlin_support.extensions.notifySubscribers
-import br.com.edsilfer.kotlin_support.extensions.showIndeterminateProgressBar
-import br.com.edsilfer.kotlin_support.extensions.showSoftKeyboard
+import br.com.edsilfer.android.search_interface.model.xml.Component
+import br.com.edsilfer.kotlin_support.extensions.*
 import br.com.edsilfer.kotlin_support.model.Events
 import br.com.edsilfer.kotlin_support.model.ISubscriber
 import br.com.edsilfer.kotlin_support.service.keyboard.EnhancedTextWatcher
@@ -31,7 +29,7 @@ import java.io.Serializable
  */
 class SearchBarManager<T>(
         val mActivity: AppCompatActivity,
-        val mPreset: SearchPallet.SearchBar,
+        val mPreset: Component,
         val searchType: SearchType
 ) : ISearchBarManager<T>, ISubscriber, Serializable {
 
@@ -46,6 +44,7 @@ class SearchBarManager<T>(
         mInputWrapper = mActivity.findViewById(R.id.input_wrapper) as TextInputLayout
         mToolbar = mActivity.findViewById(R.id.search_toolbar) as Toolbar
         mInput = mActivity.findViewById(R.id.input) as ChipEditText
+        mInput.setStyle(mPreset.getTextByID("search-input"))
         mDone = mActivity.findViewById(R.id.done) as Button
         mClear = mActivity.findViewById(R.id.clear) as ImageView
 
@@ -61,17 +60,18 @@ class SearchBarManager<T>(
 
     private fun setInputUI() {
         mInput.requestFocus()
-        mInputWrapper.hint = mActivity.getString(mPreset.hintText)
+        mInputWrapper.hint = mPreset.disclaimer
     }
 
     private fun setToolbarUI() {
-        mToolbar.setBackgroundColor(mActivity.resources.getColor(mPreset.colorPrimary))
-        mToolbar.setNavigationIcon(mPreset.iconBack)
+        mToolbar.setBackgroundColor(Color.parseColor(mPreset.getColorByID("background").value))
+        // FIXME: set according to theme
+        mToolbar.setNavigationIcon(R.drawable.ic_arrow_left_white_24dp)
         mToolbar.contentInsetStartWithNavigation = 0
-        mClear.setBackgroundResource(mPreset.iconClear)
+        // FIXME: set according to theme
+        mClear.setBackgroundResource(R.drawable.ic_close_white_24dp)
         toggleClearButtonVisibility()
         mToolbar.setNavigationOnClickListener {
-            log("entrei no navigation click listener")
             mActivity.finish()
         }
         mActivity.setSupportActionBar(mToolbar)
@@ -104,7 +104,7 @@ class SearchBarManager<T>(
     private fun addSearchTypedListener() {
         mInput.addTextChangedListener(object : EnhancedTextWatcher(mInput) {
             override fun onTextChanged(cursor: Int, isBackspace: Boolean, deletedChar: Char) {
-                mActivity.showIndeterminateProgressBar(mPreset.colorLoading)
+                mActivity.showIndeterminateProgressBar(Color.parseColor(mPreset.getColorByID("loading").value), false)
 
                 if (searchType == SearchType.SINGLE_SELECT) {
                     if (!Strings.isNullOrEmpty(getSearchWithSpans())) mClear.visibility = ImageView.VISIBLE
@@ -120,6 +120,10 @@ class SearchBarManager<T>(
     }
 
     // PUBLIC INTERFACE ============================================================================
+    override fun closerSoftKeyboard() {
+        mInput.hideSoftKeyboard()
+    }
+
     override fun onEventTriggered(event: Events, payload: Any?) {
         when (event) {
             ChipEvents.CHIP_ADDED -> {

@@ -38,6 +38,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="15dip"
         android:onClick="onSample04Clicked"
+        android:visibility="gone"
         android:text="@string/str_btn_sample_04" />
 
     <Button

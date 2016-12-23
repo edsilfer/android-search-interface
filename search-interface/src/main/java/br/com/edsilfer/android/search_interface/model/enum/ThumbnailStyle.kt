@@ -4,7 +4,15 @@ package br.com.edsilfer.android.search_interface.model.enum
  * Created by efernandes on 04/11/16.
  */
 
-enum class ThumbnailStyle {
-    SQUARE, CIRCLE
+enum class ThumbnailStyle(val mValue: String) {
+
+    SQUARE("square"), CIRCLE("circular");
+
+    companion object {
+        fun fromString(value: String): ThumbnailStyle? {
+            return ThumbnailStyle.values().firstOrNull { it.mValue == value }
+        }
+    }
 }
+
 
