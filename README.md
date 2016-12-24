@@ -83,15 +83,76 @@ _Where `RESULT_LIST` is any POJO that implements the interface `IResultRow`_
 
 ```kotlin
 val intent = Intent(this, ActivitySearch::class.java)
-intent.putExtra(ActivitySearch.ARG_SEARCH_TEMPLATE, SEARCH_ACTIVITY_PALLET)
+intent.putExtra(ActivitySearch.ARG_SEARCH_TEMPLATE, SEARCH_ACTIVITY_TEMPLATE)
 startActivity(intent)
 ```
-Where `SEARCH_ACTIVITY_PALLET` is descendent of `SearchPallet`, which has all customizable attributes (see [step 6](#step6))
+Where `SEARCH_ACTIVITY_TEMPLATE` is descendent a XML file present on res/raw directory. You shall pass a String contianing the name of the file **without extensions**
 
 <a name="step6">
 #### Step 06: customize your activity
+The UI is built upon a XML configuration file provided on ActivitySearch launch. This XML must pe present on res/raw folder. Below it is a sample:
 
-_Tutorial comming soon, meanwhile refer to the [sample app](https://github.com/edsilfer/android-search-interface/blob/master/app/src/main/java/br/com/edsilfer/android/sinterface/demo/presenter/Sample01.kt) for further details on how to customize the search activity_
+```XML
+<?xml version="1.0"?>
+<search-interface name="template-03" type="multi-select" bkg="sample_background_01">
+	<component type="search-bar" theme="light">
+		<texts>
+			<text id="search-input" type="input">
+				<font>sans-serif</font>
+				<size>13</size>
+				<style>normal</style>
+				<color>#FFFFFF</color>
+			</text>
+		</texts>
+		<colors>
+			<color id="status-bar">#000000</color>
+			<color id="background">#323232</color>
+			<color id="loading">#c6a426</color>
+		</colors>
+		<disclaimer>Search something...</disclaimer>
+	</component>
+	<component type="result-row" display="square">
+		<texts>
+			<text id="header" type="label">
+				<font>sans-serif-thin</font>
+				<size>14</size>
+				<style>bold</style>
+				<color>#FFFFFF</color>
+			</text>
+			<text id="subheader1" type="label">
+				<font>sans-serif-thin</font>
+				<size>12</size>
+				<style>normal</style>
+				<color>#FFFFFF</color>
+			</text>
+			<text id="subheader2" type="label">
+				<font>sans-serif-thin</font>
+				<size>12</size>
+				<style>normal</style>
+				<color>#FFFFFF</color>
+			</text>
+		</texts>
+		<colors>
+			<color id="background" alpha="1">#323232</color>
+			<color id="checkbox">#c6a426</color>
+		</colors>
+	</component>
+	<component type="disclaimer">
+		<texts>
+			<text id="disclaimer" type="label">
+				<font>sans-serif-thin</font>
+				<size>14</size>
+				<style>bold</style>
+				<color>#FFFFFF</color>
+			</text>
+		</texts>
+		<colors>
+			<color id="background">#000000</color>
+		</colors>
+		<disclaimer>No results have been found for the given criteria...</disclaimer>
+	</component>
+</search-interface>
+```
 
 _**PS.: All code supplied is written in Kotlin and can be used together with Java.**_
 
