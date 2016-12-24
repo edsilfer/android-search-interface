@@ -41,24 +41,17 @@ public class ActivityHomepageTest {
         ViewInteraction recyclerView = onView(allOf(withId(R.id.list), withParent(allOf(withId(R.id.replaceable), withParent(withId(R.id.container)))), isDisplayed()));
         recyclerView.perform(actionOnItemAtPosition(0, click()));
 
-        onView(withId(R.id.input)).perform(typeText(" c"));
+        onView(withId(R.id.input)).perform(typeText("c"));
 
-        ViewInteraction recyclerView2 = onView(allOf(withId(R.id.list), withParent(allOf(withId(R.id.replaceable), withParent(withId(R.id.container)))), isDisplayed()));
-        recyclerView2.perform(actionOnItemAtPosition(0, click()));
+        recyclerView.perform(actionOnItemAtPosition(0, click()));
 
-        onView(withId(R.id.input)).perform(typeText(" b "));
-
-        ViewInteraction recyclerView3 = onView(allOf(withId(R.id.list), withParent(allOf(withId(R.id.replaceable), withParent(withId(R.id.container)))), isDisplayed()));
-        recyclerView3.perform(actionOnItemAtPosition(0, click()));
-
-        ViewInteraction chipEditText4 = onView(allOf(withId(R.id.input), withText("d c b "), isDisplayed()));
-        chipEditText4.perform(click());
+       /* ViewInteraction chipEditText4 = onView(allOf(withId(R.id.input), withText("d c b "), isDisplayed()));
+        chipEditText4.perform(click());*/
 
         ViewInteraction appCompatImageButton = onView(allOf(withId(R.id.close), withParent(withId(R.id.wrapper)), isDisplayed()));
         appCompatImageButton.perform(click());
 
-        ViewInteraction chipEditText5 = onView(allOf(withId(R.id.input), withText("d c b "), isDisplayed()));
-        chipEditText5.perform(replaceText("d  b "), closeSoftKeyboard());
+        onView(withId(R.id.input)).perform(typeText("a"));
     }
 
 }

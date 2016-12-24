@@ -1,9 +1,11 @@
 package br.com.edsilfer.android.search_interface.service
 
+import android.content.DialogInterface
 import android.graphics.Color
 import android.support.design.widget.TextInputLayout
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
+import android.view.View
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
@@ -64,6 +66,9 @@ class SearchBarManager<T>(
     }
 
     private fun setToolbarUI() {
+        mActivity.setSupportActionBar(mToolbar)
+        mActivity.supportActionBar!!.setDisplayShowTitleEnabled(false)
+        mActivity.supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         mToolbar.setBackgroundColor(Color.parseColor(mPreset.getColorByID("background").value))
         // FIXME: set according to theme
         mToolbar.setNavigationIcon(R.drawable.ic_arrow_left_white_24dp)
@@ -71,12 +76,14 @@ class SearchBarManager<T>(
         // FIXME: set according to theme
         mClear.setBackgroundResource(R.drawable.ic_close_white_24dp)
         toggleClearButtonVisibility()
-        mToolbar.setNavigationOnClickListener {
-            mActivity.finish()
-        }
-        mActivity.setSupportActionBar(mToolbar)
-        mActivity.supportActionBar!!.setDisplayShowTitleEnabled(false)
-        mActivity.supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+
+        mToolbar.setNavigationOnClickListener(object : View.OnClickListener {
+            override fun onClick(p0: View?) {
+                println("entrei aqui")
+                mActivity.finish()
+            }
+
+        })
     }
 
     private fun toggleClearButtonVisibility() {
