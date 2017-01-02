@@ -79,7 +79,6 @@ class SearchBarManager<T>(
 
         mToolbar.setNavigationOnClickListener(object : View.OnClickListener {
             override fun onClick(p0: View?) {
-                println("entrei aqui")
                 mActivity.finish()
             }
 

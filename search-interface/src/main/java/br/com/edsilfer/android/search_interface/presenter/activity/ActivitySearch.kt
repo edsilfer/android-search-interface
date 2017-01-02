@@ -64,6 +64,7 @@ class ActivitySearch<T : IResultRow> : AppCompatActivity(), ISearchInterface<T>,
         retrievePreset()
         configureUserInterface()
         addEventSubscriber(SearchEvents.UPDATE_RESULTS, this)
+        addEventSubscriber(SearchEvents.ITEM_CHOSEN, this)
     }
 
     override fun onPause() {
@@ -161,6 +162,12 @@ class ActivitySearch<T : IResultRow> : AppCompatActivity(), ISearchInterface<T>,
 
             ChipEvents.CHIP_REMOVED -> {
                 mListFragment?.refreshDataSet()
+            }
+
+            SearchEvents.ITEM_CHOSEN -> {
+                if (SearchType.fromString(mTemplate!!.type)!! == SearchType.SINGLE_SELECT) {
+                    finish()
+                }
             }
 
             else -> {
