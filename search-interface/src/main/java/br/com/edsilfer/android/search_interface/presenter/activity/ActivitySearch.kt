@@ -14,10 +14,11 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import br.com.edsilfer.android.chipinterface.model.ChipEvents
+import br.com.edsilfer.android.lmanager.model.CustomDataSet
 import br.com.edsilfer.android.lmanager.model.GenericHolderFactory
 import br.com.edsilfer.android.lmanager.model.GenericViewHolder
 import br.com.edsilfer.android.lmanager.model.IListControl
-import br.com.edsilfer.android.lmanager.presenter.fragment.GenericListFragment
+import br.com.edsilfer.android.lmanager.presenter.GenericListFragment
 import br.com.edsilfer.android.search_interface.R
 import br.com.edsilfer.android.search_interface.model.enum.SearchEvents
 import br.com.edsilfer.android.search_interface.model.enum.SearchType
@@ -134,14 +135,15 @@ class ActivitySearch<T : IResultRow> : AppCompatActivity(), ISearchInterface<T>,
 
     private fun loadFragment(dataSet: ArrayList<T>) {
         if (!isFinishing) {
-            mListFragment = GenericListFragment<T>(
+            mListFragment = GenericListFragment.newInstance<T>(
+                    CustomDataSet<T>(dataSet),
                     ResultItemFactory(
                             mTemplate!!.getComponentByType("result-row"),
                             SearchType.fromString(mTemplate!!.type)!!,
                             mSearchBar!!,
                             ThumbnailStyle.fromString(mTemplate!!.getComponentByType("result-row").display)!!
-                    ),
-                    dataSet
+                    )
+
             )
 
             supportFragmentManager
