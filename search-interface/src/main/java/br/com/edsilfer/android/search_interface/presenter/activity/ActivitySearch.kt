@@ -35,6 +35,7 @@ import br.com.edsilfer.kotlin_support.extensions.paintStatusBar
 import br.com.edsilfer.kotlin_support.extensions.setStyle
 import br.com.edsilfer.kotlin_support.model.Events
 import br.com.edsilfer.kotlin_support.model.ISubscriber
+import br.com.edsilfer.kotlin_support.service.NotificationCenter
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_search_dark.*
 import org.jetbrains.anko.backgroundColor
@@ -78,11 +79,21 @@ class ActivitySearch<T : IResultRow> : AppCompatActivity(), ISearchInterface<T>,
         mSearchBar!!.closerSoftKeyboard()
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
+    }
+
     private fun loadContent() {
         if (mTemplate!!.getComponentByType("search-bar").type == "theme-dark")
             setContentView(R.layout.activity_search_dark)
         else
             setContentView(R.layout.activity_search_light)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        NotificationCenter.notify(SearchEvents.ON_SEARCH_ACTIVITY_CLOSED, null)
     }
 
     private fun configureUserInterface() {

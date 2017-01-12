@@ -7,6 +7,6 @@ import br.com.edsilfer.kotlin_support.model.Events
  */
 
 enum class SearchEvents : Events {
-    UPDATE_RESULTS, ON_SEARCH_TYPED, ITEM_CHOSEN, MULTI_SELECT_FINISHED
+    UPDATE_RESULTS, ON_SEARCH_TYPED, ITEM_CHOSEN, MULTI_SELECT_FINISHED, ON_SEARCH_ACTIVITY_CLOSED
 }
 
