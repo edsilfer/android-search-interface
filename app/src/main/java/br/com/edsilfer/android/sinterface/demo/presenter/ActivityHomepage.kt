@@ -6,16 +6,19 @@ import android.os.Bundle
 import android.os.Environment
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import android.view.SearchEvent
 import android.view.View
+import br.com.edsilfer.android.search_interface.model.enum.SearchEvents
 import br.com.edsilfer.android.search_interface.presenter.activity.ActivitySearch
 import br.com.edsilfer.android.sinterface.demo.R
+import br.com.edsilfer.android.sinterface.demo.model.Chat
 import br.com.edsilfer.android.sinterface.demo.services.SearchManager
+import br.com.edsilfer.kotlin_support.extensions.log
 import br.com.edsilfer.kotlin_support.extensions.requestPermission
 import br.com.edsilfer.kotlin_support.extensions.sendEmail
 import br.com.edsilfer.kotlin_support.extensions.takeScreenShot
-import br.com.edsilfer.kotlin_support.model.DirectoryPath
-import br.com.edsilfer.kotlin_support.model.Email
-import br.com.edsilfer.kotlin_support.model.Sender
+import br.com.edsilfer.kotlin_support.model.*
+import br.com.edsilfer.kotlin_support.service.NotificationCenter
 import org.jetbrains.anko.doAsync
 import java.io.File
 
@@ -23,13 +26,12 @@ import java.io.File
  * Created by User on 05/12/2016.
  */
 
-class ActivityHomepage : AppCompatActivity() {
-
+class ActivityHomepage : AppCompatActivity(), ISubscriber {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.act_homepage)
         SearchManager()
-
+        NotificationCenter.RegistrationManager.registerForEvent(SearchEvents.MULTI_SELECT_FINISHED, this)
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
@@ -60,6 +62,13 @@ class ActivityHomepage : AppCompatActivity() {
     fun onTakeScreenShotClicked(view: View) {
         if (requestPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE))
             takeScreenShot(location = DirectoryPath.EXTERNAL, path = "search-interface", openScreenShot = false)
+    }
+
+    override fun onEventTriggered(event: Events, payload: Any?) {
+        if (event == SearchEvents.MULTI_SELECT_FINISHED) {
+            val selectedItems = payload as MutableList<Chat>
+            log("received search result: $selectedItems")
+        }
     }
 
     fun sendEmail() {

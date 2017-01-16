@@ -67,6 +67,7 @@ class ActivitySearch<T : IResultRow> : AppCompatActivity(), ISearchInterface<T>,
         configureUserInterface()
         addEventSubscriber(SearchEvents.UPDATE_RESULTS, this)
         addEventSubscriber(SearchEvents.ITEM_CHOSEN, this)
+        addEventSubscriber(SearchEvents.MULTI_SELECT_FINISHED, this)
     }
 
     override fun onPause() {
@@ -181,6 +182,10 @@ class ActivitySearch<T : IResultRow> : AppCompatActivity(), ISearchInterface<T>,
                 if (SearchType.fromString(mTemplate!!.type)!! == SearchType.SINGLE_SELECT) {
                     finish()
                 }
+            }
+
+            SearchEvents.MULTI_SELECT_FINISHED -> {
+                finish()
             }
 
             else -> {

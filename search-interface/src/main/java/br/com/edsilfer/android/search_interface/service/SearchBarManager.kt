@@ -35,20 +35,15 @@ class SearchBarManager<T>(
         val searchType: SearchType
 ) : ISearchBarManager<T>, ISubscriber, Serializable {
 
-    private val mInputWrapper: TextInputLayout
-    private val mInput: ChipEditText
-    private val mDone: Button
-    private val mClear: ImageView
-    private val mToolbar: Toolbar
+    private val mInputWrapper: TextInputLayout = mActivity.findViewById(R.id.input_wrapper) as TextInputLayout
+    private val mInput: ChipEditText = mActivity.findViewById(R.id.input) as ChipEditText
+    private val mDone: Button = mActivity.findViewById(R.id.done) as Button
+    private val mClear: ImageView = mActivity.findViewById(R.id.clear) as ImageView
+    private val mToolbar: Toolbar = mActivity.findViewById(R.id.search_toolbar) as Toolbar
     private var mSelectedItems = mutableListOf<IResultRow>()
 
     init {
-        mInputWrapper = mActivity.findViewById(R.id.input_wrapper) as TextInputLayout
-        mToolbar = mActivity.findViewById(R.id.search_toolbar) as Toolbar
-        mInput = mActivity.findViewById(R.id.input) as ChipEditText
         mInput.setStyle(mPreset.getTextByID("search-input"))
-        mDone = mActivity.findViewById(R.id.done) as Button
-        mClear = mActivity.findViewById(R.id.clear) as ImageView
 
         setToolbarUI()
         setInputUI()
@@ -104,6 +99,7 @@ class SearchBarManager<T>(
     private fun addDoneOnClickListener() {
         mDone.setOnClickListener {
             notifySubscribers(SearchEvents.MULTI_SELECT_FINISHED, mSelectedItems)
+
         }
     }
 
