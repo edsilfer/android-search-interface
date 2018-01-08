@@ -3,6 +3,7 @@
 <a name="version"></a>[ ![Download](https://api.bintray.com/packages/edsilfer/maven/search-interface/images/download.svg) ](https://bintray.com/edsilfer/maven/search-interface/_latestVersion) - **MIN API VERSION: 16**
 
 <a name="summary">
+	
 ## Summary
 1. [Introduction](#introduction) 
 2. [How does it work?](#howdoesitwork) 
@@ -15,10 +16,12 @@
 3. [License](#license) 
 
 <a name="introduction" />
+
 ## Introduction
 While developing an application, a very common functionality is to perform searches - either, locally or remotelly - and let the user to select between a set of items. To achive this feature it is required, at least, a `Fragment` or `Activity` containing a `RecyclerView`, different row layouts, `RecyclerviewAdapte`r and its `ViewHolders`, all of that if the developer applies reusability very well. In order to ensure code orthogonality, Android Search Interface comes to offer the developer with a common but flexible interface to create Search/Select Business Streams.
 
 <a name="showcase" />
+
 ### SHOWCASE
 
 <p align="center">
@@ -32,12 +35,14 @@ While developing an application, a very common functionality is to perform searc
 </p>
 
 <a name="howdoesitwork" />
+
 ## How does it work?
 Android List Manager was developed using [Kotlin language](https://kotlinlang.org/). Kotlin is free to use and owned by [Jet Brains](https://www.jetbrains.com/). It adds a lot of cool features, boosting your productiveness while keeping everythying **100% compatible with Java.** 
 
 _For details about technical implementation of this library please refer to the source code._
 
 <a name="step1" />
+
 #### Step 01: import the module
 
 Add the library module dependency to your project:
@@ -48,6 +53,7 @@ compile 'br.com.edsilfer.android:search-interface:1.1.0'
 _Please refer to the [badge](#version) of the page to get the latest version of this library._
 
 <a name="step2" />
+
 #### Step 02: make your POJO class extends `IResultRow`
 
 The model class whose items you intend to display as search result must implement the interface below:
@@ -64,10 +70,10 @@ interface IResultRow : Serializable {
     fun getSubHeader2(): String
 
 }
-
 ```
 
 <a name="step3" />
+
 #### Step 03: subscribe for search events
 ```kotlin
  NotificationCenter.subscribe(Events.ON_SEARCH_TYPED, object : ISubscriber {
@@ -84,6 +90,7 @@ interface IResultRow : Serializable {
 - Event  `Events.ITEM_CHOSEN` is called when user selects a result. In this case, `payload` maps to the type of the returned set of items (see (step 4)[#step4]);
 
 <a name="step4" />
+
 #### Step 04: perform the search and update the results
 
 After performing the search, update the results like shown in the snippet below:
@@ -94,6 +101,7 @@ NotificationCenter.notify(Events.UPDATE_RESULTS, RESULT_LIST)
 _Where `RESULT_LIST` is any POJO that implements the interface `IResultRow`_
 
 <a name="step5" />
+
 #### Step 05: call the search activity
 
 ```kotlin
@@ -104,6 +112,7 @@ startActivity(intent)
 Where `SEARCH_ACTIVITY_TEMPLATE` is descendent a XML file present on res/raw directory. You shall pass a String contianing the name of the file **without extensions**
 
 <a name="step6" />
+
 #### Step 06: customize your activity
 The UI is built upon a XML configuration file provided on ActivitySearch launch. This XML must pe present on res/raw folder. Below it is a sample:
 
@@ -172,11 +181,13 @@ The UI is built upon a XML configuration file provided on ActivitySearch launch.
 _**PS.: All code supplied is written in Kotlin and can be used together with Java.**_
 
 <a name="next-steps" />
+
 ## Next Steps
 - Add support for recent search suggestions;
 - Add support for custom suggestions;
 
 <a name="license" />
+
 ## License
 Copyright 2016 Edgar da Silva Fernandes
 
