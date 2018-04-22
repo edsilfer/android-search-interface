@@ -1,1 +1,1 @@
-include ':app', ':search-interface'
+include ':demo', ':library'
